@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-class Home extends BaseController
+use Kenjis\CI3Compatible\Core\CI_Controller;
+
+class Home extends CI_Controller
 {
-    public function index(): string
+    public function index(): void
     {
-        return view('welcome_message');
+        $this->output->set_header('Content-Type: text/html; charset=UTF-8');
+        $this->load->helper('url');
+        $this->load->view('index');
     }
 }
