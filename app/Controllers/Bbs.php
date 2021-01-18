@@ -6,6 +6,14 @@ declare(strict_types=1);
  *
  */
 
+namespace App\Controllers;
+
+use Kenjis\CI3Compatible\Core\CI_Controller;
+
+use function header;
+use function mb_convert_encoding;
+use function time;
+
 /**
  * @property CI_DB_query_builder $db
  * @property CI_User_agent $agent

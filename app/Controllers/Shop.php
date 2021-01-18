@@ -6,6 +6,11 @@ declare(strict_types=1);
  *
  */
 
+namespace App\Controllers;
+
+use function mb_convert_kana;
+use function trim;
+
 /**
  * @property Shop_model $shop_model
  * @property Inventory_model $inventory_model

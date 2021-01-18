@@ -6,6 +6,10 @@ declare(strict_types=1);
  *
  */
 
+namespace App\Controllers;
+
+use Kenjis\CI3Compatible\Core\CI_Controller;
+
 /**
  * @property CI_Email $email
  * @property CI_Session $session
