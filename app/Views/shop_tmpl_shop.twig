@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="{{ base_url('css/shop.css') }}" type="text/css" />
+<title>CIショップ</title>
+</head>
+
+<body>
+<!-- ヘッダ -->
+{% include 'shop_ci_header.twig' %}
+
+<div id="main">
+<!-- ショップヘッダ -->
+	<div class="header">{% include 'shop_header.twig' %}</div>
+<!-- ショップメニュー -->
+	<div class="menu">{% include 'shop_menu.twig' %}</div>
+<!-- ショップメイン -->
+	<div class="main_shop">{% include main ~ '.twig' %}</div>
+</div>
+
+<!-- フッタ -->
+{% include 'ci_footer.twig' %}
+</body>
+</html>
