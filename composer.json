@@ -1,16 +1,8 @@
 {
-    "name": "kenjis/ci4-app-template",
+    "name": "kenjis/ci4-tettei-apps",
     "type": "project",
-    "description": "CodeIgniter4 application template",
-    "keywords": ["codeigniter", "codeigniter4", "project template"],
-    "homepage": "https://github.com/kenjis/ci4-app-template",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Kenji Suzuki",
-            "homepage": "https://github.com/kenjis"
-        }
-    ],
+    "description" : "『CodeIgniter徹底入門』のサンプルアプリケーション",
+    "license": "BSD-3-Clause",
     "require": {
         "php": ">=7.3",
         "codeigniter4/translations": "dev-develop",
