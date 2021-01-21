@@ -1,5 +1,8 @@
 <?php
 
+namespace App\Models\Shop;
+use Kenjis\CI3Compatible\Core\CI_Model;
+
 /**
  * @property Cart_model     $cart_model
  * @property Customer_model $customer_model

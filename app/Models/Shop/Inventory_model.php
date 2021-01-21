@@ -1,5 +1,8 @@
 <?php
 
+namespace App\Models\Shop;
+use Kenjis\CI3Compatible\Core\CI_Model;
+
 /**
  * @property CI_DB $db
  */
