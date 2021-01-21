@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Libraries\Validation;
+
 class Field_validation
 {
 	private $CI;

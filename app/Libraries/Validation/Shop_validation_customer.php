@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Libraries\Validation;
+
 class Shop_validation_customer extends Custom_validation
 {
 	// バリデーションの設定

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Libraries\Validation;
+
 abstract class Custom_validation
 {
 	private $CI;
