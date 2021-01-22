@@ -1,6 +1,6 @@
 # 『CodeIgniter徹底入門』のサンプルアプリケーションをCodeIgniter4にアップデート
 
-ここは『CodeIgniter徹底入門』（翔泳社）に含まれている以下のサンプルアプリケーション（CodeIgniter 1.6.1用）を [CodeIgniter 3.xで動作するように更新したもの](https://github.com/kenjis/codeigniter-tettei-apps/tree/php74) を、CodeIgniter4で動作するように更新するためのプロジェクトです（作業中）。
+ここは『CodeIgniter徹底入門』（翔泳社）に含まれている以下のサンプルアプリケーション（CodeIgniter 1.6.1用）を [CodeIgniter 3.xで動作するように更新したもの](https://github.com/kenjis/codeigniter-tettei-apps) を、CodeIgniter4で動作するように更新するためのプロジェクトです（作業中）。
 
 - コンタクトフォーム（7章）
 - モバイル対応簡易掲示板（8章）
@@ -82,6 +82,6 @@ GRANT ALL PRIVILEGES ON codeigniter.* TO username@localhost IDENTIFIED BY 'passw
 
 ## 『CodeIgniter徹底入門』について
 
-* [『CodeIgniter徹底入門』のサンプルアプリケーションをCodeIgniter 3.xにアップデート](https://github.com/kenjis/codeigniter-tettei-apps/tree/php74)
+* [『CodeIgniter徹底入門』のサンプルアプリケーションをCodeIgniter 3.xにアップデート](https://github.com/kenjis/codeigniter-tettei-apps)
 * [『CodeIgniter徹底入門』情報ページ](http://codeigniter.jp/tettei/)
 * [『CodeIgniter徹底入門』に対するノート](https://github.com/codeigniter-jp/codeigniter-tettei-note)
