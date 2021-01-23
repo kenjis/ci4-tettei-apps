@@ -19,7 +19,6 @@ use Kenjis\CI3Compatible\Library\CI_User_agent;
 use function header;
 use function max;
 use function mb_convert_encoding;
-use function time;
 
 /**
  * @property CI_DB_query_builder $db
@@ -227,7 +226,7 @@ class Bbs extends CI_Controller
         }
 
 // 整形・検証ルールを設定します。alpha_numericは英数字のみ、numericは数字のみ
-// となります。callback_captcha_checkは、ユーザが定義したcaptcha_check()メソッド
+// となります。captcha_checkは、ユーザが定義したcaptcha_check()メソッド
 // で検証することを意味します。
         $this->form_validation->set_rules(
             'name',
@@ -257,7 +256,7 @@ class Bbs extends CI_Controller
         $this->form_validation->set_rules(
             'captcha',
             '画像認証コード',
-            'trim|required|alpha_numeric|callback_captcha_check'
+            'trim|required|alpha_numeric|captcha_check'
         );
 // keyフィールドは、キャプチャのID番号です。隠しフィールドに仕込まれるのみで
 // ユーザの目に触れることはありません。
@@ -287,46 +286,6 @@ class Bbs extends CI_Controller
 // URLヘルパーのredirect()メソッドで記事表示ページにリダイレクトします。
             redirect('/bbs');
         }
-    }
-
-// キャプチャの検証をするメソッドです。バリデーション(認証)クラスより呼ばれます。
-    public function captcha_check($str)
-    {
-// 環境がtestingの場合は、キャプチャの検証をスキップします。
-        if (ENVIRONMENT === 'testing' && $str === '8888') {
-            return true;
-        }
-
-// 有効期限を2時間に設定し、それ以前に生成されたキャプチャをデータベースから
-// 削除します。delete()メソッドの第2引数では、「captcha_time <」を配列のキーに
-// していますが、このように記述することで、WHERE句の条件の演算子を指定できます。
-        $expiration = time() - 7200;    // 有効期限 2時間
-        $this->db->delete('captcha', ['captcha_time <' => $expiration]);
-
-// バリデーション(検証)クラスより引数$strに渡された、ユーザからの入力値がデータ
-// ベースに保存されている値と一致するかどうかを調べます。隠しフィールドである
-// keyフィールドの値と$strを条件に、有効期限内のレコードをデータベースから
-// 検索します。条件に合うレコードが存在すれば、一致したと判断します。
-// where()メソッドは、複数回呼ばれると、AND条件になります。
-        $this->db->select('COUNT(*) AS count');
-        $this->db->where('word', $str);
-        $this->db->where('captcha_id', $this->input->post('key'));
-        $this->db->where('captcha_time >', $expiration);
-        $query = $this->db->get('captcha');
-        $row = $query->row();
-
-// 投稿されたIDのキャプチャを削除します。
-        $this->db->delete('captcha', ['captcha_id' => $this->input->post('key')]);
-
-// レコードが0件の場合、つまり、一致しなかった場合は、captcha_checkルール
-// のエラーメッセージを設定し、FALSEを返します。
-        if ($row->count == 0) {
-            $this->form_validation->set_message('captcha_check', '画像認証コードが一致しません。');
-
-            return false;
-        }
-
-        return true;
     }
 
 // 携帯端末かどうかを判定し、ビューをロードするプライベートメソッドです。
