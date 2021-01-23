@@ -17,6 +17,7 @@ use Kenjis\CI3Compatible\Library\CI_Pagination;
 use Kenjis\CI3Compatible\Library\CI_User_agent;
 
 use function header;
+use function max;
 use function mb_convert_encoding;
 use function time;
 
@@ -44,11 +45,14 @@ class Bbs extends CI_Controller
     }
 
     // 日付順に記事を表示
-    public function index($offset = ''): void
+    public function index($page = 1): void
     {
-// 引数から$offsetに値が渡されます。これは、3番目のURIセグメントの値です。
+// 引数から$pageに値が渡されます。これは、3番目のURIセグメントの値です。
 // ユーザが変更可能なデータですので、int型へ変換し、必ず整数値にします。
-        $offset = (int) $offset;
+        $page = (int) $page;
+
+// ページ番号をoffsetに変換します。
+        $offset = max($page - 1, 0) * $this->limit;
 
 // 新しい記事ID順に、limit値とoffset値を指定し、bbsテーブルから記事データ
 // (オブジェクト)を取得し、$data['query']に代入します。order_by()メソッドは、
