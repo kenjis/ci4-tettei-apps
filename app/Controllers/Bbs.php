@@ -69,21 +69,21 @@ class Bbs extends CI_Controller
 // を引数にとり、そのテーブルのレコード数を返します。
         $config['total_rows'] = $this->db->count_all('bbs');
         $config['per_page'] = $this->limit;
-        $config['first_link']      = '&laquo;最初';
-        $config['last_link']       = '最後&raquo;';
-        $config['num_tag_open']    = ' ';
-        $config['num_tag_close']   = ' ';
-        $config['last_tag_open']   = ' ';
-        $config['last_tag_close']  = ' ';
-        $config['first_tag_open']  = ' ';
-        $config['first_tag_close'] = ' ';
+//        $config['first_link']      = '&laquo;最初';
+//        $config['last_link']       = '最後&raquo;';
+//        $config['num_tag_open']    = ' ';
+//        $config['num_tag_close']   = ' ';
+//        $config['last_tag_open']   = ' ';
+//        $config['last_tag_close']  = ' ';
+//        $config['first_tag_open']  = ' ';
+//        $config['first_tag_close'] = ' ';
 // 携帯端末かどうかを判定し、ページネーションの前後に挿入するタグを変更します。
         if ($this->agent->is_mobile()) {
-            $config['full_tag_open']  = '<tr><td bgcolor="#EEEEEE">';
-            $config['full_tag_close'] = '</td></tr>';
+//            $config['full_tag_open']  = '<tr><td bgcolor="#EEEEEE">';
+//            $config['full_tag_close'] = '</td></tr>';
         } else {
-            $config['full_tag_open']  = '<p class="pagination">';
-            $config['full_tag_close'] = '</p>';
+//            $config['full_tag_open']  = '<p class="pagination">';
+//            $config['full_tag_close'] = '</p>';
         }
 
         $this->pagination->initialize($config);
