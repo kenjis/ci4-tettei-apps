@@ -111,6 +111,9 @@ class Bbs extends CI_Controller
 // 検証をパスしなかった場合は、新規投稿ページを表示します。検証をパスした場合
 // は、投稿確認ページ(bbs_confirm)を表示します。
         if ($this->form_validation->run() == false) {
+// 投稿されたIDのキャプチャを削除します。
+            $this->_delete_captcha_data();
+
             $this->_show_post_page();
         } else {
             $data = [];
@@ -123,6 +126,12 @@ class Bbs extends CI_Controller
             $data['captcha']    = $this->input->post('captcha');
             $this->_load_view('bbs_confirm', $data);
         }
+    }
+
+// 投稿されたIDのキャプチャを削除します。
+    private function _delete_captcha_data(): void
+    {
+        $this->db->delete('captcha', ['captcha_id' => $this->input->post('key')]);
     }
 
 // 新規投稿ページを表示します。
@@ -271,6 +280,9 @@ class Bbs extends CI_Controller
 
 // 検証にパスしない場合は、新規投稿ページを表示します。
         if ($this->form_validation->run() == false) {
+// 投稿されたIDのキャプチャを削除します。
+            $this->_delete_captcha_data();
+
             $this->_show_post_page();
         } else {
 // 検証にパスした場合は、送られたデータとIPアドレスをbbsテーブルに登録します。
@@ -282,6 +294,9 @@ class Bbs extends CI_Controller
             $data['password']   = $this->input->post('password');
             $data['ip_address'] = $this->input->server('REMOTE_ADDR');
             $this->db->insert('bbs', $data);
+
+// 投稿されたIDのキャプチャを削除します。
+            $this->_delete_captcha_data();
 
 // URLヘルパーのredirect()メソッドで記事表示ページにリダイレクトします。
             redirect('/bbs');

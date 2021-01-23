@@ -51,9 +51,6 @@ class BbsValidationRules
         $query = $CI->db->get('captcha');
         $row = $query->row();
 
-// 投稿されたIDのキャプチャを削除します。
-        $CI->db->delete('captcha', ['captcha_id' => $CI->input->post('key')]);
-
 // レコードが0件の場合、つまり、一致しなかった場合は、captcha_checkルール
 // のエラーメッセージを設定し、FALSEを返します。
         if ($row->count == 0) {
