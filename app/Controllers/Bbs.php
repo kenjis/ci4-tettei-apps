@@ -229,9 +229,9 @@ class Bbs extends CI_Controller
 
 // 携帯端末かどうかを判定して、エラー表示の前後に挿入するタグを変更します。
         if ($this->agent->is_mobile()) {
-            $this->form_validation->set_error_delimiters('<div>', '</div>');
+//            $this->form_validation->set_error_delimiters('<div>', '</div>');
         } else {
-            $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+//            $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
         }
 
 // 整形・検証ルールを設定します。alpha_numericは英数字のみ、numericは数字のみ
