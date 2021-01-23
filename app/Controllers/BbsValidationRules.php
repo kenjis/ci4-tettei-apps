@@ -24,7 +24,7 @@ use function time;
 class BbsValidationRules
 {
 // キャプチャの検証をするメソッドです。バリデーション(認証)クラスより呼ばれます。
-    public function captcha_check($str)
+    public function captcha_check($str, &$error)
     {
 // 環境がtestingの場合は、キャプチャの検証をスキップします。
         if (ENVIRONMENT === 'testing' && $str === '8888') {
@@ -54,7 +54,7 @@ class BbsValidationRules
 // レコードが0件の場合、つまり、一致しなかった場合は、captcha_checkルール
 // のエラーメッセージを設定し、FALSEを返します。
         if ($row->count == 0) {
-            $CI->form_validation->set_message('captcha_check', '画像認証コードが一致しません。');
+            $error = '画像認証コードが一致しません。';
 
             return false;
         }
