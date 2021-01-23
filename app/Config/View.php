@@ -3,9 +3,12 @@
 namespace Config;
 
 use CodeIgniter\Config\View as BaseView;
+use Kenjis\CI3Compatible\Traits\View\ThisConfigInView;
 
 class View extends BaseView
 {
+	use ThisConfigInView;
+
 	/**
 	 * When false, the view method will clear the data between each
 	 * call. This keeps your data safe and ensures there is no accidental
