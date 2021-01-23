@@ -8,7 +8,13 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Controller;
+use Kenjis\CI3Compatible\Core\CI_Input;
+use Kenjis\CI3Compatible\Database\CI_DB_query_builder;
+use Kenjis\CI3Compatible\Library\CI_Form_validation;
+use Kenjis\CI3Compatible\Library\CI_Pagination;
+use Kenjis\CI3Compatible\Library\CI_User_agent;
 
 use function header;
 use function mb_convert_encoding;

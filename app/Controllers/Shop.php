@@ -8,6 +8,11 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use Kenjis\CI3Compatible\Core\CI_Config;
+use Kenjis\CI3Compatible\Core\CI_Input;
+use Kenjis\CI3Compatible\Library\CI_Form_validation;
+use Kenjis\CI3Compatible\Library\CI_Session;
+
 use function mb_convert_kana;
 use function trim;
 

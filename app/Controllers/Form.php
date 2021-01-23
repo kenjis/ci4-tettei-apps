@@ -9,6 +9,11 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use Kenjis\CI3Compatible\Core\CI_Controller;
+use Kenjis\CI3Compatible\Core\CI_Input;
+use Kenjis\CI3Compatible\Core\CI_Output;
+use Kenjis\CI3Compatible\Library\CI_Email;
+use Kenjis\CI3Compatible\Library\CI_Form_validation;
+use Kenjis\CI3Compatible\Library\CI_Session;
 
 /**
  * @property CI_Email $email
