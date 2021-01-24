@@ -304,7 +304,7 @@ class Bbs extends CI_Controller
     }
 
 // 携帯端末かどうかを判定し、ビューをロードするプライベートメソッドです。
-    private function _load_view($file, $data = ''): void
+    private function _load_view($file, $data = []): void
     {
 // 携帯端末の場合は、「_mobile」がファイル名に付くビューファイルをロードします。
         if ($this->agent->is_mobile()) {
