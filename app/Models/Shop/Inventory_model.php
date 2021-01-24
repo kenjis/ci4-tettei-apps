@@ -35,6 +35,10 @@ class Inventory_model extends CI_Model
         $query = $this->db->get('category');
         $row = $query->row();
 
+        if ($row === null) {
+            show_error('不正な入力です。');
+        }
+
         return $row->name;
     }
 
