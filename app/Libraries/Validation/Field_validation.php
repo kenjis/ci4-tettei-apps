@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Libraries\Validation;
 
+use Kenjis\CI3Compatible\Core\CI_Controller;
+
 class Field_validation
 {
+    /** @var CI_Controller */
     private $CI;
 
     public function __construct()
