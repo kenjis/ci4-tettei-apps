@@ -12,6 +12,7 @@ use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Input;
 use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Library\CI_Session;
+use Kenjis\CI4Twig\Twig;
 
 use function mb_convert_kana;
 use function trim;
@@ -23,7 +24,6 @@ use function trim;
  * @property Customer_model $customer_model
  * @property Field_validation $field_validation
  * @property Generate_pagination $generate_pagination
- * @property Twig $twig
  * @property CI_Session $session
  * @property CI_Form_validation $form_validation
  * @property CI_Config $config
@@ -34,10 +34,14 @@ class Shop extends MY_Controller
     public $limit;  // 1ページに表示する商品の数
     public $admin;  // 管理者のメールアドレス
 
+    /** @var Twig */
+    private $twig;
+
     public function __construct()
     {
         parent::__construct();
-        $this->load->library(['session', 'twig']);
+        $this->load->library(['session']);
+        $this->twig = new Twig();
         $this->load->helper(['form', 'url']);
 
 // モデルをロードします。ロード後のモデルオブジェクトは、$this->shop_modelなど
