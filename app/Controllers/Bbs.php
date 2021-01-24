@@ -147,7 +147,7 @@ class Bbs extends CI_Controller
         $vals = [
             'word'      => random_string('numeric', 4),
             'img_path'  => FCPATH . 'captcha/',
-            'img_url'   => base_url() . 'captcha/',
+            'img_url'   => base_url_() . 'captcha/',
         ];
         $cap = create_captcha($vals);
         $data = [
