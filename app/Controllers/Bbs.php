@@ -36,6 +36,7 @@ class Bbs extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->library('user_agent');
         $this->load->helper(['form', 'url']);
 // データベースを使うため、データベースクラスをロードします。
         $this->load->database();
