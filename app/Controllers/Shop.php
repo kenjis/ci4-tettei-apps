@@ -8,6 +8,10 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Models\Shop\Cart_model;
+use App\Models\Shop\Customer_model;
+use App\Models\Shop\Inventory_model;
+use App\Models\Shop\Shop_model;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Input;
 use Kenjis\CI3Compatible\Library\CI_Form_validation;
