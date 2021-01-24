@@ -19,6 +19,7 @@ use Kenjis\CI3Compatible\Library\CI_User_agent;
 use function header;
 use function max;
 use function mb_convert_encoding;
+use function substr;
 
 /**
  * @property CI_DB_query_builder $db
@@ -45,8 +46,14 @@ class Bbs extends CI_Controller
     }
 
     // 日付順に記事を表示
-    public function index($page = 1): void
+    public function index($page = 1)
     {
+// URLがbbsで終わる場合、セグメントが足りずページネーションが動作しない
+// ため、bbs/indexにリダイレクトさます。
+        if (substr(current_url(), -3) === 'bbs') {
+            return redirect()->to('bbs/index');
+        }
+
 // 引数から$pageに値が渡されます。これは、3番目のURIセグメントの値です。
 // ユーザが変更可能なデータですので、int型へ変換し、必ず整数値にします。
         $page = (int) $page;
