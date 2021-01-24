@@ -22,6 +22,6 @@ class MY_Controller extends CI_Controller
             return;
         }
 
-        $this->output->enable_profiler(true);
+//        $this->output->enable_profiler(true);
     }
 }
