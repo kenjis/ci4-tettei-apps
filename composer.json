@@ -5,6 +5,7 @@
     "license": "BSD-3-Clause",
     "require": {
         "php": ">=7.3",
+        "ext-mbstring": "*",
         "codeigniter4/translations": "dev-develop",
         "codeigniter4/codeigniter4": "dev-develop",
         "liaison/revision": "1.x-dev"
