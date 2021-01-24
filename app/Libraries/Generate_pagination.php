@@ -27,16 +27,16 @@ class Generate_pagination
 // ページネーションでクエリ文字列を使えるようにします。
         $config['reuse_query_string'] = true;
 // 生成するリンクのテンプレートを指定します。
-        $config['first_link']      = '&laquo;最初';
-        $config['last_link']       = '最後&raquo;';
-        $config['full_tag_open']   = '<p>';
-        $config['full_tag_close']  = '</p>';
-        $config['num_tag_open']    = ' ';
-        $config['num_tag_close']   = ' ';
-        $config['last_tag_open']   = ' ';
-        $config['last_tag_close']  = ' ';
-        $config['first_tag_open']  = ' ';
-        $config['first_tag_close'] = ' ';
+//        $config['first_link']      = '&laquo;最初';
+//        $config['last_link']       = '最後&raquo;';
+//        $config['full_tag_open']   = '<p>';
+//        $config['full_tag_close']  = '</p>';
+//        $config['num_tag_open']    = ' ';
+//        $config['num_tag_close']   = ' ';
+//        $config['last_tag_open']   = ' ';
+//        $config['last_tag_close']  = ' ';
+//        $config['first_tag_open']  = ' ';
+//        $config['first_tag_close'] = ' ';
 // $configでページネーションを初期化します。
         $this->CI->pagination->initialize($config);
 
