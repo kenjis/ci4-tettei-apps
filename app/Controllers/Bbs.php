@@ -300,7 +300,7 @@ class Bbs extends CI_Controller
             $this->_delete_captcha_data();
 
 // URLヘルパーのredirect()メソッドで記事表示ページにリダイレクトします。
-            redirect('/bbs');
+            redirect_('/bbs');
         }
     }
 
