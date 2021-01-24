@@ -8,6 +8,8 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Libraries\Generate_pagination;
+use App\Libraries\Validation\Field_validation;
 use App\Models\Shop\Cart_model;
 use App\Models\Shop\Customer_model;
 use App\Models\Shop\Inventory_model;
