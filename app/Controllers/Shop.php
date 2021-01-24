@@ -57,14 +57,14 @@ class Shop extends MY_Controller
             'shop/customer_model',
         ]);
 
-// このアプリケーション専用の設定ファイルconfig_shop.phpを読み込みます。
+// このアプリケーション専用の設定ファイルConfigShop.phpを読み込みます。
 // load()メソッドの第2引数にTRUEを指定すると、他の設定ファイルで使われている
 // 設定項目名との衝突を気にしなくても済みます。
-        $this->config->load('config_shop', true);
+        $this->config->load('ConfigShop', true);
 // 上記のように読み込んだ場合、設定値は、以下のようにitem()メソッドに引数で
 // 「設定項目名」と「設定ファイル名」を渡すことで取得できます。
-        $this->limit = $this->config->item('per_page', 'config_shop');
-        $this->admin = $this->config->item('admin_email', 'config_shop');
+        $this->limit = $this->config->item('per_page', 'ConfigShop');
+        $this->admin = $this->config->item('admin_email', 'ConfigShop');
     }
 
     // トップページ = カテゴリ別商品一覧
