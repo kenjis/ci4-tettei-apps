@@ -35,7 +35,7 @@ class CreateCategory extends CI_Migration
             ['name' => 'CD'],
             ['name' => 'DVD'],
         ];
-        $this->db->insert_batch('category', $data);
+        $this->db_->insert_batch('category', $data);
     }
 
     public function down(): void
