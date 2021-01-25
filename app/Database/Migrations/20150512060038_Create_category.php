@@ -10,7 +10,7 @@ namespace App\Database\Migrations;
  * Created by: Cli for CodeIgniter <https://github.com/kenjis/codeigniter-cli>
  * Created on: 2015/05/12 06:00:38
  */
-class Migration_Create_category extends CI_Migration
+class CreateCategory extends CI_Migration
 {
     public function up(): void
     {

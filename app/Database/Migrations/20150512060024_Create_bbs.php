@@ -10,7 +10,7 @@ namespace App\Database\Migrations;
  * Created by: Cli for CodeIgniter <https://github.com/kenjis/codeigniter-cli>
  * Created on: 2015/05/12 06:00:24
  */
-class Migration_Create_bbs extends CI_Migration
+class CreateBbs extends CI_Migration
 {
     public function up(): void
     {
