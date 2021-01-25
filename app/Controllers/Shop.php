@@ -164,6 +164,10 @@ class Shop extends MY_Controller
             'required|is_natural|max_length[3]'
         );
 
+// $prod_id、$qtyの型をintに変更します。
+        $prod_id = (int) $prod_id;
+        $qty = (int) $qty;
+
         $this->cart_model->add($prod_id, $qty);
 
 // コントローラのcart()メソッドを呼び出し、カートを表示します。
