@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace App\Database\Seeds;
+
 class CategorySeeder extends Seeder
 {
     private $table = 'category';

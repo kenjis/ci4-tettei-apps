@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace App\Database\Migrations;
+
 /**
  * Migration: Create_category
  *
