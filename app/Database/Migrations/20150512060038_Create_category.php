@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Database\Migrations;
 
+use Kenjis\CI3Compatible\Library\CI_Migration;
+
 /**
  * Migration: Create_category
  *
