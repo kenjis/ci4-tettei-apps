@@ -34,8 +34,8 @@ class Shop_model extends CI_Model
 // カートの情報を取得します。
         $cart = $this->cart_model->get_all();
         foreach ($cart['items'] as &$item) {
-            $item['price']  = number_format($item['price']);
-            $item['amount'] = number_format($item['amount']);
+            $item['price']  = number_format((float) $item['price']);
+            $item['amount'] = number_format((float) $item['amount']);
         }
 
         $data['items']  = $cart['items'];
