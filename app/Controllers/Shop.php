@@ -20,6 +20,7 @@ use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI4Twig\Twig;
 
+use function max;
 use function mb_convert_kana;
 use function substr;
 use function trim;
@@ -71,13 +72,16 @@ class Shop extends MY_Controller
     }
 
     // トップページ = カテゴリ別商品一覧
-    public function index($cat_id = '1', $offset = '0')
+    public function index($cat_id = '1', $page = '0')
     {
 // URLがshopで終わる場合、セグメントが足りずページネーションが動作しない
 // ため、shop/index/1にリダイレクトさせます。
         if (substr(current_url(), -4) === 'shop') {
             return redirect()->to('shop/index/1');
         }
+
+// ページ番号をoffsetに変換します。
+        $offset = max($page - 1, 0) * $this->limit;
 
 // カテゴリーIDとオフセットを検証します。
         $this->load->library('validation/field_validation');
@@ -183,8 +187,11 @@ class Shop extends MY_Controller
     }
 
     // 検索ページ
-    public function search($offset = '0'): void
+    public function search($page = '0'): void
     {
+// ページ番号をoffsetに変換します。
+        $offset = max($page - 1, 0) * $this->limit;
+
 // オフセットを検証します。
         $this->load->library('validation/field_validation');
         $this->field_validation->validate(
