@@ -13,7 +13,7 @@ class ProductSeeder extends Seeder
 
     public function run(): void
     {
-        $this->db->truncate($this->table);
+        $this->db_->truncate($this->table);
 
         $data = [
             'category_id' => 1,
@@ -21,7 +21,7 @@ class ProductSeeder extends Seeder
             'detail' => '日本初のCodeIgniter解説書。CodeIgniterのインストールや運用法、開発の基礎知識を紹介するとともに、主なライブラリの使い方や活用法、応用テクニックなどを具体的なサンプルプログラムを交えて徹底的に解説している。PHPフレームワーク導入を検討しているWeb開発者、また、他のPHPフレームワークが難しいと感じているユーザーにお勧めの1冊。',
             'price'  => 3800,
         ];
-        $this->db->insert($this->table, $data);
+        $this->db_->insert($this->table, $data);
 
         $data = [
             'category_id' => 2,
@@ -29,7 +29,7 @@ class ProductSeeder extends Seeder
             'detail' => 'CodeIgniter徹底入門 CD',
             'price'  => 3800,
         ];
-        $this->db->insert($this->table, $data);
+        $this->db_->insert($this->table, $data);
 
         $data = [
             'category_id' => 3,
@@ -37,7 +37,7 @@ class ProductSeeder extends Seeder
             'detail' => 'CodeIgniter徹底入門 DVD',
             'price'  => 3800,
         ];
-        $this->db->insert($this->table, $data);
+        $this->db_->insert($this->table, $data);
 
         $faker = Factory::create('ja_JP');
         $cat_id = 1;
@@ -49,7 +49,7 @@ class ProductSeeder extends Seeder
                 'price'  => $faker->numberBetween(1000, 5000),
             ];
 
-            $this->db->insert($this->table, $data);
+            $this->db_->insert($this->table, $data);
 
             if ($i === 34) {
                 $cat_id++;
