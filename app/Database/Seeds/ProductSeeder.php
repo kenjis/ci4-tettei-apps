@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Database\Seeds;
 
+use Faker\Factory;
+use Kenjis\CI3Compatible\Library\Seeder;
+
 class ProductSeeder extends Seeder
 {
     private $table = 'product';
@@ -36,7 +39,7 @@ class ProductSeeder extends Seeder
         ];
         $this->db->insert($this->table, $data);
 
-        $faker = Faker\Factory::create('ja_JP');
+        $faker = Factory::create('ja_JP');
         $cat_id = 1;
         for ($i = 0; $i < 100; $i++) {
             $data = [
