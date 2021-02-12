@@ -9,6 +9,7 @@
         "codeigniter4/translations": "dev-develop",
         "codeigniter4/codeigniter4": "dev-develop",
         "kenjis/codeigniter-ss-twig": "^4.0",
+        "kenjis/ci3-to-4-upgrade-helper": "1.x-dev",
         "liaison/revision": "1.x-dev"
     },
     "require-dev": {
