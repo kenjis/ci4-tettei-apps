@@ -17,7 +17,8 @@
         "mikey179/vfsstream": "1.6.*",
         "phpunit/phpunit": "^9.0",
         "bear/qatools": "^1.9",
-        "codeception/codeception": "^4.1"
+        "codeception/codeception": "^4.1",
+        "codeception/module-webdriver": "^1.2"
     },
     "autoload-dev": {
         "psr-4": {
