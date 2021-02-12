@@ -2,7 +2,7 @@
 suites:
     acceptance:
         actor: AcceptanceTester
-        path: .
+        path: acceptance
         modules:
             enabled:
                 - WebDriver:
