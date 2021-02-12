@@ -8,8 +8,8 @@
 
 ## 動作確認環境
 
-- CodeIgniter 4.0.5-dev ([ci4-app-template](https://github.com/kenjis/ci4-app-template)を使用)
-- PHP 7.4.13
+- CodeIgniter 4.1.2-dev ([ci4-app-template](https://github.com/kenjis/ci4-app-template)を使用)
+- PHP 7.4.135
     - Composer 2.0.8
 - MySQL 5.7
 
@@ -19,7 +19,7 @@
 
 追加されたComposerのパッケージ
 
-* CodeIgniter 3 to 4 Migration Helper <https://github.com/kenjis/ci3-to-4-migration-helper>
+* CodeIgniter 3 to 4 Upgrade Helper <https://github.com/kenjis/ci3-to-4-upgrade-helper>
 
 ## インストール方法
 
@@ -64,7 +64,10 @@ GRANT ALL PRIVILEGES ON codeigniter.* TO username@localhost IDENTIFIED BY 'passw
 
 データベースにテーブルを作成し、テストデータを挿入します。
 
-@TODO
+```
+$ php spark migrate
+$ php spark db:seed ProductSeeder
+```
 
 ## テストの実行方法
 
