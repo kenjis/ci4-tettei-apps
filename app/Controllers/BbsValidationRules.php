@@ -26,9 +26,11 @@ class BbsValidationRules
 // キャプチャの検証をするメソッドです。バリデーション(認証)クラスより呼ばれます。
     public function captcha_check($str, &$error)
     {
-// 環境がtestingの場合は、キャプチャの検証をスキップします。
-        if (ENVIRONMENT === 'testing' && $str === '8888') {
-            return true;
+// 環境がtestingまたはacceptanceの場合は、キャプチャの検証をスキップします。
+        if (ENVIRONMENT === 'testing' || ENVIRONMENT === 'acceptance') {
+            if ($str === '8888') {
+                return true;
+            }
         }
 
         $CI = get_instance();
