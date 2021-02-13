@@ -8,6 +8,13 @@ if (version_compare(PHP_VERSION, $minPHPVersion, '<'))
 }
 unset($minPHPVersion);
 
+// ファイルacceptanceが存在する場合は受入テストであり、
+// acceptance環境に変更します。
+if (file_exists(__DIR__ . '/acceptance'))
+{
+    define('ENVIRONMENT', 'acceptance');
+}
+
 // Path to the front controller (this file)
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 
