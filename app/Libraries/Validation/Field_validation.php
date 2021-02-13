@@ -6,6 +6,8 @@ namespace App\Libraries\Validation;
 
 use Kenjis\CI3Compatible\Core\CI_Controller;
 
+use function show_error;
+
 class Field_validation
 {
     /** @var CI_Controller */

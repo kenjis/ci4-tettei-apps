@@ -8,6 +8,7 @@ use Kenjis\CI3Compatible\Core\CI_Model;
 use Kenjis\CI3Compatible\Database\CI_DB;
 
 use function explode;
+use function show_error;
 
 /**
  * @property CI_DB $db
