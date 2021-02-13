@@ -20,7 +20,7 @@
     <file>app/Helpers</file>
     <file>app/Libraries</file>
     <file>app/Models</file>
-    <file>tests</file>
+    <file>tests/unit</file>
 
     <!-- Doctrine Coding Standard (Based on PSR-12) -->
     <rule ref="Doctrine">
