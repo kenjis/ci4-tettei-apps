@@ -48,7 +48,7 @@ $I->amGoingTo('名前のみ入力して送信');
 $I->fillField('name', '<script>abc</script>');
 $I->click('確認');
 $I->wait(1);
-$I->see('住所欄は必須フィールドです');
+$I->see('住所 は必須項目です');
 $I->seeInFormFields('form', [
 	'name' => '<script>abc</script>',
 ]);
