@@ -26,11 +26,11 @@ gherkin: []
 
 # additional paths
 paths:
-    tests: tests
-    output: tests/_output
-    data: tests/_data
-    support: tests/_support
-    envs: tests/_envs
+    tests: tests_acceptance
+    output: tests_acceptance/_output
+    data: tests_acceptance/_data
+    support: tests_acceptance/_support
+    envs: tests_acceptance/_envs
 
 settings:
     shuffle: false
