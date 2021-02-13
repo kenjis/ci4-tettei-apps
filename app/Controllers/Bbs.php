@@ -253,7 +253,7 @@ class Bbs extends CI_Controller
         $this->form_validation->set_rules(
             'email',
             'メールアドレス',
-            'trim|valid_email|max_length[64]'
+            'trim|permit_empty|valid_email|max_length[64]'
         );
         $this->form_validation->set_rules(
             'subject',
