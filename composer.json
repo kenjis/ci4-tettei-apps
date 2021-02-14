@@ -18,7 +18,8 @@
         "phpunit/phpunit": "^9.0",
         "bear/qatools": "^1.9",
         "codeception/codeception": "^4.1",
-        "codeception/module-webdriver": "^1.2"
+        "codeception/module-webdriver": "^1.2",
+        "kenjis/phpunit-helper": "^1.0"
     },
     "autoload-dev": {
         "psr-4": {
