@@ -21,7 +21,7 @@ class Shop_model_test extends UnitTestCase
 
         $mail = $this->CI->email->_get_data();
         $this->assertEquals($this->CI->admin, $mail['from']);
-        $this->assertContains('注文合計： 11,400円', $mail['message']);
+        $this->assertStringContainsString('注文合計： 11,400円', $mail['message']);
     }
 
     public function test_order_mail_fails(): void
