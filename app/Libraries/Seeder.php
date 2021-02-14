@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Libraries;
 
+use Config\Database;
+
 class Seeder
 {
     private $CI;
@@ -26,9 +28,10 @@ class Seeder
      */
     public function call(string $seeder): void
     {
-        $file = APPPATH . 'database/seeds/' . $seeder . '.php';
+        $file = APPPATH . 'Database/Seeds/' . $seeder . '.php';
         require_once $file;
-        $obj = new $seeder();
+        $seeder = 'App\\Database\\Seeds\\' . $seeder;
+        $obj = new $seeder(new Database());
         $obj->run();
     }
 
