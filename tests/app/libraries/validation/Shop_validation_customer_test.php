@@ -2,15 +2,22 @@
 
 declare(strict_types=1);
 
+namespace App\Libraries\Validation;
+
+use Tests\Support\TestCase;
+
+use function array_reduce;
+
 class Shop_validation_customer_test extends TestCase
 {
     public function setUp(): void
     {
-        $this->resetInstance();
-
         // Form_validaton::set_rules()が影響を受けるので、インスタンス生成前に
         // POSTメソッドにしておく必要がある
         $_SERVER['REQUEST_METHOD'] = 'POST';
+
+        $this->resetInstance();
+
         $this->CI->load->library('validation/shop_validation_customer');
         $this->obj = $this->CI->form_validation;
     }
@@ -29,7 +36,13 @@ class Shop_validation_customer_test extends TestCase
             'tel' => '03-3333-3333',
             'email' => 'foo@example.jp',
         ];
-        $this->assertTrue($this->obj->run(), $this->obj->error_string());
+
+        $error_string = array_reduce($this->obj->error_array(), static function ($carry, $item) {
+            $carry .= $item . "\n";
+
+            return $carry;
+        }, '');
+        $this->assertTrue($this->obj->run(), $error_string);
     }
 
     public function test_run_name_error(): void
@@ -40,9 +53,11 @@ class Shop_validation_customer_test extends TestCase
             'tel' => '03-3333-3333',
             'email' => 'xxx@example.jp',
         ];
+
         $this->obj->run();
+
         $test = $this->obj->error_array();
-        $expected = ['name' => '名前欄は必須フィールドです'];
+        $expected = ['name' => '名前 は必須項目です。'];
         $this->assertEquals($expected, $test);
     }
 }
