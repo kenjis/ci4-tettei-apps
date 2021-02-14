@@ -2,8 +2,17 @@
 
 declare(strict_types=1);
 
+namespace App\Models\Shop;
+
+use Tests\Support\SessionTest;
+use Tests\Support\UnitTestCase;
+
+use function get_instance;
+
 class Cart_model_test extends UnitTestCase
 {
+    use SessionTest;
+
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();

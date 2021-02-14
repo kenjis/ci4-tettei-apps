@@ -2,8 +2,15 @@
 
 declare(strict_types=1);
 
+namespace App\Models\Shop;
+
+use Tests\Support\SessionTest;
+use Tests\Support\UnitTestCase;
+
 class Customer_model_test extends UnitTestCase
 {
+    use SessionTest;
+
     public function setUp(): void
     {
         $this->obj = $this->newModel(Customer_model::class);

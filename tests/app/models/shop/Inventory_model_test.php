@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+namespace App\Models\Shop;
+
+use Tests\Support\UnitTestCase;
+
+use function get_instance;
+
 class Inventory_model_test extends UnitTestCase
 {
     public static function setUpBeforeClass(): void
