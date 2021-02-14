@@ -2,11 +2,7 @@
 
 declare(strict_types=1);
 
-/**
- * Part of CI PHPUnit Test
- *
- * @link       https://github.com/kenjis/ci-phpunit-test
- */
+namespace Tests\Support\Libraries;
 
 class Mock_Libraries_Email
 {
