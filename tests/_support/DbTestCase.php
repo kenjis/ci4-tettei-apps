@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
-class DbTestCase extends CIPHPUnitTestDbTestCase
+namespace Tests\Support;
+
+class DbTestCase extends DatabaseTestCase
 {
 }
