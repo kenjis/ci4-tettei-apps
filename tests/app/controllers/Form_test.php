@@ -7,13 +7,13 @@ class Form_test extends TestCase
     public function test_index(): void
     {
         $output = $this->request('GET', 'form');
-        $this->assertContains('<title>コンタクトフォーム</title>', $output);
+        $this->assertStringContainsString('<title>コンタクトフォーム</title>', $output);
     }
 
     public function test_confirm_error(): void
     {
         $output = $this->request('POST', 'form/confirm', ['name' => '']);
-        $this->assertContains('名前欄は必須フィールドです', $output);
+        $this->assertStringContainsString('名前 は必須項目です', $output);
     }
 
     public function test_confirm_ok(): void
@@ -27,9 +27,9 @@ class Form_test extends TestCase
                 'comment' => '<s>abc</s>',
             ]
         );
-        $this->assertContains('お問い合わせ内容の確認', $output);
-        $this->assertContains('&lt;s&gt;abc&lt;/s&gt;', $output);
-        $this->assertNotContains('<s>abc</s>', $output);
+        $this->assertStringContainsString('お問い合わせ内容の確認', $output);
+        $this->assertStringContainsString('&lt;s&gt;abc&lt;/s&gt;', $output);
+        $this->assertStringNotContainsString('<s>abc</s>', $output);
     }
 
     public function test_send(): void
@@ -49,6 +49,6 @@ class Form_test extends TestCase
                 'comment' => '<s>abc</s>',
             ]
         );
-        $this->assertContains('送信しました', $output);
+        $this->assertStringContainsString('送信しました', $output);
     }
 }

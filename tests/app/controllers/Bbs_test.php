@@ -21,7 +21,7 @@ class Bbs_test extends UnitTestCase
     public function test_index(): void
     {
         $output = $this->request('GET', 'bbs');
-        $this->assertContains('<title>掲示板</title>', $output);
+        $this->assertStringContainsString('<title>掲示板</title>', $output);
     }
 
     /**
@@ -37,7 +37,7 @@ class Bbs_test extends UnitTestCase
         );
 
         $output = $this->request('GET', 'bbs');
-        $this->assertContains('<title>ﾓﾊﾞｲﾙ掲示板</title>', $output);
+        $this->assertStringContainsString('<title>ﾓﾊﾞｲﾙ掲示板</title>', $output);
     }
 
     /**
@@ -46,7 +46,7 @@ class Bbs_test extends UnitTestCase
     public function test_post(): void
     {
         $output = $this->request('GET', 'bbs/post');
-        $this->assertContains('<title>掲示板: 新規投稿</title>', $output);
+        $this->assertStringContainsString('<title>掲示板: 新規投稿</title>', $output);
     }
 
     /**
@@ -59,7 +59,7 @@ class Bbs_test extends UnitTestCase
             'bbs/confirm',
             ['name' => '']
         );
-        $this->assertContains('名前欄は必須フィールドです', $output);
+        $this->assertStringContainsString('名前欄は必須フィールドです', $output);
     }
 
     /**
@@ -80,7 +80,7 @@ class Bbs_test extends UnitTestCase
                 'key' => '139',
             ]
         );
-        $this->assertContains('投稿確認', $output);
+        $this->assertStringContainsString('投稿確認', $output);
     }
 
     /**
@@ -105,7 +105,7 @@ class Bbs_test extends UnitTestCase
         $this->assertRedirect('bbs', 302);
 
         $output = $this->request('GET', 'bbs');
-        $this->assertContains(html_escape($subject), $output);
+        $this->assertStringContainsString(html_escape($subject), $output);
     }
 
     /**
@@ -136,14 +136,14 @@ class Bbs_test extends UnitTestCase
         $id = trim($text, '[]');
 
         $output = $this->request('POST', "bbs/delete/$id");
-        $this->assertContains('記事を削除できませんでした', $output);
+        $this->assertStringContainsString('記事を削除できませんでした', $output);
 
         $output = $this->request(
             'POST',
             "bbs/delete/$id",
             ['password' => 'delete']
         );
-        $this->assertContains('削除の確認', $output);
+        $this->assertStringContainsString('削除の確認', $output);
 
         $output = $this->request(
             'POST',
@@ -153,7 +153,7 @@ class Bbs_test extends UnitTestCase
                 'delete' => '1',
             ]
         );
-        $this->assertContains('記事を削除できませんでした', $output);
+        $this->assertStringContainsString('記事を削除できませんでした', $output);
 
         $output = $this->request(
             'POST',
@@ -163,7 +163,7 @@ class Bbs_test extends UnitTestCase
                 'delete' => '1',
             ]
         );
-        $this->assertContains('記事の削除完了', $output);
+        $this->assertStringContainsString('記事の削除完了', $output);
     }
 
     public function test_captcha_check_failure(): void

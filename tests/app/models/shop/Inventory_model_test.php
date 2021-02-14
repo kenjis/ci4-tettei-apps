@@ -55,7 +55,7 @@ class Inventory_model_test extends UnitTestCase
     {
         $results = $this->obj->get_product_by_search('CodeIgniter', 10, 0);
         foreach ($results as $record) {
-            $this->assertContains('CodeIgniter', $record->name);
+            $this->assertStringContainsString('CodeIgniter', $record->name);
         }
     }
 

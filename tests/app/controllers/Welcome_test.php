@@ -7,6 +7,6 @@ class Welcome_test extends TestCase
     public function test_index(): void
     {
         $output = $this->request('GET', 'welcome');
-        $this->assertContains('<title>CodeIgniterへようこそ！</title>', $output);
+        $this->assertStringContainsString('<title>CodeIgniterへようこそ！</title>', $output);
     }
 }

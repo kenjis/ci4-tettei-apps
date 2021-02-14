@@ -16,36 +16,36 @@ class Shop_test extends UnitTestCase
     public function test_index(): void
     {
         $output = $this->request('GET', 'shop');
-        $this->assertContains('<title>CIショップ</title>', $output);
+        $this->assertStringContainsString('<title>CIショップ</title>', $output);
     }
 
     public function test_product(): void
     {
         $output = $this->request('GET', 'shop/product/1');
-        $this->assertContains('CodeIgniter徹底入門', $output);
+        $this->assertStringContainsString('CodeIgniter徹底入門', $output);
     }
 
     public function test_add(): void
     {
         $output = $this->request('POST', 'shop/add/3', ['qty' => '3']);
-        $this->assertContains('CodeIgniter徹底入門 DVD', $output);
+        $this->assertStringContainsString('CodeIgniter徹底入門 DVD', $output);
     }
 
     public function test_search(): void
     {
         $output = $this->request('GET', 'shop/search', ['q' => '徹底入門']);
-        $this->assertContains('「徹底入門」の検索結果', $output);
+        $this->assertStringContainsString('「徹底入門」の検索結果', $output);
     }
 
     public function test_customer_info(): void
     {
         $output = $this->request('POST', 'shop/add/1', ['qty' => '1']);
-        $this->assertContains('CodeIgniter徹底入門', $output);
+        $this->assertStringContainsString('CodeIgniter徹底入門', $output);
         $output = $this->request('GET', 'shop/cart');
-        $this->assertContains('買い物かご', $output);
-        $this->assertContains('CodeIgniter徹底入門', $output);
+        $this->assertStringContainsString('買い物かご', $output);
+        $this->assertStringContainsString('CodeIgniter徹底入門', $output);
         $output = $this->request('POST', 'shop/customer_info');
-        $this->assertContains('お客様情報の入力', $output);
+        $this->assertStringContainsString('お客様情報の入力', $output);
     }
 
     public function test_confirm_pass(): void
@@ -116,7 +116,7 @@ class Shop_test extends UnitTestCase
         $obj->order();
         $output = ob_get_clean();
 
-        $this->assertContains('買い物カゴには何も入っていません', $output);
+        $this->assertStringContainsString('買い物カゴには何も入っていません', $output);
     }
 
     public function test_order(): void
@@ -131,7 +131,7 @@ class Shop_test extends UnitTestCase
         $obj->order();
         $output = $this->CI->output->get_output();
 
-        $this->assertContains('ご注文ありがとうございます', $output);
+        $this->assertStringContainsString('ご注文ありがとうございます', $output);
     }
 
     public function test_order_system_error(): void
@@ -147,6 +147,6 @@ class Shop_test extends UnitTestCase
         $obj->order();
         $output = ob_get_clean();
 
-        $this->assertContains('システムエラー', $output);
+        $this->assertStringContainsString('システムエラー', $output);
     }
 }
