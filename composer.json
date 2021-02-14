@@ -19,7 +19,8 @@
         "bear/qatools": "^1.9",
         "codeception/codeception": "^4.1",
         "codeception/module-webdriver": "^1.2",
-        "kenjis/phpunit-helper": "^1.0"
+        "kenjis/phpunit-helper": "^1.0",
+        "symfony/dom-crawler": "^5.2"
     },
     "autoload-dev": {
         "psr-4": {
