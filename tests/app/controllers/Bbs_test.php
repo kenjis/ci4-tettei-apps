@@ -8,6 +8,10 @@ use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
 use Kenjis\CI3Compatible\Test\Traits\UnitTest;
 use Symfony\Component\DomCrawler\Crawler;
 
+use function html_escape;
+use function time;
+use function trim;
+
 class Bbs_test extends FeatureTestCase
 {
     use UnitTest;

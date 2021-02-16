@@ -7,6 +7,10 @@ namespace App\Controllers;
 use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
 use Kenjis\CI3Compatible\Test\Traits\UnitTest;
 
+use function get_instance;
+use function ob_get_clean;
+use function ob_start;
+
 class Shop_test extends FeatureTestCase
 {
     use UnitTest;
