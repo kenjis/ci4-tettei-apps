@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Filters\ConvertEncoding;
+namespace App\Filters;
+
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
@@ -10,7 +11,9 @@ use CodeIgniter\HTTP\UserAgent;
 use Config\App;
 use Kenjis\CI3Compatible\Test\TestCase\TestCase;
 
-class Convert_encoding_test extends TestCase
+use function mb_convert_encoding;
+
+class ConvertEncodingTest extends TestCase
 {
     /** @var ConvertEncoding */
     private $obj;
