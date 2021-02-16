@@ -4,6 +4,7 @@ namespace Config;
 
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
+use Kenjis\CI3Compatible\Test\TestRequest;
 
 /*
  * --------------------------------------------------------------------
@@ -51,4 +52,12 @@ Events::on('pre_system', function () {
 		Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
 		Services::toolbar()->respond();
 	}
+});
+
+Events::on('post_controller_constructor', function () {
+    if (ENVIRONMENT === 'testing') {
+        $testRequest = TestRequest::getInstance();
+
+        $testRequest->runCallables();
+    }
 });
