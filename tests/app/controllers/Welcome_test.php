@@ -10,7 +10,7 @@ class Welcome_test extends FeatureTestCase
 {
     public function test_index(): void
     {
-        $output = $this->request('GET', 'welcome');
+        $output = $this->request('GET', '/');
         $this->assertStringContainsString('<title>CodeIgniterへようこそ！</title>', $output);
     }
 }
