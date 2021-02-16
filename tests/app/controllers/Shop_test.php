@@ -57,9 +57,11 @@ class Shop_test extends FeatureTestCase
     {
         $output = $this->request('POST', 'shop/add/1', ['qty' => '1']);
         $this->assertStringContainsString('CodeIgniter徹底入門', $output);
+
         $output = $this->request('GET', 'shop/cart');
         $this->assertStringContainsString('買い物かご', $output);
         $this->assertStringContainsString('CodeIgniter徹底入門', $output);
+
         $output = $this->request('POST', 'shop/customer_info');
         $this->assertStringContainsString('お客様情報の入力', $output);
     }
@@ -73,11 +75,13 @@ class Shop_test extends FeatureTestCase
 
         $model = $this->getDouble(Customer_model::class, []);
         $this->verifyInvokedOnce($model, 'set');
+
         $validation = $this->getDouble(
             CI_Form_validation::class,
             ['run' => true],
             true
         );
+
         $twig = $this->getDouble(Environment::class, []);
         $this->verifyInvokedMultipleTimes(
             $twig,
@@ -87,6 +91,7 @@ class Shop_test extends FeatureTestCase
                 ['shop_tmpl_checkout', $this->anything()],
             ]
         );
+
         $obj->form_validation = $validation;
         $this->setPrivateProperty($obj, 'twig', $twig);
         $obj->customer_model = $model;
