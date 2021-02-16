@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use Kenjis\CI3Compatible\Library\CI_Email;
 use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
 
 class Form_test extends FeatureTestCase
@@ -40,7 +41,11 @@ class Form_test extends FeatureTestCase
     {
         $this->request->setCallable(
             function ($CI): void {
-                $email = $this->getDouble('CI_Email', ['send' => true]);
+                $email = $this->getDouble(
+                    CI_Email::class,
+                    ['send' => true],
+                    true
+                );
                 $CI->email = $email;
             }
         );
