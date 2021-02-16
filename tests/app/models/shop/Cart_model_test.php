@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
-use Tests\Support\SessionTest;
-use Tests\Support\UnitTestCase;
+use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
+use Kenjis\CI3Compatible\Test\Traits\SessionTest;
 
 use function get_instance;
 

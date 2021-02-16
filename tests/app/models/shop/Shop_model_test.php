@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
+use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
+use Kenjis\CI3Compatible\Test\Traits\SessionTest;
 use Tests\Support\Libraries\Mock_Libraries_Email;
-use Tests\Support\SessionTest;
-use Tests\Support\UnitTestCase;
 
 class Shop_model_test extends UnitTestCase
 {

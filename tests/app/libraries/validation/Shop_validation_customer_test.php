@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Libraries\Validation;
 
-use Tests\Support\TestCase;
+use Kenjis\CI3Compatible\Test\TestCase\TestCase;
 
 use function array_reduce;
 

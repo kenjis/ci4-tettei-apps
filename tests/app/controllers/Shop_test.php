@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-class Shop_test extends UnitTestCase
+use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
+
+class Shop_test extends FeatureTestCase
 {
     public static function setUpBeforeClass(): void
     {

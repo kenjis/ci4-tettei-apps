@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
+use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 use Tests\Support\Libraries\Mock_Libraries_Email;
-use Tests\Support\UnitTestCase;
 
 class Mail_model_test extends UnitTestCase
 {

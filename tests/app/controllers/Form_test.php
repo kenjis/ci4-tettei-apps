@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-class Form_test extends TestCase
+use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
+
+class Form_test extends FeatureTestCase
 {
     public function test_index(): void
     {

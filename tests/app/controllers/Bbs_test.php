@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
+use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 
-class Bbs_test extends UnitTestCase
+class Bbs_test extends FeatureTestCase
 {
     public function setUp(): void
     {

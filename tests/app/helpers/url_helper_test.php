@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Helper;
 
-use Tests\Support\TestCase;
+use Kenjis\CI3Compatible\Test\TestCase\TestCase;
 
 use function get_instance;
 

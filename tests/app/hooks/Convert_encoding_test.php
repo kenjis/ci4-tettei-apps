@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Kenjis\CI3Compatible\Test\TestCase\TestCase;
 class Convert_encoding_test extends TestCase
 {
     /** @var ConvertEncoding */
