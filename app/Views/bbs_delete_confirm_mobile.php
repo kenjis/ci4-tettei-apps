@@ -32,11 +32,11 @@
 </tr>
 <tr>
 <td>
-<?=form_open('bbs');?>
+<?=form_open('bbs', ['accept-charset' => 'Shift_JIS']);?>
 <input type="submit" value="いいえ" />
 <?=form_close();?>
 
-<?=form_open('bbs/delete/'. $id);?>
+<?=form_open('bbs/delete/'. $id, ['accept-charset' => 'Shift_JIS']);?>
 <?=form_hidden('delete', '1');?>
 <?=form_hidden('password', $password);?>
 <input type="submit" value="はい" />
