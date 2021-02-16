@@ -20,7 +20,7 @@ class Shop_test extends FeatureTestCase
         parent::setUpBeforeClass();
 
         $CI =& get_instance();
-        $CI->load->library('Seeder');
+        $CI->load->library('seeder');
         $CI->seeder->call('ProductSeeder');
     }
 
