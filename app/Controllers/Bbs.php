@@ -16,9 +16,7 @@ use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Library\CI_Pagination;
 use Kenjis\CI3Compatible\Library\CI_User_agent;
 
-use function header;
 use function max;
-use function mb_convert_encoding;
 use function substr;
 
 /**
