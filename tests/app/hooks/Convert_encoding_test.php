@@ -2,7 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Filters\ConvertEncoding;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\UserAgent;
+use Config\App;
 use Kenjis\CI3Compatible\Test\TestCase\TestCase;
+
 class Convert_encoding_test extends TestCase
 {
     /** @var ConvertEncoding */
@@ -10,53 +17,47 @@ class Convert_encoding_test extends TestCase
 
     public function setUp(): void
     {
-        require_once APPPATH . 'hooks/Convert_encoding.php';
-        $this->obj = new Convert_encoding();
+        $this->obj = new ConvertEncoding();
     }
 
-    public function test_run_and_add_agent(): void
+    public function test_before(): void
     {
-        reset_instance();
-
         $str = '尾骶骨';
-        $_SERVER['PATH_INFO'] = '/bbs';
         $_POST = [
             'name' => mb_convert_encoding($str, 'SJIS-win', 'UTF-8'),
             'email' => '',
         ];
-        $agent = $this->getDouble('CI_User_agent', ['is_mobile' => true]);
-        load_class_instance('User_agent', $agent);
-        // is_cli()の返り値をfalseに変更
-        set_is_cli(false);
+        $userAgent = $this->getDouble(
+            UserAgent::class,
+            ['isMobile' => true]
+        );
+        $request = new IncomingRequest(new App(), new URI(), null, $userAgent);
 
-        $this->obj->run();
-        $this->assertEquals('尾骨', $_POST['name']);
+        $this->obj->before($request);
 
-        new CI_Controller();
-
-        $this->obj->add_agent();
-        $CI =& get_instance();
-        $this->assertSame($agent, $CI->agent);
-        $this->assertFalse(isset($CI->user_agent));
-
-        // is_cli()の返り値をtrueに戻す
-        set_is_cli(true);
+        $name = $request->getPost('name');
+        $this->assertEquals('尾?骨', $name);
     }
 
-    public function test_check_route_false(): void
+    public function test_after(): void
     {
-        reset_instance();
-        set_is_cli(false);
-        $_SERVER['PATH_INFO'] = '/shop';
+        $str = '尾骶骨';
+        $_POST = [
+            'name' => mb_convert_encoding($str, 'SJIS-win', 'UTF-8'),
+            'email' => '',
+        ];
+        $userAgent = $this->getDouble(
+            UserAgent::class,
+            ['isMobile' => true]
+        );
+        $request = new IncomingRequest(new App(), new URI(), null, $userAgent);
 
-        $this->obj->run();
-        $loaded_classes = is_loaded();
-        $this->assertFalse(isset($loaded_classes['User_agent']));
+        $response = new Response(new App());
+        $response->setBody($str);
 
-        $this->obj->add_agent();
-        $this->assertFalse(isset($CI->agent));
+        $this->obj->after($request, $response);
 
-        set_is_cli(true);
-        new CI_Controller();
+        $body = $response->getBody();
+        $this->assertEquals('尾?骨', mb_convert_encoding($body, 'UTF-8', 'SJIS-win'));
     }
 }
