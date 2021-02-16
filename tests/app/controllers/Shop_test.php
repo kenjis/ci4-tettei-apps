@@ -61,6 +61,9 @@ class Shop_test extends FeatureTestCase
 
     public function test_confirm_pass(): void
     {
+        /**
+         * @var Shop
+         */
         $obj = $this->newController(Shop::class);
 
         $model = $this->getDouble('Customer_model', ['set' => null]);
@@ -88,6 +91,9 @@ class Shop_test extends FeatureTestCase
 
     public function test_confirm_fail(): void
     {
+        /**
+         * @var Shop
+         */
         $obj = $this->newController(Shop::class);
 
         $model = $this->getDouble('Customer_model', ['set' => null]);
@@ -118,6 +124,9 @@ class Shop_test extends FeatureTestCase
 
     public function test_order_cart_is_empty(): void
     {
+        /**
+         * @var Shop
+         */
         $obj = $this->newController(Shop::class);
 
         $cart = $this->getDouble('Cart_model', ['count' => 0]);
@@ -132,6 +141,9 @@ class Shop_test extends FeatureTestCase
 
     public function test_order(): void
     {
+        /**
+         * @var Shop
+         */
         $obj = $this->newController(Shop::class);
 
         $cart = $this->getDouble('Cart_model', ['count' => 1]);
@@ -147,6 +159,9 @@ class Shop_test extends FeatureTestCase
 
     public function test_order_system_error(): void
     {
+        /**
+         * @var Shop
+         */
         $obj = $this->newController(Shop::class);
 
         $cart = $this->getDouble('Cart_model', ['count' => 1]);
