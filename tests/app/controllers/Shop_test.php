@@ -86,7 +86,7 @@ class Shop_test extends FeatureTestCase
             ]
         );
         $obj->form_validation = $validation;
-        $obj->twig = $twig;
+        $this->setPrivateProperty($obj, 'twig', $twig);
         $obj->customer_model = $model;
 
         $obj->confirm();
@@ -119,7 +119,7 @@ class Shop_test extends FeatureTestCase
             ]
         );
         $obj->form_validation = $validation;
-        $obj->twig = $twig;
+        $this->setPrivateProperty($obj, 'twig', $twig);
         $obj->Customer_model = $model;
 
         $obj->confirm();
