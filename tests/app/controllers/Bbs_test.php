@@ -55,7 +55,7 @@ class Bbs_test extends FeatureTestCase
             'bbs/confirm',
             ['name' => '']
         );
-        $this->assertStringContainsString('名前欄は必須フィールドです', $output);
+        $this->assertStringContainsString('名前 は必須項目です', $output);
     }
 
     public function test_confirm_ok(): void
