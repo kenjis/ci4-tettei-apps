@@ -21,7 +21,7 @@ class DatabaseTestCase extends CIDatabaseTestCase
      *
      * @var string|array<string>
      */
-    protected $seed = 'Tests\Support\Database\Seeds\ExampleSeeder';
+    protected $seed = '';
 
     /**
      * The path to the seeds directory.
