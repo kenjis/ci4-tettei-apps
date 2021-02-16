@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace App\Controllers;
+
 use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
 
 class Form_test extends FeatureTestCase
