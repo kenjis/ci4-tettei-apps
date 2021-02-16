@@ -73,7 +73,17 @@ $ php spark serve
 
 ### PHPUnitによるアプリケーションテスト
 
-@TODO
+```
+$ composer test
+```
+
+テストカバー率のレポートを生成したい場合は、以下を実行します。カバー率の集計にはXdebugが必要です。
+
+```
+$ composer coverage
+```
+
+レポートは`build/coverage`フォルダに作成されます。
 
 ### Codeception/Seleniumによる受入テスト
 
