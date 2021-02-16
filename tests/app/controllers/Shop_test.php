@@ -22,7 +22,7 @@ class Shop_test extends FeatureTestCase
 
     public function test_index(): void
     {
-        $output = $this->request('GET', 'shop');
+        $output = $this->request('GET', 'shop/index/1');
         $this->assertStringContainsString('<title>CIショップ</title>', $output);
     }
 

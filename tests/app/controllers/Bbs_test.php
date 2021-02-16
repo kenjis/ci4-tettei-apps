@@ -25,7 +25,7 @@ class Bbs_test extends FeatureTestCase
 
     public function test_index(): void
     {
-        $output = $this->request('GET', 'bbs');
+        $output = $this->request('GET', 'bbs/index');
         $this->assertStringContainsString('<title>掲示板</title>', $output);
     }
 
@@ -38,7 +38,7 @@ class Bbs_test extends FeatureTestCase
             }
         );
 
-        $output = $this->request('GET', 'bbs');
+        $output = $this->request('GET', 'bbs/index');
         $this->assertStringContainsString('<title>ﾓﾊﾞｲﾙ掲示板</title>', $output);
     }
 
@@ -94,7 +94,7 @@ class Bbs_test extends FeatureTestCase
         );
         $this->assertRedirect('bbs', 302);
 
-        $output = $this->request('GET', 'bbs');
+        $output = $this->request('GET', 'bbs/index');
         $this->assertStringContainsString(html_escape($subject), $output);
     }
 
@@ -115,7 +115,7 @@ class Bbs_test extends FeatureTestCase
         );
         $this->assertRedirect('bbs', 302);
 
-        $output = $this->request('GET', 'bbs');
+        $output = $this->request('GET', 'bbs/index');
         $crawler = new Crawler($output);
 
         // 最初の <h1><a>〜</a></h1> のテキストを取得
