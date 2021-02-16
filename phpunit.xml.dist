@@ -18,6 +18,7 @@
   </coverage>
   <testsuites>
     <testsuite name="app">
+      <directory>./tests/app</directory>
       <directory suffix="test.php">./tests/app</directory>
     </testsuite>
   </testsuites>
