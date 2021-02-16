@@ -152,13 +152,4 @@ class Bbs_test extends FeatureTestCase
         );
         $this->assertStringContainsString('記事の削除完了', $output);
     }
-
-    public function test_captcha_check_failure(): void
-    {
-        $obj = $this->newController(Bbs::class);
-        $obj->form_validation = new CI_Form_validation();
-
-        $actual = $obj->captcha_check('bad_input');
-        $this->assertFalse($actual);
-    }
 }
