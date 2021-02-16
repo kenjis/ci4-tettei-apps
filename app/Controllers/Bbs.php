@@ -281,7 +281,7 @@ class Bbs extends CI_Controller
     }
 
 // 投稿された記事をデータベースに登録します。
-    public function insert(): void
+    public function insert()
     {
 // 検証ルールを設定します。
         $this->_set_validation();
@@ -307,7 +307,7 @@ class Bbs extends CI_Controller
             $this->_delete_captcha_data();
 
 // URLヘルパーのredirect()メソッドで記事表示ページにリダイレクトします。
-            redirect_('/bbs');
+            return redirect()->to('/bbs');
         }
     }
 
