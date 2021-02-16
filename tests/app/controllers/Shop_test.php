@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Models\Shop\Cart_model;
+use App\Models\Shop\Customer_model;
 use App\Models\Shop\Shop_model;
 use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
 use Kenjis\CI3Compatible\Test\Traits\UnitTest;
+use Twig\Environment;
 
 use function get_instance;
 use function ob_get_clean;
@@ -69,14 +71,14 @@ class Shop_test extends FeatureTestCase
          */
         $obj = $this->newController(Shop::class);
 
-        $model = $this->getDouble('Customer_model', ['set' => null]);
+        $model = $this->getDouble(Customer_model::class, []);
         $this->verifyInvokedOnce($model, 'set');
         $validation = $this->getDouble(
             CI_Form_validation::class,
             ['run' => true],
             true
         );
-        $twig = $this->getDouble('Twig_Environment', ['display' => null]);
+        $twig = $this->getDouble(Environment::class, []);
         $this->verifyInvokedMultipleTimes(
             $twig,
             'display',
@@ -99,14 +101,14 @@ class Shop_test extends FeatureTestCase
          */
         $obj = $this->newController(Shop::class);
 
-        $model = $this->getDouble('Customer_model', ['set' => null]);
+        $model = $this->getDouble(Customer_model::class, []);
         $this->verifyNeverInvoked($model, 'set');
         $validation = $this->getDouble(
             CI_Form_validation::class,
             ['run' => false],
             true
         );
-        $twig = $this->getDouble('Twig_Environment', ['display' => null]);
+        $twig = $this->getDouble(Environment::class, []);
 
         $data['action'] = 'お客様情報の入力';
         $data['main']   = 'shop_customer_info';
