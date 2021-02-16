@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
+use Kenjis\CI3Compatible\Test\Traits\UnitTest;
 use Symfony\Component\DomCrawler\Crawler;
 
 class Bbs_test extends FeatureTestCase
 {
+    use UnitTest;
+
     public function setUp(): void
     {
         parent::setUp();
