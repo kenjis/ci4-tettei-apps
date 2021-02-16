@@ -10,6 +10,9 @@ use function get_instance;
 
 class Inventory_model_test extends UnitTestCase
 {
+    /** @var Inventory_model */
+    private $obj;
+
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();

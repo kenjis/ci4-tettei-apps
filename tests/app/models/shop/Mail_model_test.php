@@ -9,6 +9,9 @@ use Tests\Support\UnitTestCase;
 
 class Mail_model_test extends UnitTestCase
 {
+    /** @var Mail_model */
+    private $obj;
+
     public function setUp(): void
     {
         parent::setUp();

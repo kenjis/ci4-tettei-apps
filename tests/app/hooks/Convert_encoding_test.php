@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 class Convert_encoding_test extends TestCase
 {
+    /** @var ConvertEncoding */
+    private $obj;
+
     public function setUp(): void
     {
         require_once APPPATH . 'hooks/Convert_encoding.php';

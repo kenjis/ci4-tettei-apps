@@ -13,6 +13,9 @@ class Cart_model_test extends UnitTestCase
 {
     use SessionTest;
 
+    /** @var Cart_model */
+    private $obj;
+
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();

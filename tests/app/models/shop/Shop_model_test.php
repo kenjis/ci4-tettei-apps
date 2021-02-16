@@ -12,6 +12,9 @@ class Shop_model_test extends UnitTestCase
 {
     use SessionTest;
 
+    /** @var Shop_model */
+    private $obj;
+
     public function setUp(): void
     {
         parent::setUp();

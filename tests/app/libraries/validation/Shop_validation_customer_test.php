@@ -10,6 +10,9 @@ use function array_reduce;
 
 class Shop_validation_customer_test extends TestCase
 {
+    /** @var CI_Form_validation */
+    private $obj;
+
     public function setUp(): void
     {
         parent::setUp();
