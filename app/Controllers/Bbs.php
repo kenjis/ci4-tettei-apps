@@ -321,22 +321,4 @@ class Bbs extends CI_Controller
             $this->load->view($file, $data);
         }
     }
-
-// _outputメソッドは、コントローラで定義されている特殊なメソッドです。
-// 引数には、出力されるデータの文字列が渡されます。
-    public function _output($output): void
-    {
-// 携帯端末の場合は、HTTPヘッダのContent-Typeヘッダで文字エンコードがShift_JIS
-// である旨を出力し、送信するコンテンツもShift_JISに変換したものを送ります。
-        if ($this->agent->is_mobile()) {
-            header('Content-Type: text/html; charset=Shift_JIS');
-            echo mb_convert_encoding($output, 'SJIS-win', 'UTF-8');
-        }
-// 携帯端末でない場合は、文字エンコードはUTF-8ですので、Content-Typeヘッダでも
-// UTF-8を送り、コンテンツもデフォルトのまま送信します。
-        else {
-            header('Content-Type: text/html; charset=UTF-8');
-            echo $output;
-        }
-    }
 }
