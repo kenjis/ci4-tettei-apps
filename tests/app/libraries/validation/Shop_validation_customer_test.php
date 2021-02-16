@@ -22,6 +22,7 @@ class Shop_validation_customer_test extends TestCase
         // POSTメソッドにしておく必要がある
         $_SERVER['REQUEST_METHOD'] = 'POST';
 
+        $this->resetServices();
         $this->resetInstance();
 
         $this->CI->load->library('validation/shop_validation_customer');
