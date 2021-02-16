@@ -42,11 +42,15 @@ class Shop_validation_customer_test extends TestCase
             'email' => 'foo@example.jp',
         ];
 
-        $error_string = array_reduce($this->obj->error_array(), static function ($carry, $item) {
-            $carry .= $item . "\n";
+        $error_string = array_reduce(
+            $this->obj->error_array(),
+            static function ($carry, $item) {
+                $carry .= $item . "\n";
 
-            return $carry;
-        }, '');
+                return $carry;
+            },
+            ''
+        );
         $this->assertTrue($this->obj->run(), $error_string);
     }
 
