@@ -13,6 +13,8 @@ class Customer_model_test extends UnitTestCase
 
     public function setUp(): void
     {
+        parent::setUp();
+
         $this->obj = $this->newModel(Customer_model::class);
     }
 

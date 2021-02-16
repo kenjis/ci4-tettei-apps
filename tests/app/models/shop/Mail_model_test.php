@@ -11,6 +11,8 @@ class Mail_model_test extends UnitTestCase
 {
     public function setUp(): void
     {
+        parent::setUp();
+
         $this->obj = $this->newModel(Mail_model::class);
         $this->CI->email = new Mock_Libraries_Email();
     }

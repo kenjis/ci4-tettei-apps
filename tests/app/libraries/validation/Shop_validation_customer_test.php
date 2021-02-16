@@ -12,6 +12,8 @@ class Shop_validation_customer_test extends TestCase
 {
     public function setUp(): void
     {
+        parent::setUp();
+
         // Form_validaton::set_rules()が影響を受けるので、インスタンス生成前に
         // POSTメソッドにしておく必要がある
         $_SERVER['REQUEST_METHOD'] = 'POST';

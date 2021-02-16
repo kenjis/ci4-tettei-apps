@@ -21,6 +21,8 @@ class Inventory_model_test extends UnitTestCase
 
     public function setUp(): void
     {
+        parent::setUp();
+
         $this->obj = $this->newModel(Inventory_model::class);
     }
 

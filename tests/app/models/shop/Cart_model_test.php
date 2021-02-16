@@ -24,6 +24,8 @@ class Cart_model_test extends UnitTestCase
 
     public function setUp(): void
     {
+        parent::setUp();
+
         // Cart_model が Session に依存しているためリセットする
         $_SESSION = [];
 
