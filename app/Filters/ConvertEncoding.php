@@ -21,7 +21,7 @@ class ConvertEncoding implements FilterInterface
         $agent = $request->getUserAgent();
 
 // 携帯端末からの入力文字エンコードを変換します。
-        if (count($_POST) > 1 || ! $agent->isMobile()) {
+        if (count($_POST) < 1 || ! $agent->isMobile()) {
             return;
         }
 
