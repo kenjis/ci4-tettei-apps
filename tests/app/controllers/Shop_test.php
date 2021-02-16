@@ -154,8 +154,9 @@ class Shop_test extends FeatureTestCase
         $obj->cart_model = $cart;
         $obj->shop_model = $shop;
 
+        ob_start();
         $obj->order();
-        $output = $this->CI->output->get_output();
+        $output = ob_get_clean();
 
         $this->assertStringContainsString('ご注文ありがとうございます', $output);
     }
