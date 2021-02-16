@@ -23,18 +23,12 @@ class Bbs_test extends FeatureTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function test_index(): void
     {
         $output = $this->request('GET', 'bbs');
         $this->assertStringContainsString('<title>掲示板</title>', $output);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function test_index_mobile(): void
     {
         $agent = $this->getDouble('CI_User_agent', ['is_mobile' => true]);
@@ -48,18 +42,12 @@ class Bbs_test extends FeatureTestCase
         $this->assertStringContainsString('<title>ﾓﾊﾞｲﾙ掲示板</title>', $output);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function test_post(): void
     {
         $output = $this->request('GET', 'bbs/post');
         $this->assertStringContainsString('<title>掲示板: 新規投稿</title>', $output);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function test_confirm_error(): void
     {
         $output = $this->request(
@@ -70,9 +58,6 @@ class Bbs_test extends FeatureTestCase
         $this->assertStringContainsString('名前欄は必須フィールドです', $output);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function test_confirm_ok(): void
     {
         $output = $this->request(
@@ -91,9 +76,6 @@ class Bbs_test extends FeatureTestCase
         $this->assertStringContainsString('投稿確認', $output);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function test_insert_ok(): void
     {
         $subject = '<s>xyz</s> ' . time();
@@ -116,9 +98,6 @@ class Bbs_test extends FeatureTestCase
         $this->assertStringContainsString(html_escape($subject), $output);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function test_delete(): void
     {
         $this->request(
