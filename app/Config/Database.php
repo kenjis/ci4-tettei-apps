@@ -35,7 +35,7 @@ class Database extends Config
 		'hostname' => 'localhost',
 		'username' => '',
 		'password' => '',
-		'database' => '',
+		'database' => 'codeigniter',
 		'DBDriver' => 'MySQLi',
 		'DBPrefix' => '',
 		'pConnect' => false,
@@ -59,11 +59,11 @@ class Database extends Config
 	public $tests = [
 		'DSN'      => '',
 		'hostname' => 'localhost',
-		'username' => 'username',
-		'password' => 'password',
+		'username' => '',
+		'password' => '',
 		'database' => 'codeigniter',
 		'DBDriver' => 'MySQLi',
-		'DBPrefix' => '',  // Needed to ensure we're working correctly with prefixes live. DO NOT REMOVE FOR CI DEVS
+		'DBPrefix' => '',
 		'pConnect' => false,
 		'DBDebug'  => (ENVIRONMENT !== 'production'),
 		'charset'  => 'utf8',
