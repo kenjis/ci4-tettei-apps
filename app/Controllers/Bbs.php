@@ -287,12 +287,7 @@ class Bbs extends CI_Controller
         $this->_set_validation();
 
 // 検証にパスしない場合は、新規投稿ページを表示します。
-        if ($this->form_validation->run() == false) {
-// 投稿されたIDのキャプチャを削除します。
-            $this->_delete_captcha_data();
-
-            $this->_show_post_page();
-        } else {
+        if ($this->form_validation->run() != false) {
 // 検証にパスした場合は、送られたデータとIPアドレスをbbsテーブルに登録します。
             $data = [];
             $data['name']       = $this->input->post('name');
@@ -309,6 +304,11 @@ class Bbs extends CI_Controller
 // URLヘルパーのredirect()メソッドで記事表示ページにリダイレクトします。
             return redirect()->to('/bbs');
         }
+
+// 投稿されたIDのキャプチャを削除します。
+        $this->_delete_captcha_data();
+
+        $this->_show_post_page();
     }
 
 // 携帯端末かどうかを判定し、ビューをロードするプライベートメソッドです。
