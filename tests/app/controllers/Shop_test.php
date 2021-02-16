@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Models\Shop\Cart_model;
+use App\Models\Shop\Shop_model;
+use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
 use Kenjis\CI3Compatible\Test\Traits\UnitTest;
 
@@ -69,7 +72,7 @@ class Shop_test extends FeatureTestCase
         $model = $this->getDouble('Customer_model', ['set' => null]);
         $this->verifyInvokedOnce($model, 'set');
         $validation = $this->getDouble(
-            'CI_Form_validation',
+            CI_Form_validation::class,
             ['run' => true],
             true
         );
@@ -99,7 +102,7 @@ class Shop_test extends FeatureTestCase
         $model = $this->getDouble('Customer_model', ['set' => null]);
         $this->verifyNeverInvoked($model, 'set');
         $validation = $this->getDouble(
-            'CI_Form_validation',
+            CI_Form_validation::class,
             ['run' => false],
             true
         );
@@ -129,7 +132,7 @@ class Shop_test extends FeatureTestCase
          */
         $obj = $this->newController(Shop::class);
 
-        $cart = $this->getDouble('Cart_model', ['count' => 0]);
+        $cart = $this->getDouble(Cart_model::class, ['count' => 0]);
         $obj->cart_model = $cart;
 
         ob_start();
@@ -146,8 +149,8 @@ class Shop_test extends FeatureTestCase
          */
         $obj = $this->newController(Shop::class);
 
-        $cart = $this->getDouble('Cart_model', ['count' => 1]);
-        $shop = $this->getDouble('Shop_model', ['order' => true]);
+        $cart = $this->getDouble(Cart_model::class, ['count' => 1]);
+        $shop = $this->getDouble(Shop_model::class, ['order' => true]);
         $obj->cart_model = $cart;
         $obj->shop_model = $shop;
 
@@ -164,8 +167,8 @@ class Shop_test extends FeatureTestCase
          */
         $obj = $this->newController(Shop::class);
 
-        $cart = $this->getDouble('Cart_model', ['count' => 1]);
-        $shop = $this->getDouble('Shop_model', ['order' => false]);
+        $cart = $this->getDouble(Cart_model::class, ['count' => 1]);
+        $shop = $this->getDouble(Shop_model::class, ['order' => false]);
         $obj->cart_model = $cart;
         $obj->shop_model = $shop;
 
