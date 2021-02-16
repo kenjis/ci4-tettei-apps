@@ -286,7 +286,6 @@ class Bbs extends CI_Controller
 // 検証ルールを設定します。
         $this->_set_validation();
 
-// 検証にパスしない場合は、新規投稿ページを表示します。
         if ($this->form_validation->run() != false) {
 // 検証にパスした場合は、送られたデータとIPアドレスをbbsテーブルに登録します。
             $data = [];
@@ -305,6 +304,7 @@ class Bbs extends CI_Controller
             return redirect()->to('/bbs');
         }
 
+// 検証にパスしない場合は、新規投稿ページを表示します。
 // 投稿されたIDのキャプチャを削除します。
         $this->_delete_captcha_data();
 
