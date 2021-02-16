@@ -286,8 +286,8 @@ class Bbs extends CI_Controller
 // 検証ルールを設定します。
         $this->_set_validation();
 
-        if ($this->form_validation->run() != false) {
 // 検証にパスした場合は、送られたデータとIPアドレスをbbsテーブルに登録します。
+        if ($this->form_validation->run()) {
             $data = [];
             $data['name']       = $this->input->post('name');
             $data['email']      = $this->input->post('email');
