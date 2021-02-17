@@ -33,7 +33,7 @@ abstract class Custom_validation
         $this->CI->form_validation->set_rules($field, $label, $rules, $errors);
     }
 
-    public function validate(array $data = [])
+    public function validate(array $data = []): bool
     {
         if ($data !== []) {
             $this->CI->form_validation->set_data($data);
@@ -43,7 +43,7 @@ abstract class Custom_validation
         return $this->run();
     }
 
-    public function run()
+    public function run(): bool
     {
         return $this->CI->form_validation->run();
     }

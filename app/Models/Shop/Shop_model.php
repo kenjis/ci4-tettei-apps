@@ -27,7 +27,7 @@ class Shop_model extends CI_Model
     }
 
     // 注文の処理
-    public function order()
+    public function order(): bool
     {
         $data = [];
 // 注文日時をPHPのdate()関数から取得します。
