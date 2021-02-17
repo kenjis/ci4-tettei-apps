@@ -36,10 +36,6 @@ class Form extends CI_Controller
 // セッションクラスをロードすることで、セッションを開始します。
         $this->load->library('session');
 
-// 出力クラスのset_header()メソッドでHTTPヘッダのContent-Typeヘッダを指定
-// します。
-        $this->output->set_header('Content-Type: text/html; charset=UTF-8');
-
 // バリデーション(検証)クラスをロードします。
         $this->load->library('form_validation');
     }

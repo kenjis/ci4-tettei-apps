@@ -16,8 +16,6 @@ class MY_Controller extends CI_Controller
     {
         parent::__construct();
 
-        $this->output->set_header('Content-Type: text/html; charset=UTF-8');
-
         if (ENVIRONMENT !== 'development') {
             return;
         }
