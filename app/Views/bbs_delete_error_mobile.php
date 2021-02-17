@@ -27,7 +27,7 @@
 </table>
 
 <hr>
-<?=anchor('bbs', 'ﾄｯﾌﾟに戻る');?>
+<?= anchor('bbs', 'ﾄｯﾌﾟに戻る'); ?>
 
 </body>
 </html>
