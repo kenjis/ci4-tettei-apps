@@ -44,7 +44,7 @@ class Bbs extends CI_Controller
     }
 
     /**
-     * // 日付順に記事を表示
+     * 日付順に記事を表示
      */
     public function index(string $page = '1'): void
     {
