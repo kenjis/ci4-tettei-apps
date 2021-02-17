@@ -74,7 +74,7 @@ class Inventory_model extends CI_Model
         $this->db->where('id', $id);
         $query = $this->db->get('product');
 
-        return $query->num_rows() == 1;
+        return $query->num_rows() === 1;
     }
 
     public function get_product_by_search(string $q, int $limit, int $offset)

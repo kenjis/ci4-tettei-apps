@@ -305,7 +305,7 @@ class Shop extends MY_Controller
      */
     public function order(): void
     {
-        if ($this->cart_model->count() == 0) {
+        if ($this->cart_model->count() === 0) {
             echo '買い物カゴには何も入っていません。';
         }
 // モデルのorder()メソッドを呼び出し、注文データの処理を依頼します。
