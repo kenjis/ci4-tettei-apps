@@ -79,6 +79,9 @@ class Shop extends MY_Controller
      */
     public function index(string $cat_id = '1', string $page = '0'): void
     {
+        $cat_id = (int) $cat_id;
+        $page = (int) $page;
+
 // ページ番号をoffsetに変換します。
         $offset = max($page - 1, 0) * $this->limit;
 
@@ -130,6 +133,8 @@ class Shop extends MY_Controller
      */
     public function product($prod_id = '1'): void
     {
+        $prod_id = (int) $prod_id;
+
 // 商品IDを検証します。
         $this->load->library('validation/field_validation');
         $this->field_validation->validate(
@@ -153,23 +158,24 @@ class Shop extends MY_Controller
      */
     public function add(string $prod_id = '0'): void
     {
+// $prod_idの型をintに変更します。
+        $prod_id = (int) $prod_id;
+
+// POSTされたqtyフィールドより、数量を取得します。
+        $qty = (int) $this->input->post('qty');
+
 // 商品IDを検証します。
         $this->load->library('validation/field_validation');
         $this->field_validation->validate(
             $prod_id,
             'required|is_natural|max_length[11]'
         );
-// POSTされたqtyフィールドより、数量を取得します。
-        $qty = $this->input->post('qty');
+
 // 数量を検証します。
         $this->field_validation->validate(
             $qty,
             'required|is_natural|max_length[3]'
         );
-
-// $prod_id、$qtyの型をintに変更します。
-        $prod_id = (int) $prod_id;
-        $qty = (int) $qty;
 
         $this->cart_model->add($prod_id, $qty);
 
@@ -200,6 +206,8 @@ class Shop extends MY_Controller
      */
     public function search(string $page = '0'): void
     {
+        $page = (int) $page;
+
 // ページ番号をoffsetに変換します。
         $offset = max($page - 1, 0) * $this->limit;
 
