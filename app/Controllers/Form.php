@@ -76,33 +76,34 @@ class Form extends CI_Controller
 // 検証ルールを設定します。
         $this->setValidation();
 
-// 送信されたデータの検証を行い、検証OKなら、メールを送信します。
-        if ($this->form_validation->run()) {
-// メールの内容を設定します。
-            $mail = [];
-            $mail['from_name'] = $this->input->post('name');
-            $mail['from']      = $this->input->post('email');
-            $mail['to']        = 'info@example.jp';
-            $mail['subject']   = 'コンタクトフォーム';
-            $mail['body']      = $this->input->post('comment');
-
-// sendmail()メソッドを呼び出しメールの送信処理を行います。
-// メールの送信に成功したら、完了ページ(form_end)を表示します。
-            if ($this->sendmail($mail)) {
-// 完了ページ(form_end)を表示し、セッションを破棄します。
-                $this->load->view('form_end');
-                $this->session->sess_destroy();
-            }
-// メールの送信に失敗した場合、エラーを表示します。
-            else {
-                echo 'メール送信エラー';
-            }
+// 送信されたデータの検証を行い、検証でエラーの場合、入力ページ(form)を表示します。
+        if (! $this->form_validation->run()) {
+            $this->load->view('form');
 
             return;
         }
 
-// 検証でエラーの場合、入力ページ(form)を表示します。
-        $this->load->view('form');
+// 検証OKなら、メールを送信します。
+// メールの内容を設定します。
+        $mail = [];
+        $mail['from_name'] = $this->input->post('name');
+        $mail['from']      = $this->input->post('email');
+        $mail['to']        = 'info@example.jp';
+        $mail['subject']   = 'コンタクトフォーム';
+        $mail['body']      = $this->input->post('comment');
+
+// sendmail()メソッドを呼び出しメールの送信処理を行います。
+// メールの送信に成功したら、完了ページ(form_end)を表示します。
+        if ($this->sendmail($mail)) {
+// 完了ページ(form_end)を表示し、セッションを破棄します。
+            $this->load->view('form_end');
+            $this->session->sess_destroy();
+
+            return;
+        }
+
+// メールの送信に失敗した場合、エラーを表示します。
+        echo 'メール送信エラー';
     }
 
     private function sendmail(array $mail): bool
