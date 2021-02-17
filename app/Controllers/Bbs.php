@@ -29,6 +29,7 @@ use function max;
 class Bbs extends CI_Controller
 {
 // 記事表示ページで、1ページに表示する記事の件数を設定します。
+    /** @var int 1ページに表示する記事の件数 */
     public $limit = 5;
 
     public function __construct()
@@ -41,7 +42,9 @@ class Bbs extends CI_Controller
         $this->load->database();
     }
 
-    // 日付順に記事を表示
+    /**
+     * // 日付順に記事を表示
+     */
     public function index(string $page = '1'): void
     {
 // 引数から$pageに値が渡されます。これは、3番目のURIセグメントの値です。
@@ -75,7 +78,9 @@ class Bbs extends CI_Controller
         $this->loadView('bbs_show', $data);
     }
 
-    // 新規投稿ページ
+    /**
+     * 新規投稿ページ
+     */
     public function post(): void
     {
 // バリデーションを設定し、新規投稿ページを表示します。実際の処理は、他でも
@@ -84,7 +89,9 @@ class Bbs extends CI_Controller
         $this->showPostPage();
     }
 
-    // 確認ページ
+    /**
+     * 確認ページ
+     */
     public function confirm(): void
     {
 // 検証ルールを設定します。
@@ -151,7 +158,9 @@ class Bbs extends CI_Controller
         $this->loadView('bbs_post', $data);
     }
 
-    // 削除ページ
+    /**
+     * 削除ページ
+     */
     public function delete(string $id = ''): void
     {
 // 第1引数、つまり、3番目のURIセグメントのデータをint型に変換します。

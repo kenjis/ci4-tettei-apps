@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace App\Libraries;
 
+use Kenjis\CI3Compatible\Core\CI_Controller;
+
 class Generate_pagination
 {
+    /** @var CI_Controller */
     private $CI;
 
-    // ページネーションの生成
+    /**
+     * ページネーションの生成
+     */
     public function get_links(string $path, int $total, int $uri_segment): string
     {
 // ページネーションクラスをロードします。

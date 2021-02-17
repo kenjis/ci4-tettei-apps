@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Libraries\Validation;
 
+use Kenjis\CI3Compatible\Core\CI_Controller;
+
 abstract class Custom_validation
 {
+    /** @var CI_Controller */
     private $CI;
 
     public function __construct()
@@ -16,7 +19,9 @@ abstract class Custom_validation
         $this->set_validation_rules();
     }
 
-    // バリデーションの設定
+    /**
+     * バリデーションの設定
+     */
     abstract protected function set_validation_rules(): void;
 
     protected function set_rules(

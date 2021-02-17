@@ -38,8 +38,11 @@ use function trim;
  */
 class Shop extends MY_Controller
 {
-    public $limit;  // 1ページに表示する商品の数
-    public $admin;  // 管理者のメールアドレス
+    /** @var int 1ページに表示する商品の数 */
+    public $limit;
+
+    /** @var string 管理者のメールアドレス */
+    public $admin;
 
     /** @var Twig */
     private $twig;
@@ -71,7 +74,9 @@ class Shop extends MY_Controller
         $this->admin = $this->config->item('admin_email', 'ConfigShop');
     }
 
-    // トップページ = カテゴリ別商品一覧
+    /**
+     * トップページ = カテゴリ別商品一覧
+     */
     public function index(string $cat_id = '1', string $page = '0'): void
     {
 // ページ番号をoffsetに変換します。
@@ -120,7 +125,9 @@ class Shop extends MY_Controller
         $this->twig->display('shop_tmpl_shop', $data);
     }
 
-    // 商品詳細ページ
+    /**
+     * 商品詳細ページ
+     */
     public function product($prod_id = '1'): void
     {
 // 商品IDを検証します。
@@ -141,7 +148,9 @@ class Shop extends MY_Controller
         $this->twig->display('shop_tmpl_shop', $data);
     }
 
-    // カゴに入れる
+    /**
+     * カゴに入れる
+     */
     public function add(string $prod_id = '0'): void
     {
 // 商品IDを検証します。
@@ -168,7 +177,9 @@ class Shop extends MY_Controller
         $this->cart();
     }
 
-    // 買い物カゴページ
+    /**
+     * 買い物カゴページ
+     */
     public function cart(): void
     {
         $data = [];
@@ -184,7 +195,9 @@ class Shop extends MY_Controller
         $this->twig->display('shop_tmpl_shop', $data);
     }
 
-    // 検索ページ
+    /**
+     * 検索ページ
+     */
     public function search(string $page = '0'): void
     {
 // ページ番号をoffsetに変換します。
@@ -245,7 +258,9 @@ class Shop extends MY_Controller
         $this->twig->display('shop_tmpl_checkout', $data);
     }
 
-    // 注文内容確認
+    /**
+     * 注文内容確認
+     */
     public function confirm(): void
     {
         $this->load->library('validation/shop_validation_customer');
@@ -277,7 +292,9 @@ class Shop extends MY_Controller
         $this->twig->display('shop_tmpl_checkout', $data);
     }
 
-    // 注文処理
+    /**
+     * 注文処理
+     */
     public function order(): void
     {
         if ($this->cart_model->count() == 0) {
