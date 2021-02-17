@@ -85,7 +85,7 @@ class Form extends CI_Controller
             $mail['subject']   = 'コンタクトフォーム';
             $mail['body']      = $this->input->post('comment');
 
-// _sendmail()メソッドを呼び出しメールの送信処理を行います。
+// sendmail()メソッドを呼び出しメールの送信処理を行います。
 // メールの送信に成功したら、完了ページ(form_end)を表示します。
             if ($this->sendmail($mail)) {
 // 完了ページ(form_end)を表示し、セッションを破棄します。
