@@ -273,7 +273,7 @@ class Shop extends MY_Controller
     {
         $this->load->library('validation/shop_validation_customer');
 
-        if ($this->form_validation->run() == true) {
+        if ($this->form_validation->run()) {
 // 検証をパスした入力データは、モデルを使って保存します。
             $data = [
                 'name'  => $this->input->post('name'),
