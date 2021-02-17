@@ -78,7 +78,7 @@ class Bbs extends CI_Controller
 
 // _load_view()メソッドは、携帯端末かどうかで、読み込むビューファイルを
 // 切り替えするためのメソッドです。
-        $this->_load_view('bbs_show', $data);
+        $this->loadView('bbs_show', $data);
     }
 
     // 新規投稿ページ
@@ -86,23 +86,23 @@ class Bbs extends CI_Controller
     {
 // バリデーションを設定し、新規投稿ページを表示します。実際の処理は、他でも
 // 使いますので、プライベートメソッドにしています。
-        $this->_set_validation();
-        $this->_show_post_page();
+        $this->setValidation();
+        $this->showPostPage();
     }
 
     // 確認ページ
     public function confirm(): void
     {
 // 検証ルールを設定します。
-        $this->_set_validation();
+        $this->setValidation();
 
 // 検証をパスしなかった場合は、新規投稿ページを表示します。検証をパスした場合
 // は、投稿確認ページ(bbs_confirm)を表示します。
         if ($this->form_validation->run() == false) {
 // 投稿されたIDのキャプチャを削除します。
-            $this->_delete_captcha_data();
+            $this->deleteCaptchaData();
 
-            $this->_show_post_page();
+            $this->showPostPage();
         } else {
             $data = [];
             $data['name']       = $this->input->post('name');
@@ -112,18 +112,18 @@ class Bbs extends CI_Controller
             $data['password']   = $this->input->post('password');
             $data['key']        = $this->input->post('key');
             $data['captcha']    = $this->input->post('captcha');
-            $this->_load_view('bbs_confirm', $data);
+            $this->loadView('bbs_confirm', $data);
         }
     }
 
 // 投稿されたIDのキャプチャを削除します。
-    private function _delete_captcha_data(): void
+    private function deleteCaptchaData(): void
     {
         $this->db->delete('captcha', ['captcha_id' => $this->input->post('key')]);
     }
 
 // 新規投稿ページを表示します。
-    private function _show_post_page(): void
+    private function showPostPage(): void
     {
 // 画像キャプチャを生成します。ランダムな文字列を生成するために文字列ヘルパーを
 // ロードし、キャプチャプラグインをロードします。
@@ -154,7 +154,7 @@ class Bbs extends CI_Controller
         $data['subject']    = $this->input->post('subject');
         $data['body']       = $this->input->post('body');
         $data['password']   = $this->input->post('password');
-        $this->_load_view('bbs_post', $data);
+        $this->loadView('bbs_post', $data);
     }
 
     // 削除ページ
@@ -170,7 +170,7 @@ class Bbs extends CI_Controller
 
 // 削除パスワードが入力されていない場合は、エラーページを表示します。
         if ($password == '') {
-            $this->_load_view('bbs_delete_error');
+            $this->loadView('bbs_delete_error');
         } else {
 // 記事IDと削除パスワードを条件として、bbsテーブルを検索します。
             $this->db->where('id', $id);
@@ -185,7 +185,7 @@ class Bbs extends CI_Controller
                 if ($delete == 1) {
                     $this->db->where('id', $id);
                     $this->db->delete('bbs');
-                    $this->_load_view('bbs_delete_finished');
+                    $this->loadView('bbs_delete_finished');
                 }
 // deleteフィールドが1以外の場合は、記事表示ページからのPOSTですので、確認
 // ページを表示します。
@@ -200,18 +200,18 @@ class Bbs extends CI_Controller
                     $data['datetime'] = $row->datetime;
                     $data['body']     = $row->body;
                     $data['password'] = $row->password;
-                    $this->_load_view('bbs_delete_confirm', $data);
+                    $this->loadView('bbs_delete_confirm', $data);
                 }
             }
 // 削除パスワードが一致しなかった場合は、エラーページを表示します。
             else {
-                $this->_load_view('bbs_delete_error');
+                $this->loadView('bbs_delete_error');
             }
         }
     }
 
 // バリデーションを設定します。
-    private function _set_validation(): void
+    private function setValidation(): void
     {
         $this->load->library('form_validation');
 
@@ -257,7 +257,7 @@ class Bbs extends CI_Controller
     public function insert()
     {
 // 検証ルールを設定します。
-        $this->_set_validation();
+        $this->setValidation();
 
 // 検証にパスした場合は、送られたデータとIPアドレスをbbsテーブルに登録します。
         if ($this->form_validation->run()) {
@@ -271,7 +271,7 @@ class Bbs extends CI_Controller
             $this->db->insert('bbs', $data);
 
 // 投稿されたIDのキャプチャを削除します。
-            $this->_delete_captcha_data();
+            $this->deleteCaptchaData();
 
 // URLヘルパーのredirect()メソッドで記事表示ページにリダイレクトします。
             return redirect()->to('/bbs');
@@ -279,13 +279,13 @@ class Bbs extends CI_Controller
 
 // 検証にパスしない場合は、新規投稿ページを表示します。
 // 投稿されたIDのキャプチャを削除します。
-        $this->_delete_captcha_data();
+        $this->deleteCaptchaData();
 
-        $this->_show_post_page();
+        $this->showPostPage();
     }
 
 // 携帯端末かどうかを判定し、ビューをロードするプライベートメソッドです。
-    private function _load_view($file, $data = []): void
+    private function loadView($file, $data = []): void
     {
 // 携帯端末の場合は、「_mobile」がファイル名に付くビューファイルをロードします。
         if ($this->agent->is_mobile()) {

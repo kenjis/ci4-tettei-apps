@@ -40,7 +40,7 @@ class Form extends CI_Controller
         $this->load->library('form_validation');
     }
 
-    private function _set_validation(): void
+    private function setValidation(): void
     {
 // バリデーションの設定をします。
         $this->form_validation->set_rules('name', '名前', 'trim|required|max_length[20]');
@@ -57,7 +57,7 @@ class Form extends CI_Controller
     public function confirm(): void
     {
 // 検証ルールを設定します。
-        $this->_set_validation();
+        $this->setValidation();
 
 // バリデーション(検証)クラスのrun()メソッドを呼び出し、送信されたデータの検証
 // を行います。検証OKなら、確認ページ(form_confirm)を表示します。
@@ -73,7 +73,7 @@ class Form extends CI_Controller
     public function send(): void
     {
 // 検証ルールを設定します。
-        $this->_set_validation();
+        $this->setValidation();
 
 // 送信されたデータの検証を行い、検証OKなら、メールを送信します。
         if ($this->form_validation->run() == true) {
@@ -87,7 +87,7 @@ class Form extends CI_Controller
 
 // _sendmail()メソッドを呼び出しメールの送信処理を行います。
 // メールの送信に成功したら、完了ページ(form_end)を表示します。
-            if ($this->_sendmail($mail)) {
+            if ($this->sendmail($mail)) {
 // 完了ページ(form_end)を表示し、セッションを破棄します。
                 $this->load->view('form_end');
                 $this->session->sess_destroy();
@@ -103,7 +103,7 @@ class Form extends CI_Controller
         }
     }
 
-    private function _sendmail($mail)
+    private function sendmail($mail)
     {
 // Emailクラスをロードします。
         $this->load->library('email');
