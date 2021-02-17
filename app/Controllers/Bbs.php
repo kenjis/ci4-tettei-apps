@@ -58,11 +58,11 @@ class Bbs extends CI_Controller
 // 新しい記事ID順に、limit値とoffset値を指定し、bbsテーブルから記事データ
 // (オブジェクト)を取得し、$data['query']に代入します。order_by()メソッドは、
 // フィールド名とソート順を引数にとり、ORDER BY句を指定します。
-        $data = [];
-        $data['query'] = $this->getPostList($offset);
-
+        $data = [
+            'query' => $this->getPostList($offset),
 // ページネーションを生成します。
-        $data['pagination'] = $this->createPagination();
+            'pagination' => $this->createPagination(),
+        ];
 
 // _load_view()メソッドは、携帯端末かどうかで、読み込むビューファイルを
 // 切り替えするためのメソッドです。
