@@ -85,12 +85,13 @@ class Form extends CI_Controller
 
 // 検証OKなら、メールを送信します。
 // メールの内容を設定します。
-        $mail = [];
-        $mail['from_name'] = $this->input->post('name');
-        $mail['from']      = $this->input->post('email');
-        $mail['to']        = 'info@example.jp';
-        $mail['subject']   = 'コンタクトフォーム';
-        $mail['body']      = $this->input->post('comment');
+        $mail = [
+            'from_name' => $this->input->post('name'),
+            'from' => $this->input->post('email'),
+            'to' => 'info@example.jp',
+            'subject' => 'コンタクトフォーム',
+            'body' => $this->input->post('comment'),
+        ];
 
 // sendmail()メソッドを呼び出しメールの送信処理を行います。
 // メールの送信に成功したら、完了ページ(form_end)を表示します。
@@ -111,11 +112,12 @@ class Form extends CI_Controller
 // Emailクラスをロードします。
         $this->load->library('email');
 
-        $config = [];
+        $config = [
 // メールの送信方法を指定します。ここでは、mail()関数を使います。
-        $config['protocol'] = 'mail';
+            'protocol' => 'mail',
 // 日本語ではワードラップ機能は使えませんのでオフにします。
-        $config['wordwrap'] = false;
+            'wordwrap' => false,
+        ];
 // $configでEmailクラスを初期化します。
         $this->email->initialize($config);
 

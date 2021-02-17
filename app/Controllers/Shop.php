@@ -96,33 +96,37 @@ class Shop extends MY_Controller
             'required|is_natural|max_length[3]'
         );
 
-        $data = [];
-
 // モデルからカテゴリの一覧を取得します。
-        $data['cat_list'] = $this->inventory_model->get_category_list();
+        $cat_list = $this->inventory_model->get_category_list();
 
 // カテゴリIDとoffset値と、1ページに表示する商品の数を渡し、モデルより
 // 商品一覧を取得します。
-        $data['list'] = $this->inventory_model->get_product_list(
+        $list = $this->inventory_model->get_product_list(
             $cat_id,
             $this->limit,
             $offset
         );
 // カテゴリIDより、カテゴリ名を取得します。
-        $data['category'] = $this->inventory_model->get_category_name($cat_id);
+        $category = $this->inventory_model->get_category_name($cat_id);
 
 // モデルよりそのカテゴリの商品数を取得し、ページネーションを生成します。
         $this->load->library('generate_pagination');
         $path  = '/shop/index/' . $cat_id;
         $total = $this->inventory_model->get_product_count($cat_id);
-        $data['pagination'] = $this->generate_pagination->get_links($path, $total, 4);
-
-        $data['total'] = $total;
-
-        $data['main'] = 'shop_list';
+        $pagination = $this->generate_pagination->get_links($path, $total, 4);
 
 // モデルよりカートの中の商品アイテム数を取得します。
-        $data['item_count'] = $this->cart_model->count();
+        $item_count = $this->cart_model->count();
+
+        $data = [
+            'cat_list' => $cat_list,
+            'list' => $list,
+            'category' => $category,
+            'pagination' => $pagination,
+            'total' => $total,
+            'main' => 'shop_list',
+            'item_count' => $item_count,
+        ];
 
 // ビューを表示します。
         $this->twig->display('shop_tmpl_shop', $data);
@@ -142,14 +146,20 @@ class Shop extends MY_Controller
             'required|is_natural|max_length[11]'
         );
 
-        $data = [];
-        $data['cat_list'] = $this->inventory_model->get_category_list();
+        $cat_list = $this->inventory_model->get_category_list();
 
 // モデルより商品データを取得します。
-        $data['item'] = $this->inventory_model->get_product_item($prod_id);
-        $data['main'] = 'shop_product';
+        $item = $this->inventory_model->get_product_item($prod_id);
 
-        $data['item_count'] = $this->cart_model->count();
+        $item_count = $this->cart_model->count();
+
+        $data = [
+            'cat_list' => $cat_list,
+            'item' => $item,
+            'main' => 'shop_product',
+            'item_count' => $item_count,
+        ];
+
         $this->twig->display('shop_tmpl_shop', $data);
     }
 
@@ -188,16 +198,19 @@ class Shop extends MY_Controller
      */
     public function cart(): void
     {
-        $data = [];
-        $data['cat_list'] = $this->inventory_model->get_category_list();
+        $cat_list = $this->inventory_model->get_category_list();
 
 // モデルより、カートの情報を取得します。
         $cart = $this->cart_model->get_all();
-        $data['total']      = $cart['total'];
-        $data['cart']       = $cart['items'];
-        $data['item_count'] = $cart['line'];
 
-        $data['main'] = 'shop_cart';
+        $data = [
+            'cat_list' => $cat_list,
+            'total' => $cart['total'],
+            'cart' => $cart['items'],
+            'item_count' => $cart['line'],
+            'main' => 'shop_cart',
+        ];
+
         $this->twig->display('shop_tmpl_shop', $data);
     }
 
@@ -228,11 +241,10 @@ class Shop extends MY_Controller
             'max_length[100]'
         );
 
-        $data = [];
-        $data['cat_list'] = $this->inventory_model->get_category_list();
+        $cat_list = $this->inventory_model->get_category_list();
 
 // モデルから、キーワードで検索した商品データと総件数を取得します。
-        $data['list'] = $this->inventory_model->get_product_by_search(
+        $list = $this->inventory_model->get_product_by_search(
             $q,
             $this->limit,
             $offset
@@ -242,13 +254,18 @@ class Shop extends MY_Controller
 // ページネーションを生成します。
         $this->load->library('generate_pagination');
         $path  = '/shop/search';
-        $data['pagination'] = $this->generate_pagination->get_links($path, $total, 3);
+        $pagination = $this->generate_pagination->get_links($path, $total, 3);
 
-        $data['q'] = $q;
-        $data['total'] = $total;
+        $data = [
+            'cat_list' => $cat_list,
+            'list' => $list,
+            'pagination' => $pagination,
+            'q' => $q,
+            'total' => $total,
+            'main' => 'shop_search',
+            'item_count' => $this->cart_model->count(),
+        ];
 
-        $data['main']   = 'shop_search';
-        $data['item_count'] = $this->cart_model->count();
         $this->twig->display('shop_tmpl_shop', $data);
     }
 
@@ -277,21 +294,28 @@ class Shop extends MY_Controller
 
         if ($this->form_validation->run()) {
 // 検証をパスした入力データは、モデルを使って保存します。
-            $data = [
+            $customer_data = [
                 'name'  => $this->input->post('name'),
                 'zip'   => $this->input->post('zip'),
                 'addr'  => $this->input->post('addr'),
                 'tel'   => $this->input->post('tel'),
                 'email' => $this->input->post('email'),
             ];
-            $this->customer_model->set($data);
+            $this->customer_model->set($customer_data);
 
             $cart = $this->cart_model->get_all();
-            $data['total'] = $cart['total'];
-            $data['cart']  = $cart['items'];
 
-            $data['action'] = '注文内容の確認';
-            $data['main']   = 'shop_confirm';
+            $data = [
+                'name' => $customer_data['name'],
+                'zip' => $customer_data['zip'],
+                'addr' => $customer_data['addr'],
+                'tel' => $customer_data['tel'],
+                'email' => $customer_data['email'],
+                'total' => $cart['total'],
+                'cart' => $cart['items'],
+                'action' => '注文内容の確認',
+                'main' => 'shop_confirm',
+            ];
         } else {
             $data = [
                 'action' => 'お客様情報の入力',
