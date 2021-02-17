@@ -110,19 +110,21 @@ class Bbs extends CI_Controller
 // 検証ルールを設定します。
         $this->setValidation();
 
-// 検証をパスしなかった場合は、新規投稿ページを表示します。検証をパスした場合
-// は、投稿確認ページ(bbs_confirm)を表示します。
+// 検証をパスしなかった場合は、新規投稿ページを表示します。
         if ($this->form_validation->run() == false) {
 // 投稿されたIDのキャプチャを削除します。
             $this->deleteCaptchaData();
 
             $this->showPostPage();
-        } else {
-            $data = $this->getBasicPostData();
-            $data['key']        = $this->input->post('key');
-            $data['captcha']    = $this->input->post('captcha');
-            $this->loadView('bbs_confirm', $data);
+
+            return;
         }
+
+// 検証をパスした場合は、投稿確認ページ(bbs_confirm)を表示します。
+        $data = $this->getBasicPostData();
+        $data['key']        = $this->input->post('key');
+        $data['captcha']    = $this->input->post('captcha');
+        $this->loadView('bbs_confirm', $data);
     }
 
     private function getBasicPostData(): array
