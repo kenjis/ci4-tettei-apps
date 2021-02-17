@@ -27,9 +27,10 @@ class Mail_model extends CI_Model
     public function sendmail(array $mail): bool
     {
 // Emailクラスを初期化します。
-        $config = [];
-        $config['protocol'] = 'mail';
-        $config['wordwrap'] = false;
+        $config = [
+            'protocol' => 'mail',
+            'wordwrap' => false,
+        ];
         $this->email->initialize($config);
 
 // 差出人、あて先、Bcc、件名、本文を設定します。

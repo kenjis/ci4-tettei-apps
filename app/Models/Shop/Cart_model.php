@@ -81,12 +81,11 @@ class Cart_model extends CI_Model
             $total += $amount;
         }
 
-        $cart = [];
-        $cart['items'] = $items;    // 商品情報の配列
-        $cart['line']  = $line;     // 商品アイテム数
-        $cart['total'] = $total;    // 合計金額
-
-        return $cart;
+        return [
+            'items' => $items,  // 商品情報の配列
+            'line' => $line,    // 商品アイテム数
+            'total' => $total,  // 合計金額
+        ];
     }
 
     /**
