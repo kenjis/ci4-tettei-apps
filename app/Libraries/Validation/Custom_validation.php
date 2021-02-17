@@ -19,11 +19,6 @@ abstract class Custom_validation
     // バリデーションの設定
     abstract protected function set_validation_rules(): void;
 
-    protected function set_error_delimiters($prefix = '<p>', $suffix = '</p>'): void
-    {
-        $this->CI->form_validation->set_error_delimiters($prefix, $suffix);
-    }
-
     protected function set_rules(
         $field,
         $label = '',
