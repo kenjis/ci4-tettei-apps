@@ -20,6 +20,7 @@ class Shop_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+
         $this->load->model('shop/cart_model');
         $this->load->model('shop/customer_model');
         $this->load->model('shop/mail_model');
