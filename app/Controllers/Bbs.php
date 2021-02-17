@@ -59,7 +59,7 @@ class Bbs extends CI_Controller
 // (オブジェクト)を取得し、$data['query']に代入します。order_by()メソッドは、
 // フィールド名とソート順を引数にとり、ORDER BY句を指定します。
         $data = [];
-        $data['query'] = $this->getQuery($offset);
+        $data['query'] = $this->getPostList($offset);
 
 // ページネーションを生成します。
         $data['pagination'] = $this->createPagination();
@@ -69,7 +69,7 @@ class Bbs extends CI_Controller
         $this->loadView('bbs_show', $data);
     }
 
-    private function getQuery(int $offset): CI_DB_result
+    private function getPostList(int $offset): CI_DB_result
     {
         $this->db->order_by('id', 'desc');
 
