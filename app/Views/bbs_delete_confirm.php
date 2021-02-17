@@ -13,7 +13,7 @@
 <!-- main -->
 <div id="main">
 <div class="title_banner">
-<img src="<?=base_url('images/icons/bbs_titile.jpg');?>" alt="掲示板" width="580" height="70" />
+<img src="<?= base_url('images/icons/bbs_titile.jpg'); ?>" alt="掲示板" width="580" height="70" />
 </div>
 <p class="center">削除の確認</p>
 <div class="outer_frame">
@@ -21,26 +21,26 @@
 以下の記事を削除しますか？
 </p>
 <div class="confirm_delete">
-<h2><a name="<?=html_escape($id);?>">[<?=html_escape($id);?>]</a> <?=html_escape($subject);?></h2>
-<div><?=html_escape($name);?>&nbsp;
-<?=html_escape($datetime);?>&nbsp;
+<h2><a name="<?= html_escape($id); ?>">[<?= html_escape($id); ?>]</a> <?= html_escape($subject); ?></h2>
+<div><?= html_escape($name); ?>&nbsp;
+<?= html_escape($datetime); ?>&nbsp;
 </div>
-<div><?=nl2br(html_escape($body));?></div>
+<div><?= nl2br(html_escape($body)); ?></div>
 </div>
 
-<?=form_open('bbs');?>
+<?= form_open('bbs'); ?>
 <input type="submit" value="いいえ" />
-<?=form_close();?>
+<?= form_close(); ?>
 
-<?=form_open('bbs/delete/'. $id);?>
-<?=form_hidden('delete', '1');?>
-<?=form_hidden('password', $password);?>
+<?= form_open('bbs/delete/'. $id); ?>
+<?= form_hidden('delete', '1'); ?>
+<?= form_hidden('password', $password); ?>
 <input type="submit" value="はい" />
-<?=form_close();?>
+<?= form_close(); ?>
 
 <p>
 <span class="button">
-<?=anchor('bbs', 'トップに戻る');?>
+<?= anchor('bbs', 'トップに戻る'); ?>
 </span>
 </p>
 </div>

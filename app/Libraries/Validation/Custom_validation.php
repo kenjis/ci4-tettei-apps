@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Libraries\Validation;
 
+use Kenjis\CI3Compatible\Core\CI_Controller;
+
 abstract class Custom_validation
 {
+    /** @var CI_Controller */
     private $CI;
 
     public function __construct()
@@ -16,13 +19,10 @@ abstract class Custom_validation
         $this->set_validation_rules();
     }
 
-    // バリデーションの設定
+    /**
+     * バリデーションの設定
+     */
     abstract protected function set_validation_rules(): void;
-
-    protected function set_error_delimiters($prefix = '<p>', $suffix = '</p>'): void
-    {
-        $this->CI->form_validation->set_error_delimiters($prefix, $suffix);
-    }
 
     protected function set_rules(
         $field,
@@ -33,7 +33,7 @@ abstract class Custom_validation
         $this->CI->form_validation->set_rules($field, $label, $rules, $errors);
     }
 
-    public function validate(array $data = [])
+    public function validate(array $data = []): bool
     {
         if ($data !== []) {
             $this->CI->form_validation->set_data($data);
@@ -43,7 +43,7 @@ abstract class Custom_validation
         return $this->run();
     }
 
-    public function run()
+    public function run(): bool
     {
         return $this->CI->form_validation->run();
     }

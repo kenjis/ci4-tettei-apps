@@ -34,6 +34,14 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+// リダイレクトを設定します。
+// URLがbbsで終わる場合、セグメントが足りずページネーションが動作しない
+// ため、bbs/indexにリダイレクトさます。
+$routes->addRedirect('bbs', 'bbs/index');
+// URLがshopで終わる場合、セグメントが足りずページネーションが動作しない
+// ため、shop/index/1にリダイレクトさせます。
+$routes->addRedirect('shop', 'shop/index/1');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

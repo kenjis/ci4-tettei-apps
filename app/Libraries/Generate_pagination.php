@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace App\Libraries;
 
+use Kenjis\CI3Compatible\Core\CI_Controller;
+
 class Generate_pagination
 {
+    /** @var CI_Controller */
     private $CI;
 
-    // ページネーションの生成
-    public function get_links($path, $total, $uri_segment)
+    /**
+     * ページネーションの生成
+     */
+    public function get_links(string $path, int $total, int $uri_segment): string
     {
 // ページネーションクラスをロードします。
         $this->CI =& get_instance();
@@ -26,17 +31,6 @@ class Generate_pagination
         $config['uri_segment'] = $uri_segment;
 // ページネーションでクエリ文字列を使えるようにします。
         $config['reuse_query_string'] = true;
-// 生成するリンクのテンプレートを指定します。
-//        $config['first_link']      = '&laquo;最初';
-//        $config['last_link']       = '最後&raquo;';
-//        $config['full_tag_open']   = '<p>';
-//        $config['full_tag_close']  = '</p>';
-//        $config['num_tag_open']    = ' ';
-//        $config['num_tag_close']   = ' ';
-//        $config['last_tag_open']   = ' ';
-//        $config['last_tag_close']  = ' ';
-//        $config['first_tag_open']  = ' ';
-//        $config['first_tag_close'] = ' ';
 // $configでページネーションを初期化します。
         $this->CI->pagination->initialize($config);
 

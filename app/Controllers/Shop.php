@@ -22,7 +22,6 @@ use Kenjis\CI4Twig\Twig;
 
 use function max;
 use function mb_convert_kana;
-use function substr;
 use function trim;
 
 /**
@@ -39,8 +38,11 @@ use function trim;
  */
 class Shop extends MY_Controller
 {
-    public $limit;  // 1ページに表示する商品の数
-    public $admin;  // 管理者のメールアドレス
+    /** @var int 1ページに表示する商品の数 */
+    public $limit;
+
+    /** @var string 管理者のメールアドレス */
+    public $admin;
 
     /** @var Twig */
     private $twig;
@@ -48,6 +50,7 @@ class Shop extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+
         $this->load->library(['session']);
         $this->twig = new Twig();
         $this->load->helper(['form', 'url']);
@@ -71,14 +74,13 @@ class Shop extends MY_Controller
         $this->admin = $this->config->item('admin_email', 'ConfigShop');
     }
 
-    // トップページ = カテゴリ別商品一覧
-    public function index($cat_id = '1', $page = '0')
+    /**
+     * トップページ = カテゴリ別商品一覧
+     */
+    public function index(string $cat_id = '1', string $page = '0'): void
     {
-// URLがshopで終わる場合、セグメントが足りずページネーションが動作しない
-// ため、shop/index/1にリダイレクトさせます。
-        if (substr(current_url(), -4) === 'shop') {
-            return redirect()->to('shop/index/1');
-        }
+        $cat_id = (int) $cat_id;
+        $page = (int) $page;
 
 // ページ番号をoffsetに変換します。
         $offset = max($page - 1, 0) * $this->limit;
@@ -126,9 +128,13 @@ class Shop extends MY_Controller
         $this->twig->display('shop_tmpl_shop', $data);
     }
 
-    // 商品詳細ページ
+    /**
+     * 商品詳細ページ
+     */
     public function product($prod_id = '1'): void
     {
+        $prod_id = (int) $prod_id;
+
 // 商品IDを検証します。
         $this->load->library('validation/field_validation');
         $this->field_validation->validate(
@@ -147,26 +153,29 @@ class Shop extends MY_Controller
         $this->twig->display('shop_tmpl_shop', $data);
     }
 
-    // カゴに入れる
-    public function add($prod_id = '0'): void
+    /**
+     * カゴに入れる
+     */
+    public function add(string $prod_id = '0'): void
     {
+// $prod_idの型をintに変更します。
+        $prod_id = (int) $prod_id;
+
+// POSTされたqtyフィールドより、数量を取得します。
+        $qty = (int) $this->input->post('qty');
+
 // 商品IDを検証します。
         $this->load->library('validation/field_validation');
         $this->field_validation->validate(
             $prod_id,
             'required|is_natural|max_length[11]'
         );
-// POSTされたqtyフィールドより、数量を取得します。
-        $qty = $this->input->post('qty');
+
 // 数量を検証します。
         $this->field_validation->validate(
             $qty,
             'required|is_natural|max_length[3]'
         );
-
-// $prod_id、$qtyの型をintに変更します。
-        $prod_id = (int) $prod_id;
-        $qty = (int) $qty;
 
         $this->cart_model->add($prod_id, $qty);
 
@@ -174,7 +183,9 @@ class Shop extends MY_Controller
         $this->cart();
     }
 
-    // 買い物カゴページ
+    /**
+     * 買い物カゴページ
+     */
     public function cart(): void
     {
         $data = [];
@@ -190,9 +201,13 @@ class Shop extends MY_Controller
         $this->twig->display('shop_tmpl_shop', $data);
     }
 
-    // 検索ページ
-    public function search($page = '0'): void
+    /**
+     * 検索ページ
+     */
+    public function search(string $page = '0'): void
     {
+        $page = (int) $page;
+
 // ページ番号をoffsetに変換します。
         $offset = max($page - 1, 0) * $this->limit;
 
@@ -251,12 +266,14 @@ class Shop extends MY_Controller
         $this->twig->display('shop_tmpl_checkout', $data);
     }
 
-    // 注文内容確認
+    /**
+     * 注文内容確認
+     */
     public function confirm(): void
     {
         $this->load->library('validation/shop_validation_customer');
 
-        if ($this->form_validation->run() == true) {
+        if ($this->form_validation->run()) {
 // 検証をパスした入力データは、モデルを使って保存します。
             $data = [
                 'name'  => $this->input->post('name'),
@@ -283,10 +300,12 @@ class Shop extends MY_Controller
         $this->twig->display('shop_tmpl_checkout', $data);
     }
 
-    // 注文処理
+    /**
+     * 注文処理
+     */
     public function order(): void
     {
-        if ($this->cart_model->count() == 0) {
+        if ($this->cart_model->count() === 0) {
             echo '買い物カゴには何も入っていません。';
         }
 // モデルのorder()メソッドを呼び出し、注文データの処理を依頼します。

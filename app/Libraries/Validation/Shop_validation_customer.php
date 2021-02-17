@@ -6,11 +6,11 @@ namespace App\Libraries\Validation;
 
 class Shop_validation_customer extends Custom_validation
 {
-    // バリデーションの設定
+    /**
+     * バリデーションの設定
+     */
     protected function set_validation_rules(): void
     {
-//        $this->set_error_delimiters('<div class="error">', '</div>');
-
         $this->set_rules('name', '名前', 'trim|required|max_length[64]');
         $this->set_rules('zip', '郵便番号', 'trim|max_length[8]');
         $this->set_rules('addr', '住所', 'trim|required|max_length[128]');

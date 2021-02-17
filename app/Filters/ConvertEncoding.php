@@ -8,9 +8,7 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
-use function array_map;
 use function count;
-use function is_array;
 use function mb_convert_encoding;
 
 class ConvertEncoding implements FilterInterface
@@ -54,17 +52,15 @@ class ConvertEncoding implements FilterInterface
         );
     }
 
-    // 入力文字エンコード変換
-    private function convert_to_utf8($array)
+    /**
+     * 入力文字エンコード変換
+     *
+     * @param $array
+     *
+     * @return array|false|string|string[]|null
+     */
+    private function convert_to_utf8(array $array)
     {
-// 引数が配列の場合は、配列の各々の要素を自分自身に渡し処理します。
-// array_map()関数の第1引数は、コールバック関数ですが、ここでは、クラス内の
-// メソッドを指定しますので、[$this, 'convert_to_utf8']と配列
-// で渡す必要があります。
-        if (is_array($array)) {
-            return array_map([$this, 'convert_to_utf8'], $array);
-        }
-
         return mb_convert_encoding($array, 'UTF-8', 'SJIS-win');
     }
 }

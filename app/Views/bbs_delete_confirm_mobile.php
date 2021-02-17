@@ -22,25 +22,25 @@
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td bgcolor="#EEEEEE"><a name="<?=html_escape($id);?>">[<?=html_escape($id);?>]</a> <?=html_escape($subject);?></td>
+<td bgcolor="#EEEEEE"><a name="<?= html_escape($id); ?>">[<?= html_escape($id); ?>]</a> <?= html_escape($subject); ?></td>
 </tr>
 <tr>
-<td><?=html_escape($name);?>&nbsp;<?=html_escape($datetime);?>&nbsp;</td>
+<td><?= html_escape($name); ?>&nbsp;<?= html_escape($datetime); ?>&nbsp;</td>
 </tr>
 <tr>
-<td bgcolor="#EEEEEE"><?=nl2br(html_escape($body));?></td>
+<td bgcolor="#EEEEEE"><?= nl2br(html_escape($body)); ?></td>
 </tr>
 <tr>
 <td>
-<?=form_open('bbs', ['accept-charset' => 'Shift_JIS']);?>
+<?= form_open('bbs', ['accept-charset' => 'Shift_JIS']); ?>
 <input type="submit" value="いいえ" />
-<?=form_close();?>
+<?= form_close(); ?>
 
-<?=form_open('bbs/delete/'. $id, ['accept-charset' => 'Shift_JIS']);?>
-<?=form_hidden('delete', '1');?>
-<?=form_hidden('password', $password);?>
+<?= form_open('bbs/delete/'. $id, ['accept-charset' => 'Shift_JIS']); ?>
+<?= form_hidden('delete', '1'); ?>
+<?= form_hidden('password', $password); ?>
 <input type="submit" value="はい" />
-<?=form_close();?>
+<?= form_close(); ?>
 </td>
 </tr>
 <tr>
@@ -49,7 +49,7 @@
 </table>
 
 <hr>
-<?=anchor('bbs', 'ﾄｯﾌﾟに戻る');?>
+<?= anchor('bbs', 'ﾄｯﾌﾟに戻る'); ?>
 
 </body>
 </html>

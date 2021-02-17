@@ -14,7 +14,6 @@ class Home extends CI_Controller
 {
     public function index(): void
     {
-        $this->output->set_header('Content-Type: text/html; charset=UTF-8');
         $this->load->helper('url');
         $this->load->view('index');
     }

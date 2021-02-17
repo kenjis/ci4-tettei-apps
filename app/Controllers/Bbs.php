@@ -12,12 +12,12 @@ use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Controller;
 use Kenjis\CI3Compatible\Core\CI_Input;
 use Kenjis\CI3Compatible\Database\CI_DB_query_builder;
+use Kenjis\CI3Compatible\Database\CI_DB_result;
 use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Library\CI_Pagination;
 use Kenjis\CI3Compatible\Library\CI_User_agent;
 
 use function max;
-use function substr;
 
 /**
  * @property CI_DB_query_builder $db
@@ -30,28 +30,24 @@ use function substr;
 class Bbs extends CI_Controller
 {
 // 記事表示ページで、1ページに表示する記事の件数を設定します。
+    /** @var int 1ページに表示する記事の件数 */
     public $limit = 5;
 
     public function __construct()
     {
         parent::__construct();
+
         $this->load->library('user_agent');
         $this->load->helper(['form', 'url']);
 // データベースを使うため、データベースクラスをロードします。
         $this->load->database();
-
-        //$this->output->enable_profiler(TRUE);
     }
 
-    // 日付順に記事を表示
-    public function index($page = 1)
+    /**
+     * 日付順に記事を表示
+     */
+    public function index(string $page = '1'): void
     {
-// URLがbbsで終わる場合、セグメントが足りずページネーションが動作しない
-// ため、bbs/indexにリダイレクトさます。
-        if (substr(current_url(), -3) === 'bbs') {
-            return redirect()->to('bbs/index');
-        }
-
 // 引数から$pageに値が渡されます。これは、3番目のURIセグメントの値です。
 // ユーザが変更可能なデータですので、int型へ変換し、必ず整数値にします。
         $page = (int) $page;
@@ -62,92 +58,115 @@ class Bbs extends CI_Controller
 // 新しい記事ID順に、limit値とoffset値を指定し、bbsテーブルから記事データ
 // (オブジェクト)を取得し、$data['query']に代入します。order_by()メソッドは、
 // フィールド名とソート順を引数にとり、ORDER BY句を指定します。
-        $this->db->order_by('id', 'desc');
         $data = [];
-        $data['query'] = $this->db->get('bbs', $this->limit, $offset);
+        $data['query'] = $this->getPostList($offset);
 
 // ページネーションを生成します。
+        $data['pagination'] = $this->createPagination();
+
+// _load_view()メソッドは、携帯端末かどうかで、読み込むビューファイルを
+// 切り替えするためのメソッドです。
+        $this->loadView('bbs_show', $data);
+    }
+
+    private function getPostList(int $offset): CI_DB_result
+    {
+        $this->db->order_by('id', 'desc');
+
+        return $this->db->get('bbs', $this->limit, $offset);
+    }
+
+    private function createPagination(): string
+    {
         $this->load->library('pagination');
+
         $config = [];
         $config['base_url'] = $this->config->site_url('/bbs/index/');
 // 記事の総件数をbbsテーブルから取得します。count_all()メソッドは、テーブル名
 // を引数にとり、そのテーブルのレコード数を返します。
         $config['total_rows'] = $this->db->count_all('bbs');
         $config['per_page'] = $this->limit;
-//        $config['first_link']      = '&laquo;最初';
-//        $config['last_link']       = '最後&raquo;';
-//        $config['num_tag_open']    = ' ';
-//        $config['num_tag_close']   = ' ';
-//        $config['last_tag_open']   = ' ';
-//        $config['last_tag_close']  = ' ';
-//        $config['first_tag_open']  = ' ';
-//        $config['first_tag_close'] = ' ';
-// 携帯端末かどうかを判定し、ページネーションの前後に挿入するタグを変更します。
-        if ($this->agent->is_mobile()) {
-//            $config['full_tag_open']  = '<tr><td bgcolor="#EEEEEE">';
-//            $config['full_tag_close'] = '</td></tr>';
-        } else {
-//            $config['full_tag_open']  = '<p class="pagination">';
-//            $config['full_tag_close'] = '</p>';
-        }
-
         $this->pagination->initialize($config);
-        $data['pagination'] = $this->pagination->create_links();
 
-// _load_view()メソッドは、携帯端末かどうかで、読み込むビューファイルを
-// 切り替えするためのメソッドです。
-        $this->_load_view('bbs_show', $data);
+        return $this->pagination->create_links();
     }
 
-    // 新規投稿ページ
+    /**
+     * 新規投稿ページ
+     */
     public function post(): void
     {
 // バリデーションを設定し、新規投稿ページを表示します。実際の処理は、他でも
 // 使いますので、プライベートメソッドにしています。
-        $this->_set_validation();
-        $this->_show_post_page();
+        $this->setValidation();
+        $this->showPostPage();
     }
 
-    // 確認ページ
+    /**
+     * 確認ページ
+     */
     public function confirm(): void
     {
 // 検証ルールを設定します。
-        $this->_set_validation();
+        $this->setValidation();
 
-// 検証をパスしなかった場合は、新規投稿ページを表示します。検証をパスした場合
-// は、投稿確認ページ(bbs_confirm)を表示します。
-        if ($this->form_validation->run() == false) {
+// 検証をパスしなかった場合は、新規投稿ページを表示します。
+        if ($this->form_validation->run() === false) {
 // 投稿されたIDのキャプチャを削除します。
-            $this->_delete_captcha_data();
+            $this->deleteCaptchaData();
 
-            $this->_show_post_page();
-        } else {
-            $data = [];
-            $data['name']       = $this->input->post('name');
-            $data['email']      = $this->input->post('email');
-            $data['subject']    = $this->input->post('subject');
-            $data['body']       = $this->input->post('body');
-            $data['password']   = $this->input->post('password');
-            $data['key']        = $this->input->post('key');
-            $data['captcha']    = $this->input->post('captcha');
-            $this->_load_view('bbs_confirm', $data);
+            $this->showPostPage();
+
+            return;
         }
+
+// 検証をパスした場合は、投稿確認ページ(bbs_confirm)を表示します。
+        $data = $this->getBasicPostData();
+        $data['key']        = $this->input->post('key');
+        $data['captcha']    = $this->input->post('captcha');
+        $this->loadView('bbs_confirm', $data);
+    }
+
+    private function getBasicPostData(): array
+    {
+        return [
+            'name' => $this->input->post('name'),
+            'email' => $this->input->post('email'),
+            'subject' => $this->input->post('subject'),
+            'body' => $this->input->post('body'),
+            'password' => $this->input->post('password'),
+        ];
     }
 
 // 投稿されたIDのキャプチャを削除します。
-    private function _delete_captcha_data(): void
+    private function deleteCaptchaData(): void
     {
         $this->db->delete('captcha', ['captcha_id' => $this->input->post('key')]);
     }
 
 // 新規投稿ページを表示します。
-    private function _show_post_page(): void
+    private function showPostPage(): void
     {
 // 画像キャプチャを生成します。ランダムな文字列を生成するために文字列ヘルパーを
 // ロードし、キャプチャプラグインをロードします。
         $this->load->helper('string');
         $this->load->helper('captcha');
-// 画像キャプチャ生成に必要な設定をします。文字列ヘルパーのrandom_string()
+
+        [$key, $cap] = $this->createCaptcha();
+
+        $data = $this->getBasicPostData();
+        $data['image']      = $cap['image'];
+        $data['key']        = $key;
+
+        $this->loadView('bbs_post', $data);
+    }
+
+    /**
+     * @return array{0: int, 1: array}
+     */
+    private function createCaptcha(): array
+    {
+        // 画像キャプチャ生成に必要な設定をします。文字列ヘルパーのrandom_string()
 // メソッドを使い、ランダムな4桁の数字を取得します。
         $vals = [
             'word'      => random_string('numeric', 4),
@@ -165,80 +184,79 @@ class Bbs extends CI_Controller
 // 登録時に付けられたキャプチャのID番号を取得します。
         $key = $this->db->insert_id();
 
-        $data['image']      = $cap['image'];
-        $data['key']        = $key;
-        $data['name']       = $this->input->post('name');
-        $data['email']      = $this->input->post('email');
-        $data['subject']    = $this->input->post('subject');
-        $data['body']       = $this->input->post('body');
-        $data['password']   = $this->input->post('password');
-        $this->_load_view('bbs_post', $data);
+        return [$key, $cap];
     }
 
-    // 削除ページ
-    public function delete($id = ''): void
+    /**
+     * 削除ページ
+     */
+    public function delete(string $id = ''): void
     {
 // 第1引数、つまり、3番目のURIセグメントのデータをint型に変換します。
         $id = (int) $id;
 // POSTされたpasswordフィールドの値を$passwordに代入します。
-        $password = $this->input->post('password');
+        $password = (string) $this->input->post('password');
 // POSTされたdeleteフィールドの値を$deleteに代入します。この値が
 // 1の場合は、削除を実行します。1以外は、削除の確認ページを表示します。
         $delete = (int) $this->input->post('delete');
 
 // 削除パスワードが入力されていない場合は、エラーページを表示します。
-        if ($password == '') {
-            $this->_load_view('bbs_delete_error');
-        } else {
+        if ($password === '') {
+            $this->loadView('bbs_delete_error');
+
+            return;
+        }
+
 // 記事IDと削除パスワードを条件として、bbsテーブルを検索します。
-            $this->db->where('id', $id);
-            $this->db->where('password', $password);
-            $query = $this->db->get('bbs');
+        $query = $this->getPostToDelete($id, $password);
+
+        // 削除パスワードが一致しなかった場合は、エラーページを表示します。
+        if ($query->num_rows() === 0) {
+            $this->loadView('bbs_delete_error');
+
+            return;
+        }
 
 // レコードが存在した場合は、削除パスワードが一致したことになりますので、
 // 次の処理に移ります。
-            if ($query->num_rows() == 1) {
 // POSTされたデータのdeleteフィールドが1の場合は、確認ページからのPOSTなの
 // で、記事を削除します。
-                if ($delete == 1) {
-                    $this->db->where('id', $id);
-                    $this->db->delete('bbs');
-                    $this->_load_view('bbs_delete_finished');
-                }
+        if ($delete === 1) {
+            $this->deletePost($id);
+            $this->loadView('bbs_delete_finished');
+
+            return;
+        }
+
 // deleteフィールドが1以外の場合は、記事表示ページからのPOSTですので、確認
 // ページを表示します。
-                else {
-                    $row = $query->row();
+        $row = $query->row();
 
-                    $data = [];
-                    $data['id']       = $row->id;
-                    $data['name']     = $row->name;
-                    $data['email']    = $row->email;
-                    $data['subject']  = $row->subject;
-                    $data['datetime'] = $row->datetime;
-                    $data['body']     = $row->body;
-                    $data['password'] = $row->password;
-                    $this->_load_view('bbs_delete_confirm', $data);
-                }
-            }
-// 削除パスワードが一致しなかった場合は、エラーページを表示します。
-            else {
-                $this->_load_view('bbs_delete_error');
-            }
-        }
+        $data = $this->getBasicPostData();
+        $data['id']       = $row->id;
+        $data['datetime'] = $row->datetime;
+
+        $this->loadView('bbs_delete_confirm', $data);
+    }
+
+    private function deletePost(int $id): void
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('bbs');
+    }
+
+    private function getPostToDelete(int $id, string $password): CI_DB_result
+    {
+        $this->db->where('id', $id);
+        $this->db->where('password', $password);
+
+        return $this->db->get('bbs');
     }
 
 // バリデーションを設定します。
-    private function _set_validation(): void
+    private function setValidation(): void
     {
         $this->load->library('form_validation');
-
-// 携帯端末かどうかを判定して、エラー表示の前後に挿入するタグを変更します。
-        if ($this->agent->is_mobile()) {
-//            $this->form_validation->set_error_delimiters('<div>', '</div>');
-        } else {
-//            $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-        }
 
 // 整形・検証ルールを設定します。alpha_numericは英数字のみ、numericは数字のみ
 // となります。captcha_checkは、ユーザが定義したcaptcha_check()メソッド
@@ -282,21 +300,14 @@ class Bbs extends CI_Controller
     public function insert()
     {
 // 検証ルールを設定します。
-        $this->_set_validation();
+        $this->setValidation();
 
 // 検証にパスした場合は、送られたデータとIPアドレスをbbsテーブルに登録します。
         if ($this->form_validation->run()) {
-            $data = [];
-            $data['name']       = $this->input->post('name');
-            $data['email']      = $this->input->post('email');
-            $data['subject']    = $this->input->post('subject');
-            $data['body']       = $this->input->post('body');
-            $data['password']   = $this->input->post('password');
-            $data['ip_address'] = $this->input->server('REMOTE_ADDR');
-            $this->db->insert('bbs', $data);
+            $this->insertToDb();
 
 // 投稿されたIDのキャプチャを削除します。
-            $this->_delete_captcha_data();
+            $this->deleteCaptchaData();
 
 // URLヘルパーのredirect()メソッドで記事表示ページにリダイレクトします。
             return redirect()->to('/bbs');
@@ -304,13 +315,20 @@ class Bbs extends CI_Controller
 
 // 検証にパスしない場合は、新規投稿ページを表示します。
 // 投稿されたIDのキャプチャを削除します。
-        $this->_delete_captcha_data();
+        $this->deleteCaptchaData();
 
-        $this->_show_post_page();
+        $this->showPostPage();
+    }
+
+    private function insertToDb(): void
+    {
+        $data = $this->getBasicPostData();
+        $data['ip_address'] = $this->input->server('REMOTE_ADDR');
+        $this->db->insert('bbs', $data);
     }
 
 // 携帯端末かどうかを判定し、ビューをロードするプライベートメソッドです。
-    private function _load_view($file, $data = []): void
+    private function loadView(string $file, array $data = []): void
     {
 // 携帯端末の場合は、「_mobile」がファイル名に付くビューファイルをロードします。
         if ($this->agent->is_mobile()) {
