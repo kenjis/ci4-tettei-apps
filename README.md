@@ -6,6 +6,10 @@
 - モバイル対応簡易掲示板（8章）
 - 簡易ショッピングサイト（9章）
 
+現在、CodeIgniter 4.1で動作するための更新は完了しており、リファクタリングなどを実施中です。
+
+リファクタリング前のコードは、[v4.0.0](https://github.com/kenjis/ci4-tettei-apps/releases/tag/v4.0.0) を参照してください。
+
 <img src="docs/img/01-home.png" alt="Screenshot: Home" width="400"><img src="docs/img/02-form.png" alt="Screenshot: Form" width="400">
 <img src="docs/img/03-bbs.png" alt="Screenshot: BBS" width="400"><img src="docs/img/04-shop.png" alt="Screenshot: Shop" width="400">
 
