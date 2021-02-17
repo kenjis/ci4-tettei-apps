@@ -43,7 +43,6 @@ class Form extends CI_Controller
     private function _set_validation(): void
     {
 // バリデーションの設定をします。
-//        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
         $this->form_validation->set_rules('name', '名前', 'trim|required|max_length[20]');
         $this->form_validation->set_rules('email', 'メールアドレス', 'trim|required|valid_email');
         $this->form_validation->set_rules('comment', 'コメント', 'required|max_length[200]');
