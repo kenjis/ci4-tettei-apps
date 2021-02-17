@@ -149,7 +149,22 @@ class Bbs extends CI_Controller
 // ロードし、キャプチャプラグインをロードします。
         $this->load->helper('string');
         $this->load->helper('captcha');
-// 画像キャプチャ生成に必要な設定をします。文字列ヘルパーのrandom_string()
+
+        [$key, $cap] = $this->createCaptcha();
+
+        $data = $this->getBasicPostData();
+        $data['image']      = $cap['image'];
+        $data['key']        = $key;
+
+        $this->loadView('bbs_post', $data);
+    }
+
+    /**
+     * @return array{0: int, 1: array}
+     */
+    private function createCaptcha(): array
+    {
+        // 画像キャプチャ生成に必要な設定をします。文字列ヘルパーのrandom_string()
 // メソッドを使い、ランダムな4桁の数字を取得します。
         $vals = [
             'word'      => random_string('numeric', 4),
@@ -167,14 +182,7 @@ class Bbs extends CI_Controller
 // 登録時に付けられたキャプチャのID番号を取得します。
         $key = $this->db->insert_id();
 
-        $data['image']      = $cap['image'];
-        $data['key']        = $key;
-        $data['name']       = $this->input->post('name');
-        $data['email']      = $this->input->post('email');
-        $data['subject']    = $this->input->post('subject');
-        $data['body']       = $this->input->post('body');
-        $data['password']   = $this->input->post('password');
-        $this->loadView('bbs_post', $data);
+        return [$key, $cap];
     }
 
     /**
