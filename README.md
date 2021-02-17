@@ -8,7 +8,7 @@
 
 ## 動作確認環境
 
-- CodeIgniter 4.1.2-dev ([ci4-app-template](https://github.com/kenjis/ci4-app-template)を使用)
+- CodeIgniter 4.1.2-dev ([ci4-app-template](https://github.com/kenjis/ci4-app-template) を使用)
 - PHP 7.4.15
   - Composer 2.0.8
 - MySQL 5.7
