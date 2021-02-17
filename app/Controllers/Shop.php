@@ -252,7 +252,9 @@ class Shop extends MY_Controller
         $this->twig->display('shop_tmpl_shop', $data);
     }
 
-    // お客様情報入力ページ
+    /**
+     * お客様情報入力ページ
+     */
     public function customer_info(): void
     {
 // 検証ルールを設定します。
