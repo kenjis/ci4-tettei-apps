@@ -192,9 +192,7 @@ class Bbs extends CI_Controller
         }
 
 // 記事IDと削除パスワードを条件として、bbsテーブルを検索します。
-        $this->db->where('id', $id);
-        $this->db->where('password', $password);
-        $query = $this->db->get('bbs');
+        $query = $this->getPostToDelete($id, $password);
 
         // 削除パスワードが一致しなかった場合は、エラーページを表示します。
         if ($query->num_rows() === 0) {
@@ -208,8 +206,7 @@ class Bbs extends CI_Controller
 // POSTされたデータのdeleteフィールドが1の場合は、確認ページからのPOSTなの
 // で、記事を削除します。
         if ($delete == 1) {
-            $this->db->where('id', $id);
-            $this->db->delete('bbs');
+            $this->deletePost($id);
             $this->loadView('bbs_delete_finished');
 
             return;
@@ -228,6 +225,20 @@ class Bbs extends CI_Controller
         $data['body']     = $row->body;
         $data['password'] = $row->password;
         $this->loadView('bbs_delete_confirm', $data);
+    }
+
+    private function deletePost(int $id): void
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('bbs');
+    }
+
+    private function getPostToDelete(int $id, string $password): CI_DB_result
+    {
+        $this->db->where('id', $id);
+        $this->db->where('password', $password);
+
+        return $this->db->get('bbs');
     }
 
 // バリデーションを設定します。
