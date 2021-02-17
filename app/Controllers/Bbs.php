@@ -187,43 +187,47 @@ class Bbs extends CI_Controller
 // 削除パスワードが入力されていない場合は、エラーページを表示します。
         if ($password == '') {
             $this->loadView('bbs_delete_error');
-        } else {
+
+            return;
+        }
+
 // 記事IDと削除パスワードを条件として、bbsテーブルを検索します。
-            $this->db->where('id', $id);
-            $this->db->where('password', $password);
-            $query = $this->db->get('bbs');
+        $this->db->where('id', $id);
+        $this->db->where('password', $password);
+        $query = $this->db->get('bbs');
+
+        // 削除パスワードが一致しなかった場合は、エラーページを表示します。
+        if ($query->num_rows() === 0) {
+            $this->loadView('bbs_delete_error');
+
+            return;
+        }
 
 // レコードが存在した場合は、削除パスワードが一致したことになりますので、
 // 次の処理に移ります。
-            if ($query->num_rows() == 1) {
 // POSTされたデータのdeleteフィールドが1の場合は、確認ページからのPOSTなの
 // で、記事を削除します。
-                if ($delete == 1) {
-                    $this->db->where('id', $id);
-                    $this->db->delete('bbs');
-                    $this->loadView('bbs_delete_finished');
-                }
+        if ($delete == 1) {
+            $this->db->where('id', $id);
+            $this->db->delete('bbs');
+            $this->loadView('bbs_delete_finished');
+
+            return;
+        }
+
 // deleteフィールドが1以外の場合は、記事表示ページからのPOSTですので、確認
 // ページを表示します。
-                else {
-                    $row = $query->row();
+        $row = $query->row();
 
-                    $data = [];
-                    $data['id']       = $row->id;
-                    $data['name']     = $row->name;
-                    $data['email']    = $row->email;
-                    $data['subject']  = $row->subject;
-                    $data['datetime'] = $row->datetime;
-                    $data['body']     = $row->body;
-                    $data['password'] = $row->password;
-                    $this->loadView('bbs_delete_confirm', $data);
-                }
-            }
-// 削除パスワードが一致しなかった場合は、エラーページを表示します。
-            else {
-                $this->loadView('bbs_delete_error');
-            }
-        }
+        $data = [];
+        $data['id']       = $row->id;
+        $data['name']     = $row->name;
+        $data['email']    = $row->email;
+        $data['subject']  = $row->subject;
+        $data['datetime'] = $row->datetime;
+        $data['body']     = $row->body;
+        $data['password'] = $row->password;
+        $this->loadView('bbs_delete_confirm', $data);
     }
 
 // バリデーションを設定します。
