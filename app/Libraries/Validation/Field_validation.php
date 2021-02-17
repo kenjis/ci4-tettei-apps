@@ -19,7 +19,7 @@ class Field_validation
         $this->CI->load->library('form_validation');
     }
 
-    public function validate($value, $rules, $errors = [])
+    public function validate($value, $rules, array $errors = [])
     {
         $this->CI->form_validation->reset_validation();
 

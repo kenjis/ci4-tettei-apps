@@ -30,7 +30,7 @@ class Inventory_model extends CI_Model
         return $query->result();
     }
 
-    public function get_category_name($id)
+    public function get_category_name(int $id)
     {
         $this->db->select('name');
         $this->db->where('id', $id);
@@ -44,7 +44,7 @@ class Inventory_model extends CI_Model
         return $row->name;
     }
 
-    public function get_product_list($cat_id, $limit, $offset)
+    public function get_product_list(int $cat_id, int $limit, int $offset)
     {
         $this->db->where('category_id', $cat_id);
         $this->db->order_by('id');
@@ -53,7 +53,7 @@ class Inventory_model extends CI_Model
         return $query->result();
     }
 
-    public function get_product_count($cat_id)
+    public function get_product_count(int $cat_id)
     {
         $this->db->where('category_id', $cat_id);
         $query = $this->db->get('product');
@@ -61,7 +61,7 @@ class Inventory_model extends CI_Model
         return $query->num_rows();
     }
 
-    public function get_product_item($id)
+    public function get_product_item(int $id)
     {
         $this->db->where('id', $id);
         $query = $this->db->get('product');
@@ -69,7 +69,7 @@ class Inventory_model extends CI_Model
         return $query->row();
     }
 
-    public function is_available_product_item($id)
+    public function is_available_product_item(int $id)
     {
         $this->db->where('id', $id);
         $query = $this->db->get('product');
@@ -77,7 +77,7 @@ class Inventory_model extends CI_Model
         return $query->num_rows() == 1;
     }
 
-    public function get_product_by_search($q, $limit, $offset)
+    public function get_product_by_search(string $q, int $limit, int $offset)
     {
 // 検索キーワードをスペースで分割し、like()メソッドでLIKE句を指定します。
 // 複数回like()メソッドを呼んだ場合は、AND条件になります。
@@ -93,7 +93,7 @@ class Inventory_model extends CI_Model
         return $query->result();
     }
 
-    public function get_count_by_search($q)
+    public function get_count_by_search(string $q)
     {
         $this->db->select('name');
         $keywords = explode(' ', $q);

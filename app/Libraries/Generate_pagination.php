@@ -9,7 +9,7 @@ class Generate_pagination
     private $CI;
 
     // ページネーションの生成
-    public function get_links($path, $total, $uri_segment)
+    public function get_links(string $path, int $total, int $uri_segment): string
     {
 // ページネーションクラスをロードします。
         $this->CI =& get_instance();

@@ -42,7 +42,7 @@ class Bbs extends CI_Controller
     }
 
     // 日付順に記事を表示
-    public function index($page = 1): void
+    public function index(string $page = '1'): void
     {
 // 引数から$pageに値が渡されます。これは、3番目のURIセグメントの値です。
 // ユーザが変更可能なデータですので、int型へ変換し、必ず整数値にします。
@@ -152,7 +152,7 @@ class Bbs extends CI_Controller
     }
 
     // 削除ページ
-    public function delete($id = ''): void
+    public function delete(string $id = ''): void
     {
 // 第1引数、つまり、3番目のURIセグメントのデータをint型に変換します。
         $id = (int) $id;
@@ -279,7 +279,7 @@ class Bbs extends CI_Controller
     }
 
 // 携帯端末かどうかを判定し、ビューをロードするプライベートメソッドです。
-    private function loadView($file, $data = []): void
+    private function loadView(string $file, array $data = []): void
     {
 // 携帯端末の場合は、「_mobile」がファイル名に付くビューファイルをロードします。
         if ($this->agent->is_mobile()) {

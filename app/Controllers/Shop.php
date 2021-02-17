@@ -72,7 +72,7 @@ class Shop extends MY_Controller
     }
 
     // トップページ = カテゴリ別商品一覧
-    public function index($cat_id = '1', $page = '0'): void
+    public function index(string $cat_id = '1', string $page = '0'): void
     {
 // ページ番号をoffsetに変換します。
         $offset = max($page - 1, 0) * $this->limit;
@@ -142,7 +142,7 @@ class Shop extends MY_Controller
     }
 
     // カゴに入れる
-    public function add($prod_id = '0'): void
+    public function add(string $prod_id = '0'): void
     {
 // 商品IDを検証します。
         $this->load->library('validation/field_validation');
@@ -185,7 +185,7 @@ class Shop extends MY_Controller
     }
 
     // 検索ページ
-    public function search($page = '0'): void
+    public function search(string $page = '0'): void
     {
 // ページ番号をoffsetに変換します。
         $offset = max($page - 1, 0) * $this->limit;

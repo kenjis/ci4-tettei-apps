@@ -103,7 +103,7 @@ class Form extends CI_Controller
         }
     }
 
-    private function sendmail($mail)
+    private function sendmail(array $mail): bool
     {
 // Emailクラスをロードします。
         $this->load->library('email');
