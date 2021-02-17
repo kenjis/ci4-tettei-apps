@@ -333,9 +333,12 @@ class Shop extends MY_Controller
     {
         if ($this->cart_model->count() === 0) {
             echo '買い物カゴには何も入っていません。';
+
+            return;
         }
+
 // モデルのorder()メソッドを呼び出し、注文データの処理を依頼します。
-        elseif ($this->shop_model->order()) {
+        if ($this->shop_model->order()) {
             $data = [
                 'action' => '注文の完了',
                 'main'   => 'shop_thankyou',
@@ -343,8 +346,10 @@ class Shop extends MY_Controller
             $this->twig->display('shop_tmpl_checkout', $data);
 // 注文が完了したので、セッションを破棄します。
             $this->session->sess_destroy();
-        } else {
-            echo 'システムエラー';
+
+            return;
         }
+
+        echo 'システムエラー';
     }
 }
