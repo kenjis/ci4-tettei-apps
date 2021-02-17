@@ -10,20 +10,41 @@
 
 - CodeIgniter 4.1.2-dev ([ci4-app-template](https://github.com/kenjis/ci4-app-template)を使用)
 - PHP 7.4.15
-    - Composer 2.0.8
+  - Composer 2.0.8
 - MySQL 5.7
 
 ## 「CodeIgniter 3.xで動作するように更新したもの」からの変更点
 
-* ページネーションをoffsetベースからページ番号に変更
-* Callableの検証ルールをクラス化
-* バリデーションエラーのテンプレートを追加
-* 使用するTwigライブラリをcodeigniter-ss-twig v4.0に更新
-* モバイル掲示板用のフックをコントローラフィルタに移行
+- アプリケーションクラスを名前空間付きに移行
+- 設定ファイルを設定クラスに移行 
+  - app/Config/ConfigShop.php
+- ページネーション
+  - 仕様変更に伴い最初のページもURIセグメント数が変わらないものに変更
+  - offsetベースからページ番号に移行
+  - ページネーションのHTMLをテンプレートに移行
+    - App\Views\Pager\default_full
+- バリデーション
+  - Callableの検証ルールをクラスに移行
+    - App\Controllers\BbsValidationRules
+  - バリデーションエラーのHTMLをテンプレートに移行
+    - App\Views\Validation\list
+    - App\Views\Validation\single
+- モバイル掲示板用のフックをコントローラフィルタに移行
+  - App\Filters\ConvertEncoding
+- テストケースクラスを名前空間付きに移行
+- 受入テスト用にacceptance環境を追加
+  - app/Config/Boot/acceptance.php
+- Composerパッケージの更新
+  - Twigライブラリをcodeigniter-ss-twig v4.0に更新
+  - PHPUnitを9.5に更新
+  - symfony/dom-crawlerを5.2に更新
+  - symfony/css-selectorを5.2に更新
 
 追加されたComposerのパッケージ
 
-* CodeIgniter 3 to 4 Upgrade Helper <https://github.com/kenjis/ci3-to-4-upgrade-helper>
+- CodeIgniter 3 to 4 Upgrade Helper <https://github.com/kenjis/ci3-to-4-upgrade-helper>
+- PHPUnit Helper <https://github.com/kenjis/phpunit-helper>
+- bear/qatools <https://github.com/bearsunday/BEAR.QATools>
 
 ## インストール方法
 
@@ -39,7 +60,7 @@ $ cp env .env
 
 ### 依存パッケージのインストール
 
-Composerで依存パッケージをインストールします。
+Composerの依存パッケージをインストールします。
 
 ```
 $ composer install
@@ -124,6 +145,6 @@ geckodriverが開けない場合は、一度Finderからgeckodriverを右クリ�
 
 ## 『CodeIgniter徹底入門』について
 
-* [『CodeIgniter徹底入門』のサンプルアプリケーションをCodeIgniter 3.xにアップデート](https://github.com/kenjis/codeigniter-tettei-apps)
-* [『CodeIgniter徹底入門』情報ページ](http://codeigniter.jp/tettei/)
-* [『CodeIgniter徹底入門』に対するノート](https://github.com/codeigniter-jp/codeigniter-tettei-note)
+- [『CodeIgniter徹底入門』のサンプルアプリケーションをCodeIgniter 3.xにアップデート](https://github.com/kenjis/codeigniter-tettei-apps)
+- [『CodeIgniter徹底入門』情報ページ](http://codeigniter.jp/tettei/)
+- [『CodeIgniter徹底入門』に対するノート](https://github.com/codeigniter-jp/codeigniter-tettei-note)
