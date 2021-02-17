@@ -111,7 +111,7 @@ class Bbs extends CI_Controller
         $this->setValidation();
 
 // 検証をパスしなかった場合は、新規投稿ページを表示します。
-        if ($this->form_validation->run() == false) {
+        if ($this->form_validation->run() === false) {
 // 投稿されたIDのキャプチャを削除します。
             $this->deleteCaptchaData();
 
@@ -195,13 +195,13 @@ class Bbs extends CI_Controller
 // 第1引数、つまり、3番目のURIセグメントのデータをint型に変換します。
         $id = (int) $id;
 // POSTされたpasswordフィールドの値を$passwordに代入します。
-        $password = $this->input->post('password');
+        $password = (string) $this->input->post('password');
 // POSTされたdeleteフィールドの値を$deleteに代入します。この値が
 // 1の場合は、削除を実行します。1以外は、削除の確認ページを表示します。
         $delete = (int) $this->input->post('delete');
 
 // 削除パスワードが入力されていない場合は、エラーページを表示します。
-        if ($password == '') {
+        if ($password === '') {
             $this->loadView('bbs_delete_error');
 
             return;
@@ -221,7 +221,7 @@ class Bbs extends CI_Controller
 // 次の処理に移ります。
 // POSTされたデータのdeleteフィールドが1の場合は、確認ページからのPOSTなの
 // で、記事を削除します。
-        if ($delete == 1) {
+        if ($delete === 1) {
             $this->deletePost($id);
             $this->loadView('bbs_delete_finished');
 
