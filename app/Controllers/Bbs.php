@@ -12,6 +12,7 @@ use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Controller;
 use Kenjis\CI3Compatible\Core\CI_Input;
 use Kenjis\CI3Compatible\Database\CI_DB_query_builder;
+use Kenjis\CI3Compatible\Database\CI_DB_result;
 use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Library\CI_Pagination;
 use Kenjis\CI3Compatible\Library\CI_User_agent;
@@ -57,25 +58,37 @@ class Bbs extends CI_Controller
 // 新しい記事ID順に、limit値とoffset値を指定し、bbsテーブルから記事データ
 // (オブジェクト)を取得し、$data['query']に代入します。order_by()メソッドは、
 // フィールド名とソート順を引数にとり、ORDER BY句を指定します。
-        $this->db->order_by('id', 'desc');
         $data = [];
-        $data['query'] = $this->db->get('bbs', $this->limit, $offset);
+        $data['query'] = $this->getQuery($offset);
 
 // ページネーションを生成します。
+        $data['pagination'] = $this->createPagination();
+
+// _load_view()メソッドは、携帯端末かどうかで、読み込むビューファイルを
+// 切り替えするためのメソッドです。
+        $this->loadView('bbs_show', $data);
+    }
+
+    private function getQuery(int $offset): CI_DB_result
+    {
+        $this->db->order_by('id', 'desc');
+
+        return $this->db->get('bbs', $this->limit, $offset);
+    }
+
+    private function createPagination(): string
+    {
         $this->load->library('pagination');
+
         $config = [];
         $config['base_url'] = $this->config->site_url('/bbs/index/');
 // 記事の総件数をbbsテーブルから取得します。count_all()メソッドは、テーブル名
 // を引数にとり、そのテーブルのレコード数を返します。
         $config['total_rows'] = $this->db->count_all('bbs');
         $config['per_page'] = $this->limit;
-
         $this->pagination->initialize($config);
-        $data['pagination'] = $this->pagination->create_links();
 
-// _load_view()メソッドは、携帯端末かどうかで、読み込むビューファイルを
-// 切り替えするためのメソッドです。
-        $this->loadView('bbs_show', $data);
+        return $this->pagination->create_links();
     }
 
     /**
@@ -264,14 +277,7 @@ class Bbs extends CI_Controller
 
 // 検証にパスした場合は、送られたデータとIPアドレスをbbsテーブルに登録します。
         if ($this->form_validation->run()) {
-            $data = [];
-            $data['name']       = $this->input->post('name');
-            $data['email']      = $this->input->post('email');
-            $data['subject']    = $this->input->post('subject');
-            $data['body']       = $this->input->post('body');
-            $data['password']   = $this->input->post('password');
-            $data['ip_address'] = $this->input->server('REMOTE_ADDR');
-            $this->db->insert('bbs', $data);
+            $this->insertToDb();
 
 // 投稿されたIDのキャプチャを削除します。
             $this->deleteCaptchaData();
@@ -285,6 +291,18 @@ class Bbs extends CI_Controller
         $this->deleteCaptchaData();
 
         $this->showPostPage();
+    }
+
+    private function insertToDb(): void
+    {
+        $data = [];
+        $data['name']       = $this->input->post('name');
+        $data['email']      = $this->input->post('email');
+        $data['subject']    = $this->input->post('subject');
+        $data['body']       = $this->input->post('body');
+        $data['password']   = $this->input->post('password');
+        $data['ip_address'] = $this->input->server('REMOTE_ADDR');
+        $this->db->insert('bbs', $data);
     }
 
 // 携帯端末かどうかを判定し、ビューをロードするプライベートメソッドです。
