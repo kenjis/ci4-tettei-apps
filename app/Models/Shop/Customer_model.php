@@ -34,13 +34,12 @@ class Customer_model extends CI_Model
      */
     public function get(): array
     {
-        $data = [];
-        $data['name']  = $this->session->userdata('name');
-        $data['zip']   = $this->session->userdata('zip');
-        $data['addr']  = $this->session->userdata('addr');
-        $data['tel']   = $this->session->userdata('tel');
-        $data['email'] = $this->session->userdata('email');
-
-        return $data;
+        return [
+            'name'  => $this->session->userdata('name'),
+            'zip'   => $this->session->userdata('zip'),
+            'addr'  => $this->session->userdata('addr'),
+            'tel'   => $this->session->userdata('tel'),
+            'email' => $this->session->userdata('email'),
+        ];
     }
 }

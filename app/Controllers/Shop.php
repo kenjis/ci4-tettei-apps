@@ -109,11 +109,8 @@ class Shop extends MY_Controller
 // カテゴリIDより、カテゴリ名を取得します。
         $category = $this->inventory_model->get_category_name($cat_id);
 
-// モデルよりそのカテゴリの商品数を取得し、ページネーションを生成します。
-        $this->load->library('generate_pagination');
-        $path  = '/shop/index/' . $cat_id;
-        $total = $this->inventory_model->get_product_count($cat_id);
-        $pagination = $this->generate_pagination->get_links($path, $total, 4);
+// ページネーションを生成します。
+        [$total, $pagination] = $this->createPaginationCategory($cat_id);
 
 // モデルよりカートの中の商品アイテム数を取得します。
         $item_count = $this->cart_model->count();
@@ -130,6 +127,17 @@ class Shop extends MY_Controller
 
 // ビューを表示します。
         $this->twig->display('shop_tmpl_shop', $data);
+    }
+
+    private function createPaginationCategory(int $cat_id): array
+    {
+// モデルよりそのカテゴリの商品数を取得し、ページネーションを生成します。
+        $this->load->library('generate_pagination');
+        $path  = '/shop/index/' . $cat_id;
+        $total = $this->inventory_model->get_product_count($cat_id);
+        $pagination = $this->generate_pagination->get_links($path, $total, 4);
+
+        return [$total, $pagination];
     }
 
     /**
@@ -243,18 +251,15 @@ class Shop extends MY_Controller
 
         $cat_list = $this->inventory_model->get_category_list();
 
-// モデルから、キーワードで検索した商品データと総件数を取得します。
+// モデルから、キーワードで検索した商品データを取得します。
         $list = $this->inventory_model->get_product_by_search(
             $q,
             $this->limit,
             $offset
         );
-        $total = $this->inventory_model->get_count_by_search($q);
 
 // ページネーションを生成します。
-        $this->load->library('generate_pagination');
-        $path  = '/shop/search';
-        $pagination = $this->generate_pagination->get_links($path, $total, 3);
+        [$total, $pagination] = $this->createPaginationSearch($q);
 
         $data = [
             'cat_list' => $cat_list,
@@ -267,6 +272,18 @@ class Shop extends MY_Controller
         ];
 
         $this->twig->display('shop_tmpl_shop', $data);
+    }
+
+    private function createPaginationSearch(string $q): array
+    {
+        $total = $this->inventory_model->get_count_by_search($q);
+
+// ページネーションを生成します。
+        $this->load->library('generate_pagination');
+        $path  = '/shop/search';
+        $pagination = $this->generate_pagination->get_links($path, $total, 3);
+
+        return [$total, $pagination];
     }
 
     /**
