@@ -61,13 +61,14 @@ class Form extends CI_Controller
 
 // バリデーション(検証)クラスのrun()メソッドを呼び出し、送信されたデータの検証
 // を行います。検証OKなら、確認ページ(form_confirm)を表示します。
-        if ($this->form_validation->run() == true) {
+        if ($this->form_validation->run()) {
             $this->load->view('form_confirm');
+
+            return;
         }
+
 // 検証でエラーの場合、入力ページ(form)を表示します。
-        else {
-            $this->load->view('form');
-        }
+        $this->load->view('form');
     }
 
     public function send(): void
@@ -76,7 +77,7 @@ class Form extends CI_Controller
         $this->setValidation();
 
 // 送信されたデータの検証を行い、検証OKなら、メールを送信します。
-        if ($this->form_validation->run() == true) {
+        if ($this->form_validation->run()) {
 // メールの内容を設定します。
             $mail = [];
             $mail['from_name'] = $this->input->post('name');
@@ -96,17 +97,19 @@ class Form extends CI_Controller
             else {
                 echo 'メール送信エラー';
             }
+
+            return;
         }
+
 // 検証でエラーの場合、入力ページ(form)を表示します。
-        else {
-            $this->load->view('form');
-        }
+        $this->load->view('form');
     }
 
     private function sendmail(array $mail): bool
     {
 // Emailクラスをロードします。
         $this->load->library('email');
+
         $config = [];
 // メールの送信方法を指定します。ここでは、mail()関数を使います。
         $config['protocol'] = 'mail';
@@ -134,7 +137,7 @@ class Form extends CI_Controller
             return true;
         }
 
-        //          echo $this->email->print_debugger();
+        // echo $this->email->print_debugger();
         return false;
     }
 }
