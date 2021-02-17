@@ -42,8 +42,6 @@ class Form extends CI_Controller
 
 // バリデーション(検証)クラスをロードします。
         $this->load->library('form_validation');
-
-        //$this->output->enable_profiler(TRUE);
     }
 
     private function _set_validation(): void
