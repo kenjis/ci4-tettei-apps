@@ -26,7 +26,9 @@ class Shop_model extends CI_Model
         $this->load->model('shop/mail_model');
     }
 
-    // 注文の処理
+    /**
+     * 注文の処理
+     */
     public function order(): bool
     {
         $data = [];
