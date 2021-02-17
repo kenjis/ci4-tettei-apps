@@ -118,16 +118,22 @@ class Bbs extends CI_Controller
 
             $this->showPostPage();
         } else {
-            $data = [];
-            $data['name']       = $this->input->post('name');
-            $data['email']      = $this->input->post('email');
-            $data['subject']    = $this->input->post('subject');
-            $data['body']       = $this->input->post('body');
-            $data['password']   = $this->input->post('password');
+            $data = $this->getBasicPostData();
             $data['key']        = $this->input->post('key');
             $data['captcha']    = $this->input->post('captcha');
             $this->loadView('bbs_confirm', $data);
         }
+    }
+
+    private function getBasicPostData(): array
+    {
+        return [
+            'name' => $this->input->post('name'),
+            'email' => $this->input->post('email'),
+            'subject' => $this->input->post('subject'),
+            'body' => $this->input->post('body'),
+            'password' => $this->input->post('password'),
+        ];
     }
 
 // 投稿されたIDのキャプチャを削除します。
@@ -216,14 +222,10 @@ class Bbs extends CI_Controller
 // ページを表示します。
         $row = $query->row();
 
-        $data = [];
+        $data = $this->getBasicPostData();
         $data['id']       = $row->id;
-        $data['name']     = $row->name;
-        $data['email']    = $row->email;
-        $data['subject']  = $row->subject;
         $data['datetime'] = $row->datetime;
-        $data['body']     = $row->body;
-        $data['password'] = $row->password;
+
         $this->loadView('bbs_delete_confirm', $data);
     }
 
@@ -310,12 +312,7 @@ class Bbs extends CI_Controller
 
     private function insertToDb(): void
     {
-        $data = [];
-        $data['name']       = $this->input->post('name');
-        $data['email']      = $this->input->post('email');
-        $data['subject']    = $this->input->post('subject');
-        $data['body']       = $this->input->post('body');
-        $data['password']   = $this->input->post('password');
+        $data = $this->getBasicPostData();
         $data['ip_address'] = $this->input->server('REMOTE_ADDR');
         $this->db->insert('bbs', $data);
     }
