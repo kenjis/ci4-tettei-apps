@@ -20,17 +20,19 @@ class Generate_pagination
         $this->CI =& get_instance();
         $this->CI->load->library('pagination');
 
-        $config = [];
+        $config = [
 // リンク先のURLを指定します。
-        $config['base_url'] = $this->CI->config->site_url($path);
+            'base_url' => $this->CI->config->site_url($path),
 // 総件数を指定します。
-        $config['total_rows'] = $total;
+            'total_rows' => $total,
 // 1ページに表示する件数を指定します。
-        $config['per_page'] = $this->CI->limit;
+            'per_page' => $this->CI->limit,
 // ページ番号情報がどのURIセグメントに含まれるか指定します。
-        $config['uri_segment'] = $uri_segment;
+            'uri_segment' => $uri_segment,
 // ページネーションでクエリ文字列を使えるようにします。
-        $config['reuse_query_string'] = true;
+            'reuse_query_string' => true,
+        ];
+
 // $configでページネーションを初期化します。
         $this->CI->pagination->initialize($config);
 

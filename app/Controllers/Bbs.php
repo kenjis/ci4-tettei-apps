@@ -80,12 +80,14 @@ class Bbs extends CI_Controller
     {
         $this->load->library('pagination');
 
-        $config = [];
-        $config['base_url'] = $this->config->site_url('/bbs/index/');
+        $config = [
+            'base_url' => $this->config->site_url('/bbs/index/'),
 // 記事の総件数をbbsテーブルから取得します。count_all()メソッドは、テーブル名
 // を引数にとり、そのテーブルのレコード数を返します。
-        $config['total_rows'] = $this->db->count_all('bbs');
-        $config['per_page'] = $this->limit;
+            'total_rows' => $this->db->count_all('bbs'),
+            'per_page' => $this->limit,
+        ];
+
         $this->pagination->initialize($config);
 
         return $this->pagination->create_links();
