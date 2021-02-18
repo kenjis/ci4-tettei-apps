@@ -24,11 +24,16 @@ abstract class Custom_validation
      */
     abstract protected function set_validation_rules(): void;
 
+    /**
+     * @param   mixed $field
+     * @param   mixed $rules
+     * @param   array $errors
+     */
     protected function set_rules(
         $field,
-        $label = '',
+        string $label = '',
         $rules = [],
-        $errors = []
+        array $errors = []
     ): void {
         $this->CI->form_validation->set_rules($field, $label, $rules, $errors);
     }
