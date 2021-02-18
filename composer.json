@@ -16,7 +16,6 @@
         "fakerphp/faker": "^1.9",
         "mikey179/vfsstream": "1.6.*",
         "phpunit/phpunit": "^9.0",
-        "bear/qatools": "^1.9",
         "codeception/codeception": "^4.1",
         "codeception/module-webdriver": "^1.2",
         "kenjis/phpunit-helper": "^1.0",
@@ -30,9 +29,11 @@
         }
     },
     "scripts": {
+        "post-install-cmd": "@composer bin all install --ansi",
         "post-update-cmd": [
             "@composer dump-autoload",
-            "php spark revision:update"
+            "php spark revision:update",
+            "@composer bin all update --ansi"
         ],
         "test": "phpunit",
         "coverage": "php -dzend_extension=xdebug.so -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage --log-junit=build/coverage/junit.xml",
