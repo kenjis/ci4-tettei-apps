@@ -143,7 +143,7 @@ class Shop extends MY_Controller
     /**
      * 商品詳細ページ
      */
-    public function product($prod_id = '1'): void
+    public function product(string $prod_id = '1'): void
     {
         $prod_id = (int) $prod_id;
 
