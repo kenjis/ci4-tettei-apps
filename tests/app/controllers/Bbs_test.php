@@ -19,12 +19,6 @@ class Bbs_test extends FeatureTestCase
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->request->setCallable(
-            static function ($CI): void {
-                $CI->load->library('user_agent');
-            }
-        );
     }
 
     public function test_index(): void
