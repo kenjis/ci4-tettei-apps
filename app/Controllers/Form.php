@@ -107,6 +107,9 @@ class Form extends CI_Controller
         echo 'メール送信エラー';
     }
 
+    /**
+     * @param array{from_name: string, from: string, to: string, subject: string, body: string} $mail
+     */
     private function sendmail(array $mail): bool
     {
 // Emailクラスをロードします。

@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use CodeIgniter\HTTP\RedirectResponse;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Controller;
 use Kenjis\CI3Compatible\Core\CI_Input;
@@ -132,6 +133,9 @@ class Bbs extends CI_Controller
         $this->loadView('bbs_confirm', $data);
     }
 
+    /**
+     * @return array{name: string, email: string, subject: string, body: string, password: string}
+     */
     private function getBasicPostData(): array
     {
         return [
@@ -199,6 +203,12 @@ class Bbs extends CI_Controller
     {
 // 第1引数、つまり、3番目のURIセグメントのデータをint型に変換します。
         $id = filter_var($id, FILTER_VALIDATE_INT);
+
+        if ($id === false) {
+            show_error('不正な入力です。');
+
+            return;
+        }
 
 // POSTされたpasswordフィールドの値を$passwordに代入します。
         $password = (string) $this->input->post('password');
@@ -303,7 +313,7 @@ class Bbs extends CI_Controller
     }
 
 // 投稿された記事をデータベースに登録します。
-    public function insert()
+    public function insert(): ?RedirectResponse
     {
 // 検証ルールを設定します。
         $this->setValidation();
@@ -324,6 +334,8 @@ class Bbs extends CI_Controller
         $this->deleteCaptchaData();
 
         $this->showPostPage();
+
+        return null;
     }
 
     private function insertToDb(): void
@@ -334,6 +346,10 @@ class Bbs extends CI_Controller
     }
 
 // 携帯端末かどうかを判定し、ビューをロードするプライベートメソッドです。
+
+    /**
+     * @param array<string, mixed> $data
+     */
     private function loadView(string $file, array $data = []): void
     {
 // 携帯端末の場合は、「_mobile」がファイル名に付くビューファイルをロードします。

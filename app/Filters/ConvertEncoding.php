@@ -55,12 +55,19 @@ class ConvertEncoding implements FilterInterface
     /**
      * 入力文字エンコード変換
      *
-     * @param $array
+     * @param array<string, mixed> $array
      *
-     * @return array|false|string|string[]|null
+     * @return array<string, mixed>
      */
-    private function convert_to_utf8(array $array)
+    private function convert_to_utf8(array $array): array
     {
-        return mb_convert_encoding($array, 'UTF-8', 'SJIS-win');
+        // @phpstan-ignore-next-line
+        $utf8 = mb_convert_encoding($array, 'UTF-8', 'SJIS-win');
+
+        if ($utf8 === false) { // @phpstan-ignore-line
+            return [];
+        }
+
+        return $utf8; // @phpstan-ignore-line
     }
 }

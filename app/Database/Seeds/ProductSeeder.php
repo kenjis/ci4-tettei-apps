@@ -9,6 +9,7 @@ use Kenjis\CI3Compatible\Library\Seeder;
 
 class ProductSeeder extends Seeder
 {
+    /** @var string */
     private $table = 'product';
 
     public function run(): void

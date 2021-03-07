@@ -75,7 +75,7 @@ class Shop_model extends CI_Model
 
 // sendmail()メソッドを呼び出し、実際にメールを送信します。メール送信に成功
 // すれば、TRUEを返します。
-        if ($this->mail_model->sendmail($mail)) {
+        if ($this->mail_model->sendmail($mail)) { // @phpstan-ignore-line 何故か 'to' が array|int|string と判定されてエラーになる
             return true;
         }
 

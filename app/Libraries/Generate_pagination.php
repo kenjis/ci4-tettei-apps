@@ -20,13 +20,13 @@ class Generate_pagination
 // ページネーションクラスをロードします。
         $this->CI =& get_instance();
         $this->CI->load->library('pagination');
-        $this->pagination = $this->CI->pagination;
+        $this->pagination = $this->CI->pagination; // @phpstan-ignore-line
     }
 
     /**
      * ページネーションの生成
      *
-     * @param array $config
+     * @param array{base_url: string, per_page: int, total_rows: int, uri_segment: int} $config
      */
     public function get_links(array $config): string
     {

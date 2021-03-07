@@ -78,8 +78,8 @@ class Shop extends MY_Controller
         $this->config->load('ConfigShop', true);
 // 上記のように読み込んだ場合、設定値は、以下のようにitem()メソッドに引数で
 // 「設定項目名」と「設定ファイル名」を渡すことで取得できます。
-        $this->limit = $this->config->item('per_page', 'ConfigShop');
-        $this->admin = $this->config->item('admin_email', 'ConfigShop');
+        $this->limit = (int) $this->config->item('per_page', 'ConfigShop');
+        $this->admin = (string) $this->config->item('admin_email', 'ConfigShop');
     }
 
     /**
@@ -89,6 +89,12 @@ class Shop extends MY_Controller
     {
         $cat_id = filter_var($cat_id, FILTER_VALIDATE_INT);
         $page = filter_var($page, FILTER_VALIDATE_INT);
+
+        if ($cat_id === false || $page === false) {
+            show_error('不正な入力です。');
+
+            return;
+        }
 
 // ページ番号をoffsetに変換します。
         $offset = max($page - 1, 0) * $this->limit;
@@ -136,6 +142,9 @@ class Shop extends MY_Controller
         $this->twig->display('shop_tmpl_shop', $data);
     }
 
+    /**
+     * @return array{0: int, 1: string}
+     */
     private function createPaginationCategory(int $cat_id): array
     {
         $this->load->library('generate_pagination');
@@ -165,6 +174,12 @@ class Shop extends MY_Controller
     public function product(string $prod_id = '1'): void
     {
         $prod_id = filter_var($prod_id, FILTER_VALIDATE_INT);
+
+        if ($prod_id === false) {
+            show_error('不正な入力です。');
+
+            return;
+        }
 
 // 商品IDを検証します。
         $this->field_validation->validate(
@@ -196,6 +211,12 @@ class Shop extends MY_Controller
     {
 // $prod_idの型をintに変更します。
         $prod_id = filter_var($prod_id, FILTER_VALIDATE_INT);
+
+        if ($prod_id === false) {
+            show_error('不正な入力です。');
+
+            return;
+        }
 
 // POSTされたqtyフィールドより、数量を取得します。
         $qty = (int) $this->input->post('qty');
@@ -290,6 +311,9 @@ class Shop extends MY_Controller
         $this->twig->display('shop_tmpl_shop', $data);
     }
 
+    /**
+     * @return array{0: int, 1: string}
+     */
     private function createPaginationSearch(string $q): array
     {
         $this->load->library('generate_pagination');
