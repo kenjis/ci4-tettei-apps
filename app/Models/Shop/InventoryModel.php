@@ -7,10 +7,10 @@ namespace App\Models\Shop;
 use Kenjis\CI3Compatible\Core\CI_Loader;
 use Kenjis\CI3Compatible\Core\CI_Model;
 use Kenjis\CI3Compatible\Database\CI_DB;
+use Kenjis\CI3Compatible\Exception\RuntimeException;
 use stdClass;
 
 use function explode;
-use function show_error;
 
 /**
  * @property CI_DB $db
@@ -44,7 +44,7 @@ class InventoryModel extends CI_Model
         $row = $query->row();
 
         if ($row === null) {
-            show_error('不正な入力です。');
+            throw new RuntimeException('不正な入力です。');
         }
 
         return $row->name;

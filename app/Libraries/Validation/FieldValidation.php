@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Libraries\Validation;
 
 use Kenjis\CI3Compatible\Core\CI_Controller;
+use Kenjis\CI3Compatible\Exception\RuntimeException;
 use Kenjis\CI3Compatible\Library\CI_Form_validation;
-
-use function show_error;
 
 class FieldValidation
 {
@@ -43,8 +42,6 @@ class FieldValidation
             return true;
         }
 
-        show_error('不正な入力です。');
-
-        return false;
+        throw new RuntimeException('不正な入力です。');
     }
 }
