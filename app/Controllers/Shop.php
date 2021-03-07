@@ -21,9 +21,12 @@ use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI4Twig\Twig;
 
+use function filter_var;
 use function max;
 use function mb_convert_kana;
 use function trim;
+
+use const FILTER_VALIDATE_INT;
 
 /**
  * @property Shop_model $shop_model

@@ -17,7 +17,10 @@ use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Library\CI_Pagination;
 use Kenjis\CI3Compatible\Library\CI_User_agent;
 
+use function filter_var;
 use function max;
+
+use const FILTER_VALIDATE_INT;
 
 /**
  * @property CI_DB_query_builder $db
