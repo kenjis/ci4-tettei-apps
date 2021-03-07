@@ -50,7 +50,7 @@ class Bbs extends CI_Controller
     {
 // 引数から$pageに値が渡されます。これは、3番目のURIセグメントの値です。
 // ユーザが変更可能なデータですので、int型へ変換し、必ず整数値にします。
-        $page = (int) $page;
+        $page = filter_var($page, FILTER_VALIDATE_INT);
 
 // ページ番号をoffsetに変換します。
         $offset = max($page - 1, 0) * $this->limit;
@@ -195,7 +195,8 @@ class Bbs extends CI_Controller
     public function delete(string $id = ''): void
     {
 // 第1引数、つまり、3番目のURIセグメントのデータをint型に変換します。
-        $id = (int) $id;
+        $id = filter_var($id, FILTER_VALIDATE_INT);
+
 // POSTされたpasswordフィールドの値を$passwordに代入します。
         $password = (string) $this->input->post('password');
 // POSTされたdeleteフィールドの値を$deleteに代入します。この値が
