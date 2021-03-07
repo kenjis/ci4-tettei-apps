@@ -355,8 +355,10 @@ class Bbs extends CI_Controller
 // 携帯端末の場合は、「_mobile」がファイル名に付くビューファイルをロードします。
         if ($this->agent->is_mobile()) {
             $this->load->view($file . '_mobile', $data);
-        } else {
-            $this->load->view($file, $data);
+
+            return;
         }
+
+        $this->load->view($file, $data);
     }
 }

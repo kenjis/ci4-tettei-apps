@@ -361,36 +361,39 @@ class Shop extends MY_Controller
     {
         $this->load->library('validation/shop_validation_customer');
 
-        if ($this->shop_validation_customer->run()) {
-// 検証をパスした入力データは、モデルを使って保存します。
-            $customer_data = [
-                'name'  => $this->input->post('name'),
-                'zip'   => $this->input->post('zip'),
-                'addr'  => $this->input->post('addr'),
-                'tel'   => $this->input->post('tel'),
-                'email' => $this->input->post('email'),
-            ];
-            $this->customer_model->set($customer_data);
-
-            $cart = $this->cart_model->get_all();
-
-            $data = [
-                'name' => $customer_data['name'],
-                'zip' => $customer_data['zip'],
-                'addr' => $customer_data['addr'],
-                'tel' => $customer_data['tel'],
-                'email' => $customer_data['email'],
-                'total' => $cart['total'],
-                'cart' => $cart['items'],
-                'action' => '注文内容の確認',
-                'main' => 'shop_confirm',
-            ];
-        } else {
+        if (! $this->shop_validation_customer->run()) {
             $data = [
                 'action' => 'お客様情報の入力',
-                'main'   => 'shop_customer_info',
+                'main' => 'shop_customer_info',
             ];
+            $this->twig->display('shop_tmpl_checkout', $data);
+
+            return;
         }
+
+// 検証をパスした入力データは、モデルを使って保存します。
+        $customer_data = [
+            'name'  => $this->input->post('name'),
+            'zip'   => $this->input->post('zip'),
+            'addr'  => $this->input->post('addr'),
+            'tel'   => $this->input->post('tel'),
+            'email' => $this->input->post('email'),
+        ];
+        $this->customer_model->set($customer_data);
+
+        $cart = $this->cart_model->get_all();
+
+        $data = [
+            'name' => $customer_data['name'],
+            'zip' => $customer_data['zip'],
+            'addr' => $customer_data['addr'],
+            'tel' => $customer_data['tel'],
+            'email' => $customer_data['email'],
+            'total' => $cart['total'],
+            'cart' => $cart['items'],
+            'action' => '注文内容の確認',
+            'main' => 'shop_confirm',
+        ];
 
         $this->twig->display('shop_tmpl_checkout', $data);
     }

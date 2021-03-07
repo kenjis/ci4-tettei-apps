@@ -13,6 +13,9 @@ use function mb_convert_encoding;
 
 class ConvertEncoding implements FilterInterface
 {
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function before(RequestInterface $request, $arguments = null): void
     {
 // 携帯端末からのアクセスを判定するためユーザエージェントクラスをロードします。
@@ -29,6 +32,9 @@ class ConvertEncoding implements FilterInterface
         $request->setGlobal('post', $_POST);
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function after(
         RequestInterface $request,
         ResponseInterface $response,
