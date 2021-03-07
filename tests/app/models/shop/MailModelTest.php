@@ -7,7 +7,7 @@ namespace App\Models\Shop;
 use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 use Tests\Support\Libraries\Mock_Libraries_Email;
 
-class Mail_model_test extends UnitTestCase
+class MailModelTest extends UnitTestCase
 {
     /** @var MailModel */
     private $obj;

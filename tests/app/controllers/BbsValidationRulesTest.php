@@ -6,7 +6,7 @@ namespace App\Controllers;
 
 use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 
-class BbsValidationRules_test extends UnitTestCase
+class BbsValidationRulesTest extends UnitTestCase
 {
     public function test_captcha_check_failure(): void
     {

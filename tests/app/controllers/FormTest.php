@@ -7,7 +7,7 @@ namespace App\Controllers;
 use Kenjis\CI3Compatible\Library\CI_Email;
 use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
 
-class Form_test extends FeatureTestCase
+class FormTest extends FeatureTestCase
 {
     public function test_index(): void
     {

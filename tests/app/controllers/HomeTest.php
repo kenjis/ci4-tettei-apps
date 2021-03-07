@@ -6,7 +6,7 @@ namespace App\Controllers;
 
 use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
 
-class Home_test extends FeatureTestCase
+class HomeTest extends FeatureTestCase
 {
     public function test_index(): void
     {

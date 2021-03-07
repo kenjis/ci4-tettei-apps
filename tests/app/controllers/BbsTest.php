@@ -12,7 +12,7 @@ use function html_escape;
 use function time;
 use function trim;
 
-class Bbs_test extends FeatureTestCase
+class BbsTest extends FeatureTestCase
 {
     use UnitTest;
 

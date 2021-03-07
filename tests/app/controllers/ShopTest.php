@@ -16,7 +16,7 @@ use function get_instance;
 use function ob_get_clean;
 use function ob_start;
 
-class Shop_test extends FeatureTestCase
+class ShopTest extends FeatureTestCase
 {
     use UnitTest;
 

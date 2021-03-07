@@ -8,7 +8,7 @@ use Kenjis\CI3Compatible\Test\TestCase\TestCase;
 
 use function array_reduce;
 
-class Shop_validation_customer_test extends TestCase
+class ShopValidationCustomerTest extends TestCase
 {
     /** @var shopValidationCustomer */
     private $obj;

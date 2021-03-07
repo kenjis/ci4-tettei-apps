@@ -9,7 +9,7 @@ use Kenjis\CI3Compatible\Test\Traits\SessionTest;
 
 use function get_instance;
 
-class Cart_model_test extends UnitTestCase
+class CartModelTest extends UnitTestCase
 {
     use SessionTest;
 

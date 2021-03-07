@@ -8,7 +8,7 @@ use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 use Kenjis\CI3Compatible\Test\Traits\SessionTest;
 use Tests\Support\Libraries\Mock_Libraries_Email;
 
-class Shop_model_test extends UnitTestCase
+class ShopModelTest extends UnitTestCase
 {
     use SessionTest;
 

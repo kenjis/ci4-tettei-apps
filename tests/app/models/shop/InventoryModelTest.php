@@ -8,7 +8,7 @@ use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 
 use function get_instance;
 
-class Inventory_model_test extends UnitTestCase
+class InventoryModelTest extends UnitTestCase
 {
     /** @var InventoryModel */
     private $obj;

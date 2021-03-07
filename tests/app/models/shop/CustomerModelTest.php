@@ -7,7 +7,7 @@ namespace App\Models\Shop;
 use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 use Kenjis\CI3Compatible\Test\Traits\SessionTest;
 
-class Customer_model_test extends UnitTestCase
+class CustomerModelTest extends UnitTestCase
 {
     use SessionTest;
 
