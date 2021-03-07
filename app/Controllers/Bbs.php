@@ -11,7 +11,7 @@ namespace App\Controllers;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Controller;
 use Kenjis\CI3Compatible\Core\CI_Input;
-use Kenjis\CI3Compatible\Database\CI_DB_query_builder;
+use Kenjis\CI3Compatible\Database\CI_DB;
 use Kenjis\CI3Compatible\Database\CI_DB_result;
 use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Library\CI_Pagination;
@@ -23,7 +23,7 @@ use function max;
 use const FILTER_VALIDATE_INT;
 
 /**
- * @property CI_DB_query_builder $db
+ * @property CI_DB $db
  * @property CI_User_agent $agent
  * @property CI_Pagination $pagination
  * @property CI_Form_validation $form_validation
