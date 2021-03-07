@@ -13,7 +13,7 @@ class Cart_model_test extends UnitTestCase
 {
     use SessionTest;
 
-    /** @var Cart_model */
+    /** @var CartModel */
     private $obj;
 
     public static function setUpBeforeClass(): void
@@ -32,7 +32,7 @@ class Cart_model_test extends UnitTestCase
         // Cart_model が Session に依存しているためリセットする
         $_SESSION = [];
 
-        $this->obj = $this->newModel(Cart_model::class);
+        $this->obj = $this->newModel(CartModel::class);
     }
 
     public function test_add(): void

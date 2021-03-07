@@ -9,14 +9,14 @@ use Tests\Support\Libraries\Mock_Libraries_Email;
 
 class Mail_model_test extends UnitTestCase
 {
-    /** @var Mail_model */
+    /** @var MailModel */
     private $obj;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->obj = $this->newModel(Mail_model::class);
+        $this->obj = $this->newModel(MailModel::class);
         $this->CI->email = new Mock_Libraries_Email();
     }
 

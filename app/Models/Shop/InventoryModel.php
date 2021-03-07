@@ -16,7 +16,7 @@ use function show_error;
  * @property CI_DB $db
  * @property CI_Loader $load
  */
-class Inventory_model extends CI_Model
+class InventoryModel extends CI_Model
 {
     public function __construct()
     {

@@ -12,7 +12,7 @@ use Kenjis\CI3Compatible\Library\CI_Email;
  * @property CI_Email $email
  * @property CI_Loader $load
  */
-class Mail_model extends CI_Model
+class MailModel extends CI_Model
 {
     public function __construct()
     {

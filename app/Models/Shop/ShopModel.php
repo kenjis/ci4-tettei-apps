@@ -13,21 +13,21 @@ use function date;
 use function number_format;
 
 /**
- * @property Cart_model $cart_model
- * @property Customer_model $customer_model
- * @property Mail_model $mail_model
+ * @property CartModel $cartModel
+ * @property CustomerModel $customerModel
+ * @property MailModel $mailModel
  * @property CI_Parser $parser
  * @property CI_Loader $load
  */
-class Shop_model extends CI_Model
+class ShopModel extends CI_Model
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->load->model('shop/cart_model');
-        $this->load->model('shop/customer_model');
-        $this->load->model('shop/mail_model');
+        $this->load->model('shop/cartModel');
+        $this->load->model('shop/customerModel');
+        $this->load->model('shop/mailModel');
     }
 
     /**
@@ -39,7 +39,7 @@ class Shop_model extends CI_Model
         $date = date('Y/m/d H:i:s');
 
 // カートの情報を取得します。
-        $cart = $this->cart_model->get_all();
+        $cart = $this->cartModel->get_all();
         foreach ($cart['items'] as &$item) {
             $item['price']  = number_format((float) $item['price']);
             $item['amount'] = number_format((float) $item['amount']);
@@ -53,7 +53,7 @@ class Shop_model extends CI_Model
         ];
 
 // お客様情報を取得します。
-        $data = array_merge($data, $this->customer_model->get());
+        $data = array_merge($data, $this->customerModel->get());
 
 // テンプレートパーサクラスでメール本文を作成します。
         $this->load->library('parser');
@@ -75,7 +75,7 @@ class Shop_model extends CI_Model
 
 // sendmail()メソッドを呼び出し、実際にメールを送信します。メール送信に成功
 // すれば、TRUEを返します。
-        if ($this->mail_model->sendmail($mail)) { // @phpstan-ignore-line 何故か 'to' が array|int|string と判定されてエラーになる
+        if ($this->mailModel->sendmail($mail)) { // @phpstan-ignore-line 何故か 'to' が array|int|string と判定されてエラーになる
             return true;
         }
 

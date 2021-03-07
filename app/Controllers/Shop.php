@@ -11,10 +11,10 @@ namespace App\Controllers;
 use App\Libraries\Generate_pagination;
 use App\Libraries\Validation\Field_validation;
 use App\Libraries\Validation\Shop_validation_customer;
-use App\Models\Shop\Cart_model;
-use App\Models\Shop\Customer_model;
-use App\Models\Shop\Inventory_model;
-use App\Models\Shop\Shop_model;
+use App\Models\Shop\CartModel;
+use App\Models\Shop\CustomerModel;
+use App\Models\Shop\InventoryModel;
+use App\Models\Shop\ShopModel;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Input;
 use Kenjis\CI3Compatible\Library\CI_Form_validation;
@@ -29,10 +29,10 @@ use function trim;
 use const FILTER_VALIDATE_INT;
 
 /**
- * @property Shop_model $shop_model
- * @property Inventory_model $inventory_model
- * @property Cart_model $cart_model
- * @property Customer_model $customer_model
+ * @property ShopModel $shopModel
+ * @property InventoryModel $inventoryModel
+ * @property CartModel $cartModel
+ * @property CustomerModel $customerModel
  * @property Field_validation $field_validation
  * @property Shop_validation_customer $shop_validation_customer
  * @property Generate_pagination $generate_pagination
@@ -66,10 +66,10 @@ class Shop extends MY_Controller
 // モデルをロードします。ロード後のモデルオブジェクトは、$this->shop_modelなど
 // として利用できます。
         $this->load->model([
-            'shop/shop_model',
-            'shop/inventory_model',
-            'shop/cart_model',
-            'shop/customer_model',
+            'shop/shopModel',
+            'shop/inventoryModel',
+            'shop/cartModel',
+            'shop/customerModel',
         ]);
 
 // このアプリケーション専用の設定ファイルConfigShop.phpを読み込みます。
@@ -110,23 +110,23 @@ class Shop extends MY_Controller
         );
 
 // モデルからカテゴリの一覧を取得します。
-        $catList = $this->inventory_model->get_category_list();
+        $catList = $this->inventoryModel->get_category_list();
 
 // カテゴリIDとoffset値と、1ページに表示する商品の数を渡し、モデルより
 // 商品一覧を取得します。
-        $list = $this->inventory_model->get_product_list(
+        $list = $this->inventoryModel->get_product_list(
             $catId,
             $this->limit,
             $offset
         );
 // カテゴリIDより、カテゴリ名を取得します。
-        $category = $this->inventory_model->get_category_name($catId);
+        $category = $this->inventoryModel->get_category_name($catId);
 
 // ページネーションを生成します。
         [$total, $pagination] = $this->createPaginationCategory($catId);
 
 // モデルよりカートの中の商品アイテム数を取得します。
-        $itemCount = $this->cart_model->count();
+        $itemCount = $this->cartModel->count();
 
         $data = [
             'cat_list' => $catList,
@@ -151,7 +151,7 @@ class Shop extends MY_Controller
 
 // モデルよりそのカテゴリの商品数を取得し、ページネーションを生成します。
         $path  = '/shop/index/' . $catId;
-        $total = $this->inventory_model->get_product_count($catId);
+        $total = $this->inventoryModel->get_product_count($catId);
 
         $config = [
 // リンク先のURLを指定します。
@@ -187,12 +187,12 @@ class Shop extends MY_Controller
             'required|is_natural|max_length[11]'
         );
 
-        $catList = $this->inventory_model->get_category_list();
+        $catList = $this->inventoryModel->get_category_list();
 
 // モデルより商品データを取得します。
-        $item = $this->inventory_model->get_product_item($prodId);
+        $item = $this->inventoryModel->get_product_item($prodId);
 
-        $itemCount = $this->cart_model->count();
+        $itemCount = $this->cartModel->count();
 
         $data = [
             'cat_list' => $catList,
@@ -233,7 +233,7 @@ class Shop extends MY_Controller
             'required|is_natural|max_length[3]'
         );
 
-        $this->cart_model->add($prodId, $qty);
+        $this->cartModel->add($prodId, $qty);
 
 // コントローラのcart()メソッドを呼び出し、カートを表示します。
         $this->cart();
@@ -244,10 +244,10 @@ class Shop extends MY_Controller
      */
     public function cart(): void
     {
-        $catList = $this->inventory_model->get_category_list();
+        $catList = $this->inventoryModel->get_category_list();
 
 // モデルより、カートの情報を取得します。
-        $cart = $this->cart_model->get_all();
+        $cart = $this->cartModel->get_all();
 
         $data = [
             'cat_list' => $catList,
@@ -286,10 +286,10 @@ class Shop extends MY_Controller
             'max_length[100]'
         );
 
-        $catList = $this->inventory_model->get_category_list();
+        $catList = $this->inventoryModel->get_category_list();
 
 // モデルから、キーワードで検索した商品データを取得します。
-        $list = $this->inventory_model->get_product_by_search(
+        $list = $this->inventoryModel->get_product_by_search(
             $q,
             $this->limit,
             $offset
@@ -305,7 +305,7 @@ class Shop extends MY_Controller
             'q' => $q,
             'total' => $total,
             'main' => 'shop_search',
-            'item_count' => $this->cart_model->count(),
+            'item_count' => $this->cartModel->count(),
         ];
 
         $this->twig->display('shop_tmpl_shop', $data);
@@ -320,7 +320,7 @@ class Shop extends MY_Controller
 
 // ページネーションを生成します。
         $path  = '/shop/search';
-        $total = $this->inventory_model->get_count_by_search($q);
+        $total = $this->inventoryModel->get_count_by_search($q);
 
         $config = [
 // リンク先のURLを指定します。
@@ -379,9 +379,9 @@ class Shop extends MY_Controller
             'tel'   => $this->input->post('tel'),
             'email' => $this->input->post('email'),
         ];
-        $this->customer_model->set($customerData);
+        $this->customerModel->set($customerData);
 
-        $cart = $this->cart_model->get_all();
+        $cart = $this->cartModel->get_all();
 
         $data = [
             'name' => $customerData['name'],
@@ -403,14 +403,14 @@ class Shop extends MY_Controller
      */
     public function order(): void
     {
-        if ($this->cart_model->count() === 0) {
+        if ($this->cartModel->count() === 0) {
             echo '買い物カゴには何も入っていません。';
 
             return;
         }
 
 // モデルのorder()メソッドを呼び出し、注文データの処理を依頼します。
-        if ($this->shop_model->order($this->admin)) {
+        if ($this->shopModel->order($this->admin)) {
             $data = [
                 'action' => '注文の完了',
                 'main'   => 'shop_thankyou',

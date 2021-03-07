@@ -11,14 +11,14 @@ class Customer_model_test extends UnitTestCase
 {
     use SessionTest;
 
-    /** @var Customer_model */
+    /** @var CustomerModel */
     private $obj;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->obj = $this->newModel(Customer_model::class);
+        $this->obj = $this->newModel(CustomerModel::class);
     }
 
     public function test_set_and_get(): void

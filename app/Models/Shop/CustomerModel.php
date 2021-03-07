@@ -12,7 +12,7 @@ use Kenjis\CI3Compatible\Library\CI_Session;
  * @property CI_Session $session
  * @property CI_Loader $load
  */
-class Customer_model extends CI_Model
+class CustomerModel extends CI_Model
 {
     public function __construct()
     {

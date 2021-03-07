@@ -12,22 +12,22 @@ class Shop_model_test extends UnitTestCase
 {
     use SessionTest;
 
-    /** @var Shop_model */
+    /** @var ShopModel */
     private $obj;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->obj = $this->newModel(Shop_model::class);
+        $this->obj = $this->newModel(ShopModel::class);
         $this->CI->email = new Mock_Libraries_Email();
         $this->CI->admin = 'admin@example.jp';
     }
 
     public function test_order(): void
     {
-        $this->CI->cart_model->add(1, 1);
-        $this->CI->cart_model->add(2, 2);
+        $this->CI->cartModel->add(1, 1);
+        $this->CI->cartModel->add(2, 2);
 
         $actual = $this->obj->order('admin@example.jp');
         $this->assertTrue($actual);
@@ -41,8 +41,8 @@ class Shop_model_test extends UnitTestCase
     {
         $this->CI->email->return_send = false;
 
-        $this->CI->cart_model->add(1, 1);
-        $this->CI->cart_model->add(2, 2);
+        $this->CI->cartModel->add(1, 1);
+        $this->CI->cartModel->add(2, 2);
 
         $actual = $this->obj->order('admin@example.jp');
         $this->assertFalse($actual);

@@ -11,18 +11,18 @@ use Kenjis\CI3Compatible\Library\CI_Session;
 use function substr;
 
 /**
- * @property Inventory_model $inventory_model
+ * @property InventoryModel $inventoryModel
  * @property CI_Session $session
  * @property CI_Loader $load
  */
-class Cart_model extends CI_Model
+class CartModel extends CI_Model
 {
     public function __construct()
     {
         parent::__construct();
 
         $this->load->library('session');
-        $this->load->model('shop/inventory_model');
+        $this->load->model('shop/inventoryModel');
     }
 
     /**
@@ -40,7 +40,7 @@ class Cart_model extends CI_Model
         }
 // 指定の数量が1以上の場合は、その商品が存在するかチェックした後に、商品と数量を
 // セッションデータに追加します。セッションの項目名は「item+商品ID」とします。
-        elseif ($this->inventory_model->is_available_product_item($id)) {
+        elseif ($this->inventoryModel->is_available_product_item($id)) {
             $this->session->set_userdata('item' . $id, $qty);
         }
     }
@@ -68,7 +68,7 @@ class Cart_model extends CI_Model
             // 配列のキーから商品IDを取り出します。
             $id = (int) substr($key, 4);
             // get_product_item()メソッドを使い、商品データを取得します。
-            $item = $this->inventory_model->get_product_item($id);
+            $item = $this->inventoryModel->get_product_item($id);
             // 単価に数量を掛けて金額を計算します。
             $amount = $item->price * $val;
             // 以上の情報を連想配列に代入します。

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Models\Shop\Cart_model;
-use App\Models\Shop\Customer_model;
-use App\Models\Shop\Shop_model;
+use App\Models\Shop\CartModel;
+use App\Models\Shop\CustomerModel;
+use App\Models\Shop\ShopModel;
 use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
 use Kenjis\CI3Compatible\Test\Traits\UnitTest;
@@ -73,7 +73,7 @@ class Shop_test extends FeatureTestCase
          */
         $obj = $this->newController(Shop::class);
 
-        $model = $this->getDouble(Customer_model::class, []);
+        $model = $this->getDouble(CustomerModel::class, []);
         $this->verifyInvokedOnce($model, 'set');
 
         $validation = $this->getDouble(
@@ -94,7 +94,7 @@ class Shop_test extends FeatureTestCase
 
         $obj->form_validation = $validation;
         $this->setPrivateProperty($obj, 'twig', $twig);
-        $obj->customer_model = $model;
+        $obj->customerModel = $model;
 
         $obj->confirm();
     }
@@ -106,7 +106,7 @@ class Shop_test extends FeatureTestCase
          */
         $obj = $this->newController(Shop::class);
 
-        $model = $this->getDouble(Customer_model::class, []);
+        $model = $this->getDouble(CustomerModel::class, []);
         $this->verifyNeverInvoked($model, 'set');
         $validation = $this->getDouble(
             CI_Form_validation::class,
@@ -139,8 +139,8 @@ class Shop_test extends FeatureTestCase
          */
         $obj = $this->newController(Shop::class);
 
-        $cart = $this->getDouble(Cart_model::class, ['count' => 0]);
-        $obj->cart_model = $cart;
+        $cart = $this->getDouble(CartModel::class, ['count' => 0]);
+        $obj->cartModel = $cart;
 
         ob_start();
         $obj->order();
@@ -156,10 +156,10 @@ class Shop_test extends FeatureTestCase
          */
         $obj = $this->newController(Shop::class);
 
-        $cart = $this->getDouble(Cart_model::class, ['count' => 1]);
-        $shop = $this->getDouble(Shop_model::class, ['order' => true]);
-        $obj->cart_model = $cart;
-        $obj->shop_model = $shop;
+        $cart = $this->getDouble(CartModel::class, ['count' => 1]);
+        $shop = $this->getDouble(ShopModel::class, ['order' => true]);
+        $obj->cartModel = $cart;
+        $obj->shopModel = $shop;
 
         ob_start();
         $obj->order();
@@ -175,10 +175,10 @@ class Shop_test extends FeatureTestCase
          */
         $obj = $this->newController(Shop::class);
 
-        $cart = $this->getDouble(Cart_model::class, ['count' => 1]);
-        $shop = $this->getDouble(Shop_model::class, ['order' => false]);
-        $obj->cart_model = $cart;
-        $obj->shop_model = $shop;
+        $cart = $this->getDouble(CartModel::class, ['count' => 1]);
+        $shop = $this->getDouble(ShopModel::class, ['order' => false]);
+        $obj->cartModel = $cart;
+        $obj->shopModel = $shop;
 
         ob_start();
         $obj->order();

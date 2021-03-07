@@ -10,7 +10,7 @@ use function get_instance;
 
 class Inventory_model_test extends UnitTestCase
 {
-    /** @var Inventory_model */
+    /** @var InventoryModel */
     private $obj;
 
     public static function setUpBeforeClass(): void
@@ -26,7 +26,7 @@ class Inventory_model_test extends UnitTestCase
     {
         parent::setUp();
 
-        $this->obj = $this->newModel(Inventory_model::class);
+        $this->obj = $this->newModel(InventoryModel::class);
     }
 
     public function test_get_category_list(): void
