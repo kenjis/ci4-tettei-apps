@@ -9,7 +9,7 @@ use Kenjis\CI3Compatible\Library\CI_Form_validation;
 
 use function show_error;
 
-class Field_validation
+class FieldValidation
 {
     /** @var CI_Controller */
     private $CI;

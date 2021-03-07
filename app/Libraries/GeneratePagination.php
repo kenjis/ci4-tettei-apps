@@ -7,7 +7,7 @@ namespace App\Libraries;
 use Kenjis\CI3Compatible\Core\CI_Controller;
 use Kenjis\CI3Compatible\Library\CI_Pagination;
 
-class Generate_pagination
+class GeneratePagination
 {
     /** @var CI_Controller */
     private $CI;

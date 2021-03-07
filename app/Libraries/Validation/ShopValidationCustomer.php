@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Libraries\Validation;
 
-class Shop_validation_customer extends Custom_validation
+class ShopValidationCustomer extends CustomValidation
 {
     /**
      * バリデーションの設定

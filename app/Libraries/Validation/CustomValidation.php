@@ -7,7 +7,7 @@ namespace App\Libraries\Validation;
 use Kenjis\CI3Compatible\Core\CI_Controller;
 use Kenjis\CI3Compatible\Library\CI_Form_validation;
 
-abstract class Custom_validation
+abstract class CustomValidation
 {
     /** @var CI_Controller */
     private $CI;

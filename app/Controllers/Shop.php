@@ -8,9 +8,9 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Libraries\Generate_pagination;
-use App\Libraries\Validation\Field_validation;
-use App\Libraries\Validation\Shop_validation_customer;
+use App\Libraries\GeneratePagination;
+use App\Libraries\Validation\FieldValidation;
+use App\Libraries\Validation\ShopValidationCustomer;
 use App\Models\Shop\CartModel;
 use App\Models\Shop\CustomerModel;
 use App\Models\Shop\InventoryModel;
@@ -33,9 +33,9 @@ use const FILTER_VALIDATE_INT;
  * @property InventoryModel $inventoryModel
  * @property CartModel $cartModel
  * @property CustomerModel $customerModel
- * @property Field_validation $field_validation
- * @property Shop_validation_customer $shop_validation_customer
- * @property Generate_pagination $generate_pagination
+ * @property FieldValidation $fieldValidation
+ * @property ShopValidationCustomer $shopValidationCustomer
+ * @property GeneratePagination $generatePagination
  * @property CI_Session $session
  * @property CI_Form_validation $form_validation
  * @property CI_Config $config
@@ -57,7 +57,7 @@ class Shop extends MY_Controller
         parent::__construct();
 
         $this->load->library([
-            'validation/field_validation',
+            'validation/fieldValidation',
             'session',
         ]);
         $this->twig = new Twig();
@@ -100,11 +100,11 @@ class Shop extends MY_Controller
         $offset = max($page - 1, 0) * $this->limit;
 
 // カテゴリーIDとオフセットを検証します。
-        $this->field_validation->validate(
+        $this->fieldValidation->validate(
             $catId,
             'required|is_natural|max_length[11]'
         );
-        $this->field_validation->validate(
+        $this->fieldValidation->validate(
             $offset,
             'required|is_natural|max_length[3]'
         );
@@ -147,7 +147,7 @@ class Shop extends MY_Controller
      */
     private function createPaginationCategory(int $catId): array
     {
-        $this->load->library('generate_pagination');
+        $this->load->library('generatePagination');
 
 // モデルよりそのカテゴリの商品数を取得し、ページネーションを生成します。
         $path  = '/shop/index/' . $catId;
@@ -163,7 +163,7 @@ class Shop extends MY_Controller
 // ページ番号情報がどのURIセグメントに含まれるか指定します。
             'uri_segment' => 4,
         ];
-        $pagination = $this->generate_pagination->get_links($config);
+        $pagination = $this->generatePagination->get_links($config);
 
         return [$total, $pagination];
     }
@@ -182,7 +182,7 @@ class Shop extends MY_Controller
         }
 
 // 商品IDを検証します。
-        $this->field_validation->validate(
+        $this->fieldValidation->validate(
             $prodId,
             'required|is_natural|max_length[11]'
         );
@@ -222,13 +222,13 @@ class Shop extends MY_Controller
         $qty = (int) $this->input->post('qty');
 
 // 商品IDを検証します。
-        $this->field_validation->validate(
+        $this->fieldValidation->validate(
             $prodId,
             'required|is_natural|max_length[11]'
         );
 
 // 数量を検証します。
-        $this->field_validation->validate(
+        $this->fieldValidation->validate(
             $qty,
             'required|is_natural|max_length[3]'
         );
@@ -271,7 +271,7 @@ class Shop extends MY_Controller
         $offset = max($page - 1, 0) * $this->limit;
 
 // オフセットを検証します。
-        $this->field_validation->validate(
+        $this->fieldValidation->validate(
             $offset,
             'required|is_natural|max_length[3]'
         );
@@ -281,7 +281,7 @@ class Shop extends MY_Controller
 // 全角スペースを半角スペースに変換します。
         $q = trim(mb_convert_kana($q, 's'));
 // 検索キーワードを検証します。
-        $this->field_validation->validate(
+        $this->fieldValidation->validate(
             $q,
             'max_length[100]'
         );
@@ -316,7 +316,7 @@ class Shop extends MY_Controller
      */
     private function createPaginationSearch(string $q): array
     {
-        $this->load->library('generate_pagination');
+        $this->load->library('generatePagination');
 
 // ページネーションを生成します。
         $path  = '/shop/search';
@@ -332,7 +332,7 @@ class Shop extends MY_Controller
 // ページ番号情報がどのURIセグメントに含まれるか指定します。
             'uri_segment' => 3,
         ];
-        $pagination = $this->generate_pagination->get_links($config);
+        $pagination = $this->generatePagination->get_links($config);
 
         return [$total, $pagination];
     }
@@ -343,9 +343,9 @@ class Shop extends MY_Controller
     public function customer_info(): void
     {
 // 検証ルールを設定します。
-        $this->load->library('validation/shop_validation_customer');
+        $this->load->library('validation/shopValidationCustomer');
 
-        $this->shop_validation_customer->run();
+        $this->shopValidationCustomer->run();
 
         $data = [
             'action' => 'お客様情報の入力',
@@ -359,9 +359,9 @@ class Shop extends MY_Controller
      */
     public function confirm(): void
     {
-        $this->load->library('validation/shop_validation_customer');
+        $this->load->library('validation/shopValidationCustomer');
 
-        if (! $this->shop_validation_customer->run()) {
+        if (! $this->shopValidationCustomer->run()) {
             $data = [
                 'action' => 'お客様情報の入力',
                 'main' => 'shop_customer_info',

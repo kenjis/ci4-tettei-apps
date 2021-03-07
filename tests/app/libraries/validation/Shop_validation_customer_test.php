@@ -25,7 +25,7 @@ class Shop_validation_customer_test extends TestCase
         $this->resetServices();
         $this->resetInstance();
 
-        $this->CI->load->library('validation/shop_validation_customer');
+        $this->CI->load->library('validation/shopValidationCustomer');
         $this->obj = $this->CI->form_validation;
     }
 
