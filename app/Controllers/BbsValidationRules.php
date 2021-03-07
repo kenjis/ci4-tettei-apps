@@ -25,7 +25,7 @@ use function time;
 class BbsValidationRules
 {
 // キャプチャの検証をするメソッドです。バリデーション(認証)クラスより呼ばれます。
-    public function captcha_check(string $str, string &$error): bool
+    public function captcha_check(string $str, ?string &$error): bool
     {
 // 環境がtestingまたはacceptanceの場合は、キャプチャの検証をスキップします。
         if (ENVIRONMENT === 'testing' || ENVIRONMENT === 'acceptance') { // @phpstan-ignore-line
