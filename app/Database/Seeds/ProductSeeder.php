@@ -41,10 +41,10 @@ class ProductSeeder extends Seeder
         $this->db_->insert($this->table, $data);
 
         $faker = Factory::create('ja_JP');
-        $cat_id = 1;
+        $catId = 1;
         for ($i = 0; $i < 100; $i++) {
             $data = [
-                'category_id' => $cat_id,
+                'category_id' => $catId,
                 'name'   => $faker->country,
                 'detail' => $faker->text,
                 'price'  => $faker->numberBetween(1000, 5000),
@@ -53,9 +53,9 @@ class ProductSeeder extends Seeder
             $this->db_->insert($this->table, $data);
 
             if ($i === 34) {
-                $cat_id++;
+                $catId++;
             } elseif ($i === 67) {
-                $cat_id++;
+                $catId++;
             }
         }
     }

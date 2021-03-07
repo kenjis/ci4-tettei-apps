@@ -53,18 +53,18 @@ class Inventory_model extends CI_Model
     /**
      * @return stdClass[]
      */
-    public function get_product_list(int $cat_id, int $limit, int $offset): array
+    public function get_product_list(int $catId, int $limit, int $offset): array
     {
-        $this->db->where('category_id', $cat_id);
+        $this->db->where('category_id', $catId);
         $this->db->order_by('id');
         $query = $this->db->get('product', $limit, $offset);
 
         return $query->result();
     }
 
-    public function get_product_count(int $cat_id): int
+    public function get_product_count(int $catId): int
     {
-        $this->db->where('category_id', $cat_id);
+        $this->db->where('category_id', $catId);
         $query = $this->db->get('product');
 
         return $query->num_rows();

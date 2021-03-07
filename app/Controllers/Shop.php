@@ -85,12 +85,12 @@ class Shop extends MY_Controller
     /**
      * トップページ = カテゴリ別商品一覧
      */
-    public function index(string $cat_id = '1', string $page = '0'): void
+    public function index(string $catId = '1', string $page = '0'): void
     {
-        $cat_id = filter_var($cat_id, FILTER_VALIDATE_INT);
+        $catId = filter_var($catId, FILTER_VALIDATE_INT);
         $page = filter_var($page, FILTER_VALIDATE_INT);
 
-        if ($cat_id === false || $page === false) {
+        if ($catId === false || $page === false) {
             show_error('不正な入力です。');
 
             return;
@@ -101,7 +101,7 @@ class Shop extends MY_Controller
 
 // カテゴリーIDとオフセットを検証します。
         $this->field_validation->validate(
-            $cat_id,
+            $catId,
             'required|is_natural|max_length[11]'
         );
         $this->field_validation->validate(
@@ -110,32 +110,32 @@ class Shop extends MY_Controller
         );
 
 // モデルからカテゴリの一覧を取得します。
-        $cat_list = $this->inventory_model->get_category_list();
+        $catList = $this->inventory_model->get_category_list();
 
 // カテゴリIDとoffset値と、1ページに表示する商品の数を渡し、モデルより
 // 商品一覧を取得します。
         $list = $this->inventory_model->get_product_list(
-            $cat_id,
+            $catId,
             $this->limit,
             $offset
         );
 // カテゴリIDより、カテゴリ名を取得します。
-        $category = $this->inventory_model->get_category_name($cat_id);
+        $category = $this->inventory_model->get_category_name($catId);
 
 // ページネーションを生成します。
-        [$total, $pagination] = $this->createPaginationCategory($cat_id);
+        [$total, $pagination] = $this->createPaginationCategory($catId);
 
 // モデルよりカートの中の商品アイテム数を取得します。
-        $item_count = $this->cart_model->count();
+        $itemCount = $this->cart_model->count();
 
         $data = [
-            'cat_list' => $cat_list,
+            'cat_list' => $catList,
             'list' => $list,
             'category' => $category,
             'pagination' => $pagination,
             'total' => $total,
             'main' => 'shop_list',
-            'item_count' => $item_count,
+            'item_count' => $itemCount,
         ];
 
 // ビューを表示します。
@@ -145,13 +145,13 @@ class Shop extends MY_Controller
     /**
      * @return array{0: int, 1: string}
      */
-    private function createPaginationCategory(int $cat_id): array
+    private function createPaginationCategory(int $catId): array
     {
         $this->load->library('generate_pagination');
 
 // モデルよりそのカテゴリの商品数を取得し、ページネーションを生成します。
-        $path  = '/shop/index/' . $cat_id;
-        $total = $this->inventory_model->get_product_count($cat_id);
+        $path  = '/shop/index/' . $catId;
+        $total = $this->inventory_model->get_product_count($catId);
 
         $config = [
 // リンク先のURLを指定します。
@@ -171,11 +171,11 @@ class Shop extends MY_Controller
     /**
      * 商品詳細ページ
      */
-    public function product(string $prod_id = '1'): void
+    public function product(string $prodId = '1'): void
     {
-        $prod_id = filter_var($prod_id, FILTER_VALIDATE_INT);
+        $prodId = filter_var($prodId, FILTER_VALIDATE_INT);
 
-        if ($prod_id === false) {
+        if ($prodId === false) {
             show_error('不正な入力です。');
 
             return;
@@ -183,22 +183,22 @@ class Shop extends MY_Controller
 
 // 商品IDを検証します。
         $this->field_validation->validate(
-            $prod_id,
+            $prodId,
             'required|is_natural|max_length[11]'
         );
 
-        $cat_list = $this->inventory_model->get_category_list();
+        $catList = $this->inventory_model->get_category_list();
 
 // モデルより商品データを取得します。
-        $item = $this->inventory_model->get_product_item($prod_id);
+        $item = $this->inventory_model->get_product_item($prodId);
 
-        $item_count = $this->cart_model->count();
+        $itemCount = $this->cart_model->count();
 
         $data = [
-            'cat_list' => $cat_list,
+            'cat_list' => $catList,
             'item' => $item,
             'main' => 'shop_product',
-            'item_count' => $item_count,
+            'item_count' => $itemCount,
         ];
 
         $this->twig->display('shop_tmpl_shop', $data);
@@ -207,12 +207,12 @@ class Shop extends MY_Controller
     /**
      * カゴに入れる
      */
-    public function add(string $prod_id = '0'): void
+    public function add(string $prodId = '0'): void
     {
 // $prod_idの型をintに変更します。
-        $prod_id = filter_var($prod_id, FILTER_VALIDATE_INT);
+        $prodId = filter_var($prodId, FILTER_VALIDATE_INT);
 
-        if ($prod_id === false) {
+        if ($prodId === false) {
             show_error('不正な入力です。');
 
             return;
@@ -223,7 +223,7 @@ class Shop extends MY_Controller
 
 // 商品IDを検証します。
         $this->field_validation->validate(
-            $prod_id,
+            $prodId,
             'required|is_natural|max_length[11]'
         );
 
@@ -233,7 +233,7 @@ class Shop extends MY_Controller
             'required|is_natural|max_length[3]'
         );
 
-        $this->cart_model->add($prod_id, $qty);
+        $this->cart_model->add($prodId, $qty);
 
 // コントローラのcart()メソッドを呼び出し、カートを表示します。
         $this->cart();
@@ -244,13 +244,13 @@ class Shop extends MY_Controller
      */
     public function cart(): void
     {
-        $cat_list = $this->inventory_model->get_category_list();
+        $catList = $this->inventory_model->get_category_list();
 
 // モデルより、カートの情報を取得します。
         $cart = $this->cart_model->get_all();
 
         $data = [
-            'cat_list' => $cat_list,
+            'cat_list' => $catList,
             'total' => $cart['total'],
             'cart' => $cart['items'],
             'item_count' => $cart['line'],
@@ -286,7 +286,7 @@ class Shop extends MY_Controller
             'max_length[100]'
         );
 
-        $cat_list = $this->inventory_model->get_category_list();
+        $catList = $this->inventory_model->get_category_list();
 
 // モデルから、キーワードで検索した商品データを取得します。
         $list = $this->inventory_model->get_product_by_search(
@@ -299,7 +299,7 @@ class Shop extends MY_Controller
         [$total, $pagination] = $this->createPaginationSearch($q);
 
         $data = [
-            'cat_list' => $cat_list,
+            'cat_list' => $catList,
             'list' => $list,
             'pagination' => $pagination,
             'q' => $q,
@@ -372,23 +372,23 @@ class Shop extends MY_Controller
         }
 
 // 検証をパスした入力データは、モデルを使って保存します。
-        $customer_data = [
+        $customerData = [
             'name'  => $this->input->post('name'),
             'zip'   => $this->input->post('zip'),
             'addr'  => $this->input->post('addr'),
             'tel'   => $this->input->post('tel'),
             'email' => $this->input->post('email'),
         ];
-        $this->customer_model->set($customer_data);
+        $this->customer_model->set($customerData);
 
         $cart = $this->cart_model->get_all();
 
         $data = [
-            'name' => $customer_data['name'],
-            'zip' => $customer_data['zip'],
-            'addr' => $customer_data['addr'],
-            'tel' => $customer_data['tel'],
-            'email' => $customer_data['email'],
+            'name' => $customerData['name'],
+            'zip' => $customerData['zip'],
+            'addr' => $customerData['addr'],
+            'tel' => $customerData['tel'],
+            'email' => $customerData['email'],
             'total' => $cart['total'],
             'cart' => $cart['items'],
             'action' => '注文内容の確認',
