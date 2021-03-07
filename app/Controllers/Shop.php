@@ -297,6 +297,7 @@ class Shop extends MY_Controller
     {
 // 検証ルールを設定します。
         $this->load->library('validation/shop_validation_customer');
+
         $this->shop_validation_customer->run();
 
         $data = [

@@ -16,6 +16,7 @@ abstract class Custom_validation
         $this->CI =& get_instance();
         $this->CI->load->library('form_validation');
 
+        $this->CI->form_validation->reset_validation();
         $this->set_validation_rules();
     }
 
