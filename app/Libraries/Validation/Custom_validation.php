@@ -5,18 +5,23 @@ declare(strict_types=1);
 namespace App\Libraries\Validation;
 
 use Kenjis\CI3Compatible\Core\CI_Controller;
+use Kenjis\CI3Compatible\Library\CI_Form_validation;
 
 abstract class Custom_validation
 {
     /** @var CI_Controller */
     private $CI;
 
+    /** @var CI_Form_validation */
+    private $form_validation;
+
     public function __construct()
     {
         $this->CI =& get_instance();
         $this->CI->load->library('form_validation');
+        $this->form_validation = $this->CI->form_validation;
 
-        $this->CI->form_validation->reset_validation();
+        $this->form_validation->reset_validation();
         $this->set_validation_rules();
     }
 
@@ -36,13 +41,13 @@ abstract class Custom_validation
         $rules = [],
         array $errors = []
     ): void {
-        $this->CI->form_validation->set_rules($field, $label, $rules, $errors);
+        $this->form_validation->set_rules($field, $label, $rules, $errors);
     }
 
     public function validate(array $data = []): bool
     {
         if ($data !== []) {
-            $this->CI->form_validation->set_data($data);
+            $this->form_validation->set_data($data);
             $this->set_validation_rules();
         }
 
@@ -51,6 +56,6 @@ abstract class Custom_validation
 
     public function run(): bool
     {
-        return $this->CI->form_validation->run();
+        return $this->form_validation->run();
     }
 }
