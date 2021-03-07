@@ -56,6 +56,23 @@ class Inventory_model_test extends UnitTestCase
         $this->assertEquals($expected, $actual);
     }
 
+    public function test_get_product_list(): void
+    {
+        $expected = [1 => 'CodeIgniter徹底入門'];
+        $list = $this->obj->get_product_list(1, 1, 0);
+        foreach ($list as $product) {
+            $this->assertEquals($expected[$product->id], $product->name);
+        }
+    }
+
+    public function test_get_product_item(): void
+    {
+        $item = $this->obj->get_product_item(1);
+
+        $expected = 'CodeIgniter徹底入門';
+        $this->assertEquals($expected, $item->name);
+    }
+
     public function test_get_product_by_search(): void
     {
         $results = $this->obj->get_product_by_search('CodeIgniter', 10, 0);

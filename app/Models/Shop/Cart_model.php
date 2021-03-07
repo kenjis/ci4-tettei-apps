@@ -48,7 +48,7 @@ class Cart_model extends CI_Model
     /**
      * 買い物カゴの情報を取得
      *
-     * @return array
+     * @return array{items: array, line: int, total: int}
      */
     public function get_all(): array
     {

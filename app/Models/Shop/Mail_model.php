@@ -24,7 +24,7 @@ class Mail_model extends CI_Model
     /**
      * メール送信処理
      *
-     * @param array $mail
+     * @param array{from_name: string, from: string, to: string, bcc: string, subject: string, body: string} $mail
      */
     public function sendmail(array $mail): bool
     {

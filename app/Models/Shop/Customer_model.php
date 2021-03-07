@@ -22,7 +22,7 @@ class Customer_model extends CI_Model
     }
 
     /**
-     * @param array $data
+     * @param array{name: string, zip: string, addr: string, tel: string, email: string} $data
      */
     public function set(array $data): void
     {
@@ -32,7 +32,7 @@ class Customer_model extends CI_Model
     }
 
     /**
-     * @return array
+     * @return array{name: string, zip: string, addr: string, tel: string, email: string}
      */
     public function get(): array
     {

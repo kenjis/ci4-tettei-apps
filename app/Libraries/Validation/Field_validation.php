@@ -21,10 +21,16 @@ class Field_validation
     {
         $this->CI =& get_instance();
         $this->CI->load->library('form_validation');
+        // @phpstan-ignore-next-line
         $this->form_validation = $this->CI->form_validation;
     }
 
-    public function validate($value, $rules, array $errors = [])
+    /**
+     * @param mixed                 $value
+     * @param mixed                 $rules
+     * @param array<string, string> $errors
+     */
+    public function validate($value, $rules, array $errors = []): bool
     {
         $this->form_validation->reset_validation();
 
@@ -38,5 +44,7 @@ class Field_validation
         }
 
         show_error('不正な入力です。');
+
+        return false;
     }
 }

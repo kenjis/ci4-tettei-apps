@@ -19,6 +19,7 @@ abstract class Custom_validation
     {
         $this->CI =& get_instance();
         $this->CI->load->library('form_validation');
+        // @phpstan-ignore-next-line
         $this->form_validation = $this->CI->form_validation;
 
         $this->form_validation->reset_validation();
@@ -31,9 +32,9 @@ abstract class Custom_validation
     abstract protected function set_validation_rules(): void;
 
     /**
-     * @param mixed $field
-     * @param mixed $rules
-     * @param array $errors
+     * @param mixed                 $field
+     * @param mixed                 $rules
+     * @param array<string, string> $errors
      */
     protected function set_rules(
         $field,
@@ -44,6 +45,9 @@ abstract class Custom_validation
         $this->form_validation->set_rules($field, $label, $rules, $errors);
     }
 
+    /**
+     * @param array<string, string> $data
+     */
     public function validate(array $data = []): bool
     {
         if ($data !== []) {

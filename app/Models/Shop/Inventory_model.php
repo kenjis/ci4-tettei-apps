@@ -7,6 +7,7 @@ namespace App\Models\Shop;
 use Kenjis\CI3Compatible\Core\CI_Loader;
 use Kenjis\CI3Compatible\Core\CI_Model;
 use Kenjis\CI3Compatible\Database\CI_DB;
+use stdClass;
 
 use function explode;
 use function show_error;
@@ -24,6 +25,9 @@ class Inventory_model extends CI_Model
         $this->load->database();
     }
 
+    /**
+     * @return stdClass[]
+     */
     public function get_category_list(): array
     {
         $this->db->order_by('id');
@@ -46,6 +50,9 @@ class Inventory_model extends CI_Model
         return $row->name;
     }
 
+    /**
+     * @return stdClass[]
+     */
     public function get_product_list(int $cat_id, int $limit, int $offset): array
     {
         $this->db->where('category_id', $cat_id);
@@ -63,7 +70,7 @@ class Inventory_model extends CI_Model
         return $query->num_rows();
     }
 
-    public function get_product_item(int $id)
+    public function get_product_item(int $id): stdClass
     {
         $this->db->where('id', $id);
         $query = $this->db->get('product');
@@ -79,6 +86,9 @@ class Inventory_model extends CI_Model
         return $query->num_rows() === 1;
     }
 
+    /**
+     * @return stdClass[]
+     */
     public function get_product_by_search(string $q, int $limit, int $offset): array
     {
 // 検索キーワードをスペースで分割し、like()メソッドでLIKE句を指定します。
