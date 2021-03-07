@@ -10,6 +10,7 @@ namespace App\Controllers;
 
 use App\Libraries\Generate_pagination;
 use App\Libraries\Validation\Field_validation;
+use App\Libraries\Validation\Shop_validation_customer;
 use App\Models\Shop\Cart_model;
 use App\Models\Shop\Customer_model;
 use App\Models\Shop\Inventory_model;
@@ -30,6 +31,7 @@ use function trim;
  * @property Cart_model $cart_model
  * @property Customer_model $customer_model
  * @property Field_validation $field_validation
+ * @property Shop_validation_customer $shop_validation_customer
  * @property Generate_pagination $generate_pagination
  * @property CI_Session $session
  * @property CI_Form_validation $form_validation
@@ -292,7 +294,7 @@ class Shop extends MY_Controller
     {
 // 検証ルールを設定します。
         $this->load->library('validation/shop_validation_customer');
-        $this->form_validation->run();
+        $this->shop_validation_customer->run();
 
         $data = [
             'action' => 'お客様情報の入力',
@@ -308,7 +310,7 @@ class Shop extends MY_Controller
     {
         $this->load->library('validation/shop_validation_customer');
 
-        if ($this->form_validation->run()) {
+        if ($this->shop_validation_customer->run()) {
 // 検証をパスした入力データは、モデルを使って保存します。
             $customer_data = [
                 'name'  => $this->input->post('name'),
