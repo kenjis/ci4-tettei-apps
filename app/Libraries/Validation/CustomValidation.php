@@ -63,6 +63,9 @@ abstract class CustomValidation
         return $this->form_validation->run();
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function error_array(): array
     {
         return $this->form_validation->error_array();
