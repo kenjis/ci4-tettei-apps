@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
+use Kenjis\CI3Compatible\Core\CI_Loader;
 use Kenjis\CI3Compatible\Core\CI_Model;
 use Kenjis\CI3Compatible\Library\CI_Email;
 
 /**
  * @property CI_Email $email
+ * @property CI_Loader $load
  */
 class Mail_model extends CI_Model
 {

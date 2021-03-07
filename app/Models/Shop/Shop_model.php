@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
+use Kenjis\CI3Compatible\Core\CI_Loader;
 use Kenjis\CI3Compatible\Core\CI_Model;
+use Kenjis\CI3Compatible\Library\CI_Parser;
 
 use function array_merge;
 use function date;
 use function number_format;
 
 /**
- * @property Cart_model     $cart_model
+ * @property Cart_model $cart_model
  * @property Customer_model $customer_model
- * @property Mail_model     $mail_model
+ * @property Mail_model $mail_model
+ * @property CI_Parser $parser
+ * @property CI_Loader $load
  */
 class Shop_model extends CI_Model
 {

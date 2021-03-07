@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
+use Kenjis\CI3Compatible\Core\CI_Loader;
 use Kenjis\CI3Compatible\Core\CI_Model;
 use Kenjis\CI3Compatible\Database\CI_DB;
 
@@ -12,6 +13,7 @@ use function show_error;
 
 /**
  * @property CI_DB $db
+ * @property CI_Loader $load
  */
 class Inventory_model extends CI_Model
 {
