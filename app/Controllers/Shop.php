@@ -138,11 +138,23 @@ class Shop extends MY_Controller
 
     private function createPaginationCategory(int $cat_id): array
     {
-// モデルよりそのカテゴリの商品数を取得し、ページネーションを生成します。
         $this->load->library('generate_pagination');
+
+// モデルよりそのカテゴリの商品数を取得し、ページネーションを生成します。
         $path  = '/shop/index/' . $cat_id;
         $total = $this->inventory_model->get_product_count($cat_id);
-        $pagination = $this->generate_pagination->get_links($path, $total, 4);
+
+        $config = [
+// リンク先のURLを指定します。
+            'base_url' => $this->config->site_url($path),
+// 1ページに表示する件数を指定します。
+            'per_page' => $this->limit,
+// 総件数を指定します。
+            'total_rows' => $total,
+// ページ番号情報がどのURIセグメントに含まれるか指定します。
+            'uri_segment' => 4,
+        ];
+        $pagination = $this->generate_pagination->get_links($config);
 
         return [$total, $pagination];
     }
@@ -280,12 +292,23 @@ class Shop extends MY_Controller
 
     private function createPaginationSearch(string $q): array
     {
-        $total = $this->inventory_model->get_count_by_search($q);
+        $this->load->library('generate_pagination');
 
 // ページネーションを生成します。
-        $this->load->library('generate_pagination');
         $path  = '/shop/search';
-        $pagination = $this->generate_pagination->get_links($path, $total, 3);
+        $total = $this->inventory_model->get_count_by_search($q);
+
+        $config = [
+// リンク先のURLを指定します。
+            'base_url' => $this->config->site_url($path),
+// 1ページに表示する件数を指定します。
+            'per_page' => $this->limit,
+// 総件数を指定します。
+            'total_rows' => $total,
+// ページ番号情報がどのURIセグメントに含まれるか指定します。
+            'uri_segment' => 3,
+        ];
+        $pagination = $this->generate_pagination->get_links($config);
 
         return [$total, $pagination];
     }
