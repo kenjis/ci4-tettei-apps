@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Libraries\Validation;
 
-use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Test\TestCase\TestCase;
 
 use function array_reduce;
 
 class Shop_validation_customer_test extends TestCase
 {
-    /** @var CI_Form_validation */
+    /** @var shopValidationCustomer */
     private $obj;
 
     public function setUp(): void
@@ -26,7 +25,7 @@ class Shop_validation_customer_test extends TestCase
         $this->resetInstance();
 
         $this->CI->load->library('validation/shopValidationCustomer');
-        $this->obj = $this->CI->form_validation;
+        $this->obj = $this->CI->shopValidationCustomer;
     }
 
     public function test_run_empty_data(): void
