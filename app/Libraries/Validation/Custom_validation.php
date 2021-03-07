@@ -25,9 +25,9 @@ abstract class Custom_validation
     abstract protected function set_validation_rules(): void;
 
     /**
-     * @param   mixed $field
-     * @param   mixed $rules
-     * @param   array $errors
+     * @param mixed $field
+     * @param mixed $rules
+     * @param array $errors
      */
     protected function set_rules(
         $field,
