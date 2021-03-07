@@ -360,7 +360,7 @@ class Shop extends MY_Controller
         }
 
 // モデルのorder()メソッドを呼び出し、注文データの処理を依頼します。
-        if ($this->shop_model->order()) {
+        if ($this->shop_model->order($this->admin)) {
             $data = [
                 'action' => '注文の完了',
                 'main'   => 'shop_thankyou',

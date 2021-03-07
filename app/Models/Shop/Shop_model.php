@@ -33,7 +33,7 @@ class Shop_model extends CI_Model
     /**
      * 注文の処理
      */
-    public function order(): bool
+    public function order(string $adminEmail): bool
     {
 // 注文日時をPHPのdate()関数から取得します。
         $date = date('Y/m/d H:i:s');
@@ -66,9 +66,9 @@ class Shop_model extends CI_Model
 // メールのヘッダを設定します。Bccで同じメールを管理者にも送るようにします。
         $mail = [
             'from_name' => 'CIショップ',
-            'from'      => $this->admin,
+            'from'      => $adminEmail,
             'to'        => $data['email'],
-            'bcc'       => $this->admin,
+            'bcc'       => $adminEmail,
             'subject'   => '【注文メール】CIショップ',
             'body'      => $body,
         ];

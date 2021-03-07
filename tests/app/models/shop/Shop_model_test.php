@@ -29,7 +29,7 @@ class Shop_model_test extends UnitTestCase
         $this->CI->cart_model->add(1, 1);
         $this->CI->cart_model->add(2, 2);
 
-        $actual = $this->obj->order();
+        $actual = $this->obj->order('admin@example.jp');
         $this->assertTrue($actual);
 
         $mail = $this->CI->email->_get_data();
@@ -44,7 +44,7 @@ class Shop_model_test extends UnitTestCase
         $this->CI->cart_model->add(1, 1);
         $this->CI->cart_model->add(2, 2);
 
-        $actual = $this->obj->order();
+        $actual = $this->obj->order('admin@example.jp');
         $this->assertFalse($actual);
     }
 }
