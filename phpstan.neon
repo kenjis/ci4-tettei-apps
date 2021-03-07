@@ -2,9 +2,8 @@ parameters:
   level: max
   paths:
     - app
-    - tests
   excludes_analyse:
     - app/Config/*
-    - app/Views/errors/*
+    - app/Views/*
   bootstrapFiles:
     - vendor/codeigniter4/codeigniter4/system/Test/bootstrap.php
