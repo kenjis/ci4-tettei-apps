@@ -51,7 +51,10 @@ class Shop extends MY_Controller
     {
         parent::__construct();
 
-        $this->load->library(['session']);
+        $this->load->library([
+            'validation/field_validation',
+            'session',
+        ]);
         $this->twig = new Twig();
         $this->load->helper(['form', 'url']);
 
@@ -86,7 +89,6 @@ class Shop extends MY_Controller
         $offset = max($page - 1, 0) * $this->limit;
 
 // カテゴリーIDとオフセットを検証します。
-        $this->load->library('validation/field_validation');
         $this->field_validation->validate(
             $cat_id,
             'required|is_natural|max_length[11]'
@@ -148,7 +150,6 @@ class Shop extends MY_Controller
         $prod_id = filter_var($prod_id, FILTER_VALIDATE_INT);
 
 // 商品IDを検証します。
-        $this->load->library('validation/field_validation');
         $this->field_validation->validate(
             $prod_id,
             'required|is_natural|max_length[11]'
@@ -183,7 +184,6 @@ class Shop extends MY_Controller
         $qty = (int) $this->input->post('qty');
 
 // 商品IDを検証します。
-        $this->load->library('validation/field_validation');
         $this->field_validation->validate(
             $prod_id,
             'required|is_natural|max_length[11]'
@@ -233,7 +233,6 @@ class Shop extends MY_Controller
         $offset = max($page - 1, 0) * $this->limit;
 
 // オフセットを検証します。
-        $this->load->library('validation/field_validation');
         $this->field_validation->validate(
             $offset,
             'required|is_natural|max_length[3]'
