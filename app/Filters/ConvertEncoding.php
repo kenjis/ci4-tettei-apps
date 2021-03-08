@@ -26,7 +26,7 @@ class ConvertEncoding implements FilterInterface
             return;
         }
 
-        $_POST = $this->convert_to_utf8($_POST);
+        $_POST = $this->convertToUtf8($_POST);
 
 // Requestオブジェクトに変換した$_POSTを設定します。
         $request->setGlobal('post', $_POST);
@@ -65,7 +65,7 @@ class ConvertEncoding implements FilterInterface
      *
      * @return array<string, mixed>
      */
-    private function convert_to_utf8(array $array): array
+    private function convertToUtf8(array $array): array
     {
         // @phpstan-ignore-next-line
         $utf8 = mb_convert_encoding($array, 'UTF-8', 'SJIS-win');
