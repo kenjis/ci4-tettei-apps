@@ -41,7 +41,7 @@ use const FILTER_VALIDATE_INT;
  * @property CI_Config $config
  * @property CI_Input $input
  */
-class Shop extends MY_Controller
+class Shop extends MyController
 {
     /** @var int 1ページに表示する商品の数 */
     public $limit;
