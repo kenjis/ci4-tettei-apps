@@ -28,7 +28,7 @@ class GeneratePagination
      *
      * @param array{base_url: string, per_page: int, total_rows: int, uri_segment: int} $config
      */
-    public function get_links(array $config): string
+    public function getLinks(array $config): string
     {
         $config['reuse_query_string'] = true;
 

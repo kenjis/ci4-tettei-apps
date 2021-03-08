@@ -163,7 +163,7 @@ class Shop extends MY_Controller
 // ページ番号情報がどのURIセグメントに含まれるか指定します。
             'uri_segment' => 4,
         ];
-        $pagination = $this->generatePagination->get_links($config);
+        $pagination = $this->generatePagination->getLinks($config);
 
         return [$total, $pagination];
     }
@@ -332,7 +332,7 @@ class Shop extends MY_Controller
 // ページ番号情報がどのURIセグメントに含まれるか指定します。
             'uri_segment' => 3,
         ];
-        $pagination = $this->generatePagination->get_links($config);
+        $pagination = $this->generatePagination->getLinks($config);
 
         return [$total, $pagination];
     }
