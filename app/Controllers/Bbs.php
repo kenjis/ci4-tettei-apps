@@ -147,13 +147,17 @@ class Bbs extends CI_Controller
         ];
     }
 
-// 投稿されたIDのキャプチャを削除します。
+    /**
+     * 投稿されたIDのキャプチャを削除
+     */
     private function deleteCaptchaData(): void
     {
         $this->db->delete('captcha', ['captcha_id' => $this->input->post('key')]);
     }
 
-// 新規投稿ページを表示します。
+    /**
+     * 新規投稿ページを表示
+     */
     private function showPostPage(): void
     {
 // 画像キャプチャを生成します。ランダムな文字列を生成するために文字列ヘルパーを
@@ -269,7 +273,9 @@ class Bbs extends CI_Controller
         return $this->db->get('bbs');
     }
 
-// バリデーションを設定します。
+    /**
+     * バリデーションを設定
+     */
     private function setValidation(): void
     {
         $this->load->library('form_validation');
@@ -312,7 +318,9 @@ class Bbs extends CI_Controller
         $this->form_validation->set_rules('key', 'key', 'numeric');
     }
 
-// 投稿された記事をデータベースに登録します。
+    /**
+     * 投稿された記事をデータベースに登録
+     */
     public function insert(): ?RedirectResponse
     {
 // 検証ルールを設定します。
@@ -345,9 +353,9 @@ class Bbs extends CI_Controller
         $this->db->insert('bbs', $data);
     }
 
-// 携帯端末かどうかを判定し、ビューをロードするプライベートメソッドです。
-
     /**
+     * 携帯端末かどうかを判定し、ビューをロード
+     *
      * @param array<string, mixed> $data
      */
     private function loadView(string $file, array $data = []): void

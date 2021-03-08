@@ -24,7 +24,11 @@ use function time;
  */
 class BbsValidationRules
 {
-// キャプチャの検証をするメソッドです。バリデーション(認証)クラスより呼ばれます。
+    /**
+     * キャプチャの検証をするメソッド
+     *
+     * バリデーション(認証)クラスより呼ばれる
+     */
     public function captcha_check(string $str, ?string &$error): bool
     {
 // 環境がtestingまたはacceptanceの場合は、キャプチャの検証をスキップします。
