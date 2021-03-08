@@ -41,6 +41,8 @@
         "pcov": "php -dextension=pcov.so -d pcov.enabled=1 ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage  --coverage-clover=coverage.xml --log-junit=build/coverage/junit.xml",
         "cs-fix": "phpcbf",
         "cs": "phpcs",
+        "rector": "rector process --dry-run --clear-cache",
+        "rector-fix": "rector process --clear-cache",
         "md": "phpmd app text ./phpmd.xml --exclude */app/Config,*/app/Views",
         "metrics": "./vendor/bin/phpmetrics --report-html=build/metrics --exclude='Config,Database,Language,ThirdParty,Views' --junit=build/coverage/junit.xml app",
         "loc": [
