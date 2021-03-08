@@ -11,6 +11,7 @@ use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Library\CI_Pagination;
 use Kenjis\CI3Compatible\Library\CI_User_agent;
 
+use function assert;
 use function get_instance;
 use function time;
 
@@ -39,8 +40,8 @@ class BbsValidationRules
         }
 
         $CI = get_instance();
-        /** @var CI_DB */
         $db = $CI->db; // @phpstan-ignore-line
+        assert($db instanceof CI_DB);
 
 // 有効期限を2時間に設定し、それ以前に生成されたキャプチャをデータベースから
 // 削除します。delete()メソッドの第2引数では、「captcha_time <」を配列のキーに
