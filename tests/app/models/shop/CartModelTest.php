@@ -57,7 +57,7 @@ class CartModelTest extends UnitTestCase
         $this->obj->add(1, 1);
         $this->obj->add(2, 2);
 
-        $actual = $this->obj->get_all();
+        $actual = $this->obj->getAll();
         $expected = [
             'items' => [
                 1 => [

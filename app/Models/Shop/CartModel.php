@@ -40,7 +40,7 @@ class CartModel extends CI_Model
         }
 // 指定の数量が1以上の場合は、その商品が存在するかチェックした後に、商品と数量を
 // セッションデータに追加します。セッションの項目名は「item+商品ID」とします。
-        elseif ($this->inventoryModel->is_available_product_item($id)) {
+        elseif ($this->inventoryModel->isAvailableProductItem($id)) {
             $this->session->set_userdata('item' . $id, $qty);
         }
     }
@@ -50,7 +50,7 @@ class CartModel extends CI_Model
      *
      * @return array{items: array, line: int, total: int}
      */
-    public function get_all(): array
+    public function getAll(): array
     {
         $items = [];    // 商品情報の配列
         $total = 0;     // 合計金額
@@ -68,7 +68,7 @@ class CartModel extends CI_Model
             // 配列のキーから商品IDを取り出します。
             $id = (int) substr($key, 4);
             // get_product_item()メソッドを使い、商品データを取得します。
-            $item = $this->inventoryModel->get_product_item($id);
+            $item = $this->inventoryModel->getProductItem($id);
             // 単価に数量を掛けて金額を計算します。
             $amount = $item->price * $val;
             // 以上の情報を連想配列に代入します。
@@ -95,7 +95,7 @@ class CartModel extends CI_Model
      */
     public function count(): int
     {
-        $cart = $this->get_all();
+        $cart = $this->getAll();
 
         return $cart['line'];
     }

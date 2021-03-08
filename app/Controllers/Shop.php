@@ -110,17 +110,17 @@ class Shop extends MY_Controller
         );
 
 // モデルからカテゴリの一覧を取得します。
-        $catList = $this->inventoryModel->get_category_list();
+        $catList = $this->inventoryModel->getCategoryList();
 
 // カテゴリIDとoffset値と、1ページに表示する商品の数を渡し、モデルより
 // 商品一覧を取得します。
-        $list = $this->inventoryModel->get_product_list(
+        $list = $this->inventoryModel->getProductList(
             $catId,
             $this->limit,
             $offset
         );
 // カテゴリIDより、カテゴリ名を取得します。
-        $category = $this->inventoryModel->get_category_name($catId);
+        $category = $this->inventoryModel->getCategoryName($catId);
 
 // ページネーションを生成します。
         [$total, $pagination] = $this->createPaginationCategory($catId);
@@ -151,7 +151,7 @@ class Shop extends MY_Controller
 
 // モデルよりそのカテゴリの商品数を取得し、ページネーションを生成します。
         $path  = '/shop/index/' . $catId;
-        $total = $this->inventoryModel->get_product_count($catId);
+        $total = $this->inventoryModel->getProductCount($catId);
 
         $config = [
 // リンク先のURLを指定します。
@@ -187,10 +187,10 @@ class Shop extends MY_Controller
             'required|is_natural|max_length[11]'
         );
 
-        $catList = $this->inventoryModel->get_category_list();
+        $catList = $this->inventoryModel->getCategoryList();
 
 // モデルより商品データを取得します。
-        $item = $this->inventoryModel->get_product_item($prodId);
+        $item = $this->inventoryModel->getProductItem($prodId);
 
         $itemCount = $this->cartModel->count();
 
@@ -244,10 +244,10 @@ class Shop extends MY_Controller
      */
     public function cart(): void
     {
-        $catList = $this->inventoryModel->get_category_list();
+        $catList = $this->inventoryModel->getCategoryList();
 
 // モデルより、カートの情報を取得します。
-        $cart = $this->cartModel->get_all();
+        $cart = $this->cartModel->getAll();
 
         $data = [
             'cat_list' => $catList,
@@ -286,10 +286,10 @@ class Shop extends MY_Controller
             'max_length[100]'
         );
 
-        $catList = $this->inventoryModel->get_category_list();
+        $catList = $this->inventoryModel->getCategoryList();
 
 // モデルから、キーワードで検索した商品データを取得します。
-        $list = $this->inventoryModel->get_product_by_search(
+        $list = $this->inventoryModel->getProductBySearch(
             $q,
             $this->limit,
             $offset
@@ -320,7 +320,7 @@ class Shop extends MY_Controller
 
 // ページネーションを生成します。
         $path  = '/shop/search';
-        $total = $this->inventoryModel->get_count_by_search($q);
+        $total = $this->inventoryModel->getCountBySearch($q);
 
         $config = [
 // リンク先のURLを指定します。
@@ -381,7 +381,7 @@ class Shop extends MY_Controller
         ];
         $this->customerModel->set($customerData);
 
-        $cart = $this->cartModel->get_all();
+        $cart = $this->cartModel->getAll();
 
         $data = [
             'name' => $customerData['name'],

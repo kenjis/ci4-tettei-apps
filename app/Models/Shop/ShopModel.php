@@ -39,7 +39,7 @@ class ShopModel extends CI_Model
         $date = date('Y/m/d H:i:s');
 
 // カートの情報を取得します。
-        $cart = $this->cartModel->get_all();
+        $cart = $this->cartModel->getAll();
         foreach ($cart['items'] as &$item) {
             $item['price']  = number_format((float) $item['price']);
             $item['amount'] = number_format((float) $item['amount']);
