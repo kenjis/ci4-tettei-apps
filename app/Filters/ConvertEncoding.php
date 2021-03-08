@@ -14,6 +14,8 @@ use function mb_convert_encoding;
 class ConvertEncoding implements FilterInterface
 {
     /**
+     * @param mixed $arguments
+     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function before(RequestInterface $request, $arguments = null): void
@@ -33,6 +35,8 @@ class ConvertEncoding implements FilterInterface
     }
 
     /**
+     * @param mixed $arguments
+     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function after(

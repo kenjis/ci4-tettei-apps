@@ -175,7 +175,7 @@ class Bbs extends CI_Controller
     }
 
     /**
-     * @return array{0: int, 1: array}
+     * @return array{0: int, 1: array{word: string, time: float, image: string, filename: string}}
      */
     private function createCaptcha(): array
     {
