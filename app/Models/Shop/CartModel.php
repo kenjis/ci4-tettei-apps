@@ -37,10 +37,9 @@ class CartModel extends CI_Model
 // unset_userdata()メソッドで、セッションデータからその商品を削除します。
         if ($qty <= 0) {
             $this->session->unset_userdata('item' . $id);
-        }
+        } elseif ($this->inventoryModel->isAvailableProductItem($id)) {
 // 指定の数量が1以上の場合は、その商品が存在するかチェックした後に、商品と数量を
 // セッションデータに追加します。セッションの項目名は「item+商品ID」とします。
-        elseif ($this->inventoryModel->isAvailableProductItem($id)) {
             $this->session->set_userdata('item' . $id, $qty);
         }
     }
