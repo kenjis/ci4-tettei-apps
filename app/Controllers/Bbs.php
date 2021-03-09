@@ -124,9 +124,9 @@ class Bbs extends CI_Controller
         }
 
 // 検証をパスした場合は、投稿確認ページ(bbs_confirm)を表示します。
-        $data = $this->getBasicPostData();
-        $data['key']        = $this->input->post('key');
-        $data['captcha']    = $this->input->post('captcha');
+        $data            = $this->getBasicPostData();
+        $data['key']     = $this->input->post('key');
+        $data['captcha'] = $this->input->post('captcha');
         $this->loadView('bbs_confirm', $data);
     }
 
@@ -164,9 +164,9 @@ class Bbs extends CI_Controller
 
         [$key, $cap] = $this->createCaptcha();
 
-        $data = $this->getBasicPostData();
-        $data['image']      = $cap['image'];
-        $data['key']        = $key;
+        $data          = $this->getBasicPostData();
+        $data['image'] = $cap['image'];
+        $data['key']   = $key;
 
         $this->loadView('bbs_post', $data);
     }
@@ -179,9 +179,9 @@ class Bbs extends CI_Controller
         // 画像キャプチャ生成に必要な設定をします。文字列ヘルパーのrandom_string()
 // メソッドを使い、ランダムな4桁の数字を取得します。
         $vals = [
-            'word'      => random_string('numeric', 4),
-            'img_path'  => FCPATH . 'captcha/',
-            'img_url'   => base_url_() . 'captcha/',
+            'word'     => random_string('numeric', 4),
+            'img_path' => FCPATH . 'captcha/',
+            'img_url'  => base_url_() . 'captcha/',
         ];
         $cap = create_captcha($vals);
         $data = [
@@ -243,7 +243,7 @@ class Bbs extends CI_Controller
 // ページを表示します。
         $row = $query->row();
 
-        $data = $this->getBasicPostData();
+        $data             = $this->getBasicPostData();
         $data['id']       = $row->id;
         $data['datetime'] = $row->datetime;
 
