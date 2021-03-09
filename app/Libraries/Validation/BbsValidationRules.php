@@ -7,6 +7,7 @@ namespace App\Libraries\Validation;
 use Kenjis\CI3Compatible\Core\CI_Input;
 use Kenjis\CI3Compatible\Database\CI_DB;
 
+use function assert;
 use function get_instance;
 use function time;
 
