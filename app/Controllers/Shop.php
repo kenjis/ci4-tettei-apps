@@ -198,7 +198,7 @@ class Shop extends MyController
         $prodId = $this->convertToInt($prodId);
 
 // POSTされたqtyフィールドより、数量を取得します。
-        $qty = (int) $this->input->post('qty');
+        $qty = (int) $this->request->getPost('qty');
 
 // 商品IDを検証します。
         $this->fieldValidation->validate(
@@ -256,9 +256,11 @@ class Shop extends MyController
         );
 
 // 検索キーワードをクエリ文字列から取得します。
-        $q = (string) $this->input->get('q');
+        $q = (string) $this->request->getGet('q');
+
 // 全角スペースを半角スペースに変換します。
         $q = trim(mb_convert_kana($q, 's'));
+
 // 検索キーワードを検証します。
         $this->fieldValidation->validate(
             $q,
@@ -346,13 +348,13 @@ class Shop extends MyController
         }
 
 // 検証をパスした入力データは、モデルを使って保存します。
-        $customerData = [
-            'name'  => $this->input->post('name'),
-            'zip'   => $this->input->post('zip'),
-            'addr'  => $this->input->post('addr'),
-            'tel'   => $this->input->post('tel'),
-            'email' => $this->input->post('email'),
-        ];
+        $customerData = $this->request->getPost([
+            'name',
+            'zip',
+            'addr',
+            'tel',
+            'email',
+        ]);
         $this->customerModel->set($customerData);
 
         $cart = $this->cartModel->getAll();

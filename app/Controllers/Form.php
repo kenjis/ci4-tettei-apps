@@ -86,11 +86,11 @@ class Form extends CI_Controller
 // 検証OKなら、メールを送信します。
 // メールの内容を設定します。
         $mail = [
-            'from_name' => $this->input->post('name'),
-            'from' => $this->input->post('email'),
+            'from_name' => $this->request->getPost('name'),
+            'from' => $this->request->getPost('email'),
             'to' => 'info@example.jp',
             'subject' => 'コンタクトフォーム',
-            'body' => $this->input->post('comment'),
+            'body' => $this->request->getPost('comment'),
         ];
 
 // sendmail()メソッドを呼び出しメールの送信処理を行います。
