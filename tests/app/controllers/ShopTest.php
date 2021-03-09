@@ -18,6 +18,7 @@ class ShopTest extends FeatureTestCase
 {
     use UnitTest;
 
+    // region Fixture
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -26,7 +27,9 @@ class ShopTest extends FeatureTestCase
         $CI->load->library('seeder');
         $CI->seeder->call('ProductSeeder');
     }
+    // endregion
 
+    // region Feature Tests
     public function test_index(): void
     {
         $output = $this->request('GET', 'shop/index/1');
@@ -63,7 +66,9 @@ class ShopTest extends FeatureTestCase
         $output = $this->request('POST', 'shop/customer_info');
         $this->assertStringContainsString('お客様情報の入力', $output);
     }
+    // endregion
 
+    // region Unit Tests
     public function test_confirm_pass(): void
     {
         /**
@@ -178,4 +183,5 @@ class ShopTest extends FeatureTestCase
 
         $this->assertStringContainsString('システムエラー', $output);
     }
+    // endregion
 }

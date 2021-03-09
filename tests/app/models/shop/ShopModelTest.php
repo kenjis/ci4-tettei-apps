@@ -15,6 +15,7 @@ class ShopModelTest extends UnitTestCase
     /** @var ShopModel */
     private $obj;
 
+    // region Fixture
     public function setUp(): void
     {
         parent::setUp();
@@ -23,7 +24,9 @@ class ShopModelTest extends UnitTestCase
         $this->CI->email = new Mock_Libraries_Email();
         $this->CI->admin = 'admin@example.jp';
     }
+    // endregion
 
+    // region Tests
     public function test_order(): void
     {
         $this->CI->cartModel->add(1, 1);
@@ -47,4 +50,5 @@ class ShopModelTest extends UnitTestCase
         $actual = $this->obj->order('admin@example.jp');
         $this->assertFalse($actual);
     }
+    // endregion
 }

@@ -13,6 +13,7 @@ class InventoryModelTest extends UnitTestCase
     /** @var InventoryModel */
     private $obj;
 
+    // region Fixture
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -28,7 +29,9 @@ class InventoryModelTest extends UnitTestCase
 
         $this->obj = $this->newModel(InventoryModel::class);
     }
+    // endregion
 
+    // region Tests
     public function test_get_category_list(): void
     {
         $expected = [
@@ -93,4 +96,5 @@ class InventoryModelTest extends UnitTestCase
         $actual = $this->obj->isAvailableProductItem(9999999999);
         $this->assertFalse($actual);
     }
+    // endregion
 }
