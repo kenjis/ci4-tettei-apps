@@ -183,7 +183,7 @@ class Bbs extends CI_Controller
      */
     private function createCaptcha(): array
     {
-        // 画像キャプチャ生成に必要な設定をします。文字列ヘルパーのrandom_string()
+// 画像キャプチャ生成に必要な設定をします。文字列ヘルパーのrandom_string()
 // メソッドを使い、ランダムな4桁の数字を取得します。
         $vals = [
             'word'     => random_string('numeric', 4),
