@@ -15,6 +15,7 @@ use App\Models\Shop\CartModel;
 use App\Models\Shop\CustomerModel;
 use App\Models\Shop\InventoryModel;
 use App\Models\Shop\ShopModel;
+use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Input;
 use Kenjis\CI3Compatible\Library\CI_Form_validation;
@@ -40,6 +41,9 @@ use function trim;
  */
 class Shop extends MyController
 {
+    /** @var IncomingRequest */
+    protected $request;
+
     /** @var int 1ページに表示する商品の数 */
     public $limit;
 

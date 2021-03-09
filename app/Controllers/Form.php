@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI3Compatible\Core\CI_Controller;
 use Kenjis\CI3Compatible\Core\CI_Input;
 use Kenjis\CI3Compatible\Core\CI_Output;
@@ -24,6 +25,9 @@ use Kenjis\CI3Compatible\Library\CI_Session;
  */
 class Form extends CI_Controller
 {
+    /** @var IncomingRequest */
+    protected $request;
+
     public function __construct()
     {
 // 親クラスのコンストラクタを呼び出します。コントローラにコンストラクタを

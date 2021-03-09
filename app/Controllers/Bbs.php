@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Controller;
@@ -30,6 +31,9 @@ use function max;
  */
 class Bbs extends CI_Controller
 {
+    /** @var IncomingRequest */
+    protected $request;
+
 // 記事表示ページで、1ページに表示する記事の件数を設定します。
     /** @var int 1ページに表示する記事の件数 */
     public $limit = 5;
