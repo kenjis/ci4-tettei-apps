@@ -38,12 +38,14 @@ class Bbs extends CI_Controller
     /** @var int 1ページに表示する記事の件数 */
     public $limit = 5;
 
+    /** @var string[] */
+    protected $helpers = ['form', 'url'];
+
     public function __construct()
     {
         parent::__construct();
 
         $this->load->library('user_agent');
-        $this->load->helper(['form', 'url']);
 // データベースを使うため、データベースクラスをロードします。
         $this->load->database();
     }

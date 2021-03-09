@@ -25,6 +25,10 @@ class Form extends CI_Controller
     /** @var IncomingRequest */
     protected $request;
 
+// 必要なヘルパーをロードします。
+    /** @var string[] */
+    protected $helpers = ['form', 'url'];
+
     /**
      * バリデーションのルール
      *
@@ -50,9 +54,6 @@ class Form extends CI_Controller
 // 親クラスのコンストラクタを呼び出します。コントローラにコンストラクタを
 // 記述する場合は、忘れずに記述してください。
         parent::__construct();
-
-// 必要なヘルパーをロードします。
-        $this->load->helper(['form', 'url']);
 
 // セッションクラスをロードすることで、セッションを開始します。
         $this->load->library('session');

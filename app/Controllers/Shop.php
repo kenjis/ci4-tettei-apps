@@ -53,6 +53,9 @@ class Shop extends MyController
     /** @var Twig */
     private $twig;
 
+    /** @var string[] */
+    protected $helpers = ['form', 'url'];
+
     public function __construct()
     {
         parent::__construct();
@@ -62,7 +65,6 @@ class Shop extends MyController
             'session',
         ]);
         $this->twig = new Twig();
-        $this->load->helper(['form', 'url']);
 
 // モデルをロードします。ロード後のモデルオブジェクトは、$this->shop_modelなど
 // として利用できます。
