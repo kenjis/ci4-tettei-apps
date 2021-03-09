@@ -64,13 +64,13 @@ class CartModel extends CI_Model
             }
 
             $line++;
-            // 配列のキーから商品IDを取り出します。
+// 配列のキーから商品IDを取り出します。
             $id = (int) substr($key, 4);
-            // get_product_item()メソッドを使い、商品データを取得します。
+// get_product_item()メソッドを使い、商品データを取得します。
             $item = $this->inventoryModel->getProductItem($id);
-            // 単価に数量を掛けて金額を計算します。
+// 単価に数量を掛けて金額を計算します。
             $amount = $item->price * $val;
-            // 以上の情報を連想配列に代入します。
+// 以上の情報を連想配列に代入します。
             $items[$line] = [
                 'id'     => $id,
                 'qty'    => $val,
@@ -78,7 +78,7 @@ class CartModel extends CI_Model
                 'price'  => $item->price,
                 'amount' => $amount,
             ];
-            // 合計金額を計算します。
+// 合計金額を計算します。
             $total += $amount;
         }
 
