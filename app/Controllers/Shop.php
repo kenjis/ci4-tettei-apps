@@ -21,12 +21,9 @@ use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI4Twig\Twig;
 
-use function filter_var;
 use function max;
 use function mb_convert_kana;
 use function trim;
-
-use const FILTER_VALIDATE_INT;
 
 /**
  * @property ShopModel $shopModel
@@ -87,14 +84,8 @@ class Shop extends MyController
      */
     public function index(string $catId = '1', string $page = '0'): void
     {
-        $catId = filter_var($catId, FILTER_VALIDATE_INT);
-        $page = filter_var($page, FILTER_VALIDATE_INT);
-
-        if ($catId === false || $page === false) {
-            show_error('不正な入力です。');
-
-            return;
-        }
+        $catId = $this->convertToInt($catId);
+        $page = $this->convertToInt($page);
 
 // ページ番号をoffsetに変換します。
         $offset = max($page - 1, 0) * $this->limit;
@@ -173,13 +164,7 @@ class Shop extends MyController
      */
     public function product(string $prodId = '1'): void
     {
-        $prodId = filter_var($prodId, FILTER_VALIDATE_INT);
-
-        if ($prodId === false) {
-            show_error('不正な入力です。');
-
-            return;
-        }
+        $prodId = $this->convertToInt($prodId);
 
 // 商品IDを検証します。
         $this->fieldValidation->validate(
@@ -210,13 +195,7 @@ class Shop extends MyController
     public function add(string $prodId = '0'): void
     {
 // $prod_idの型をintに変更します。
-        $prodId = filter_var($prodId, FILTER_VALIDATE_INT);
-
-        if ($prodId === false) {
-            show_error('不正な入力です。');
-
-            return;
-        }
+        $prodId = $this->convertToInt($prodId);
 
 // POSTされたqtyフィールドより、数量を取得します。
         $qty = (int) $this->input->post('qty');
@@ -265,7 +244,7 @@ class Shop extends MyController
      */
     public function search(string $page = '0'): void
     {
-        $page = filter_var($page, FILTER_VALIDATE_INT);
+        $page = $this->convertToInt($page);
 
 // ページ番号をoffsetに変換します。
         $offset = max($page - 1, 0) * $this->limit;

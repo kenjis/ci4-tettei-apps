@@ -18,10 +18,7 @@ use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Library\CI_Pagination;
 use Kenjis\CI3Compatible\Library\CI_User_agent;
 
-use function filter_var;
 use function max;
-
-use const FILTER_VALIDATE_INT;
 
 /**
  * @property CI_DB $db
@@ -54,7 +51,7 @@ class Bbs extends CI_Controller
     {
 // 引数から$pageに値が渡されます。これは、3番目のURIセグメントの値です。
 // ユーザが変更可能なデータですので、int型へ変換し、必ず整数値にします。
-        $page = filter_var($page, FILTER_VALIDATE_INT);
+        $page = $this->convertToInt($page);
 
 // ページ番号をoffsetに変換します。
         $offset = max($page - 1, 0) * $this->limit;
@@ -206,13 +203,7 @@ class Bbs extends CI_Controller
     public function delete(string $id = ''): void
     {
 // 第1引数、つまり、3番目のURIセグメントのデータをint型に変換します。
-        $id = filter_var($id, FILTER_VALIDATE_INT);
-
-        if ($id === false) {
-            show_error('不正な入力です。');
-
-            return;
-        }
+        $id = $this->convertToInt($id);
 
 // POSTされたpasswordフィールドの値を$passwordに代入します。
         $password = (string) $this->input->post('password');

@@ -9,7 +9,12 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Kenjis\CI3Compatible\Exception\RuntimeException;
 use Psr\Log\LoggerInterface;
+
+use function filter_var;
+
+use const FILTER_VALIDATE_INT;
 
 /**
  * BaseController provides a convenient place for loading components
@@ -47,5 +52,19 @@ class BaseController extends Controller
         // Preload any models, libraries, etc, here.
         //--------------------------------------------------------------------
         // E.g.: $this->session = \Config\Services::session();
+    }
+
+    /**
+     * 文字列を検証し整数に変換
+     */
+    protected function convertToInt(string $var): int
+    {
+        $var = filter_var($var, FILTER_VALIDATE_INT);
+
+        if ($var === false) {
+            throw new RuntimeException('不正な入力です。', 400);
+        }
+
+        return $var;
     }
 }
