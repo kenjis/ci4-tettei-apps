@@ -321,11 +321,6 @@ class Shop extends MyController
      */
     public function customer_info(): string
     {
-// 検証ルールを設定します。
-        $this->load->library('validation/shopValidationCustomer');
-
-        $this->shopValidationCustomer->run();
-
         $data = [
             'action' => 'お客様情報の入力',
             'main'   => 'shop_customer_info',
