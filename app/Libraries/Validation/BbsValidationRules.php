@@ -4,24 +4,15 @@ declare(strict_types=1);
 
 namespace App\Libraries\Validation;
 
-use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Input;
 use Kenjis\CI3Compatible\Database\CI_DB;
-use Kenjis\CI3Compatible\Library\CI_Form_validation;
-use Kenjis\CI3Compatible\Library\CI_Pagination;
-use Kenjis\CI3Compatible\Library\CI_User_agent;
 
-use function assert;
 use function get_instance;
 use function time;
 
 /**
  * @property CI_DB $db
- * @property CI_User_agent $agent
- * @property CI_Pagination $pagination
- * @property CI_Form_validation $form_validation
  * @property CI_Input $input
- * @property CI_Config $config
  */
 class BbsValidationRules
 {
