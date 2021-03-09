@@ -28,6 +28,26 @@ class Form extends CI_Controller
     /** @var IncomingRequest */
     protected $request;
 
+    /**
+     * バリデーションのルール
+     *
+     * @var array<string, array<string, string>>
+     */
+    private $validationRules = [
+        'name' => [
+            'label' => '名前',
+            'rules' => 'trim|required|max_length[20]',
+        ],
+        'email' => [
+            'label' => 'メールアドレス',
+            'rules' => 'trim|required|valid_email',
+        ],
+        'comment' => [
+            'label' => 'コメント',
+            'rules' => 'required|max_length[200]',
+        ],
+    ];
+
     public function __construct()
     {
 // 親クラスのコンストラクタを呼び出します。コントローラにコンストラクタを
@@ -44,14 +64,6 @@ class Form extends CI_Controller
         $this->load->library('form_validation');
     }
 
-    private function setValidation(): void
-    {
-// バリデーションの設定をします。
-        $this->form_validation->set_rules('name', '名前', 'trim|required|max_length[20]');
-        $this->form_validation->set_rules('email', 'メールアドレス', 'trim|required|valid_email');
-        $this->form_validation->set_rules('comment', 'コメント', 'required|max_length[200]');
-    }
-
     public function index(): void
     {
 // 入力ページ(form)のビューをロードし表示します。
@@ -60,13 +72,17 @@ class Form extends CI_Controller
 
     public function confirm(): void
     {
-// 検証ルールを設定します。
-        $this->setValidation();
 
 // バリデーション(検証)クラスのrun()メソッドを呼び出し、送信されたデータの検証
 // を行います。検証OKなら、確認ページ(form_confirm)を表示します。
-        if ($this->form_validation->run()) {
-            $this->load->view('form_confirm');
+        if ($this->validate($this->validationRules)) {
+            $data = [
+                'name' => trim($this->request->getPost('name')),
+                'email' => trim($this->request->getPost('email')),
+                'comment' => $this->request->getPost('comment'),
+            ];
+
+            $this->load->view('form_confirm', $data);
 
             return;
         }
@@ -77,11 +93,9 @@ class Form extends CI_Controller
 
     public function send(): void
     {
-// 検証ルールを設定します。
-        $this->setValidation();
 
 // 送信されたデータの検証を行い、検証でエラーの場合、入力ページ(form)を表示します。
-        if (! $this->form_validation->run()) {
+        if (! $this->validate($this->validationRules)) {
             $this->load->view('form');
 
             return;
