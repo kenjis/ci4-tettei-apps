@@ -10,18 +10,15 @@ namespace App\Controllers;
 
 use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI3Compatible\Core\CI_Controller;
-use Kenjis\CI3Compatible\Core\CI_Input;
-use Kenjis\CI3Compatible\Core\CI_Output;
+use Kenjis\CI3Compatible\Exception\RuntimeException;
 use Kenjis\CI3Compatible\Library\CI_Email;
-use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Library\CI_Session;
+
+use function trim;
 
 /**
  * @property CI_Email $email
  * @property CI_Session $session
- * @property CI_Form_validation $form_validation
- * @property CI_Input $input
- * @property CI_Output $output
  */
 class Form extends CI_Controller
 {
