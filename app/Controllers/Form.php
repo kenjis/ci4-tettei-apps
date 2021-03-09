@@ -72,6 +72,9 @@ class Form extends CI_Controller
 
     public function confirm(): void
     {
+        if ($this->request->getMethod() !== 'post') {
+            throw new RuntimeException('不正な入力です。', 400);
+        }
 
 // バリデーション(検証)クラスのrun()メソッドを呼び出し、送信されたデータの検証
 // を行います。検証OKなら、確認ページ(form_confirm)を表示します。
@@ -93,6 +96,9 @@ class Form extends CI_Controller
 
     public function send(): void
     {
+        if ($this->request->getMethod() !== 'post') {
+            throw new RuntimeException('不正な入力です。', 400);
+        }
 
 // 送信されたデータの検証を行い、検証でエラーの場合、入力ページ(form)を表示します。
         if (! $this->validate($this->validationRules)) {
