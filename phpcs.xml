@@ -63,4 +63,11 @@
     <rule ref="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps">
         <exclude-pattern>app/Libraries/Validation/*</exclude-pattern>
     </rule>
+
+    <rule ref="Squiz.Commenting.FunctionComment.WrongStyle">
+        <exclude-pattern>tests/app/*</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.FunctionSpacing.After">
+        <exclude-pattern>tests/app/*</exclude-pattern>
+    </rule>
 </ruleset>
