@@ -13,8 +13,6 @@ use Kenjis\CI3Compatible\Test\Traits\UnitTest;
 use Twig\Environment;
 
 use function get_instance;
-use function ob_get_clean;
-use function ob_start;
 
 class ShopTest extends FeatureTestCase
 {
@@ -85,7 +83,7 @@ class ShopTest extends FeatureTestCase
         $twig = $this->getDouble(Environment::class, []);
         $this->verifyInvokedMultipleTimes(
             $twig,
-            'display',
+            'render',
             1,
             [
                 ['shop_tmpl_checkout', $this->anything()],
@@ -119,7 +117,7 @@ class ShopTest extends FeatureTestCase
         $data['main']   = 'shop_customer_info';
         $this->verifyInvokedMultipleTimes(
             $twig,
-            'display',
+            'render',
             1,
             [
                 ['shop_tmpl_checkout', $data],
@@ -142,9 +140,7 @@ class ShopTest extends FeatureTestCase
         $cart = $this->getDouble(CartModel::class, ['count' => 0]);
         $obj->cartModel = $cart;
 
-        ob_start();
-        $obj->order();
-        $output = ob_get_clean();
+        $output = $obj->order();
 
         $this->assertStringContainsString('買い物カゴには何も入っていません', $output);
     }
@@ -161,9 +157,7 @@ class ShopTest extends FeatureTestCase
         $obj->cartModel = $cart;
         $obj->shopModel = $shop;
 
-        ob_start();
-        $obj->order();
-        $output = ob_get_clean();
+        $output = $obj->order();
 
         $this->assertStringContainsString('ご注文ありがとうございます', $output);
     }
@@ -180,9 +174,7 @@ class ShopTest extends FeatureTestCase
         $obj->cartModel = $cart;
         $obj->shopModel = $shop;
 
-        ob_start();
-        $obj->order();
-        $output = ob_get_clean();
+        $output = $obj->order();
 
         $this->assertStringContainsString('システムエラー', $output);
     }

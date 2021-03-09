@@ -82,7 +82,7 @@ class Shop extends MyController
     /**
      * トップページ = カテゴリ別商品一覧
      */
-    public function index(string $catId = '1', string $page = '0'): void
+    public function index(string $catId = '1', string $page = '0'): string
     {
         $catId = $this->convertToInt($catId);
         $page = $this->convertToInt($page);
@@ -130,7 +130,7 @@ class Shop extends MyController
         ];
 
 // ビューを表示します。
-        $this->twig->display('shop_tmpl_shop', $data);
+        return $this->twig->render('shop_tmpl_shop', $data);
     }
 
     /**
@@ -162,7 +162,7 @@ class Shop extends MyController
     /**
      * 商品詳細ページ
      */
-    public function product(string $prodId = '1'): void
+    public function product(string $prodId = '1'): string
     {
         $prodId = $this->convertToInt($prodId);
 
@@ -186,13 +186,13 @@ class Shop extends MyController
             'item_count' => $itemCount,
         ];
 
-        $this->twig->display('shop_tmpl_shop', $data);
+        return $this->twig->render('shop_tmpl_shop', $data);
     }
 
     /**
      * カゴに入れる
      */
-    public function add(string $prodId = '0'): void
+    public function add(string $prodId = '0'): string
     {
 // $prod_idの型をintに変更します。
         $prodId = $this->convertToInt($prodId);
@@ -215,13 +215,13 @@ class Shop extends MyController
         $this->cartModel->add($prodId, $qty);
 
 // コントローラのcart()メソッドを呼び出し、カートを表示します。
-        $this->cart();
+        return $this->cart();
     }
 
     /**
      * 買い物カゴページ
      */
-    public function cart(): void
+    public function cart(): string
     {
         $catList = $this->inventoryModel->getCategoryList();
 
@@ -236,13 +236,13 @@ class Shop extends MyController
             'main' => 'shop_cart',
         ];
 
-        $this->twig->display('shop_tmpl_shop', $data);
+        return $this->twig->render('shop_tmpl_shop', $data);
     }
 
     /**
      * 検索ページ
      */
-    public function search(string $page = '0'): void
+    public function search(string $page = '0'): string
     {
         $page = $this->convertToInt($page);
 
@@ -287,7 +287,7 @@ class Shop extends MyController
             'item_count' => $this->cartModel->count(),
         ];
 
-        $this->twig->display('shop_tmpl_shop', $data);
+        return $this->twig->render('shop_tmpl_shop', $data);
     }
 
     /**
@@ -319,7 +319,7 @@ class Shop extends MyController
     /**
      * お客様情報入力ページ
      */
-    public function customer_info(): void
+    public function customer_info(): string
     {
 // 検証ルールを設定します。
         $this->load->library('validation/shopValidationCustomer');
@@ -330,13 +330,14 @@ class Shop extends MyController
             'action' => 'お客様情報の入力',
             'main'   => 'shop_customer_info',
         ];
-        $this->twig->display('shop_tmpl_checkout', $data);
+
+        return $this->twig->render('shop_tmpl_checkout', $data);
     }
 
     /**
      * 注文内容確認
      */
-    public function confirm(): void
+    public function confirm(): string
     {
         $this->load->library('validation/shopValidationCustomer');
 
@@ -345,9 +346,8 @@ class Shop extends MyController
                 'action' => 'お客様情報の入力',
                 'main' => 'shop_customer_info',
             ];
-            $this->twig->display('shop_tmpl_checkout', $data);
 
-            return;
+            return $this->twig->render('shop_tmpl_checkout', $data);
         }
 
 // 検証をパスした入力データは、モデルを使って保存します。
@@ -374,33 +374,31 @@ class Shop extends MyController
             'main' => 'shop_confirm',
         ];
 
-        $this->twig->display('shop_tmpl_checkout', $data);
+        return $this->twig->render('shop_tmpl_checkout', $data);
     }
 
     /**
      * 注文処理
      */
-    public function order(): void
+    public function order(): string
     {
         if ($this->cartModel->count() === 0) {
-            echo '買い物カゴには何も入っていません。';
-
-            return;
+            return '買い物カゴには何も入っていません。';
         }
 
 // モデルのorder()メソッドを呼び出し、注文データの処理を依頼します。
         if ($this->shopModel->order($this->admin)) {
+            // 注文が完了したので、セッションを破棄します。
+            $this->session->sess_destroy();
+
             $data = [
                 'action' => '注文の完了',
                 'main'   => 'shop_thankyou',
             ];
-            $this->twig->display('shop_tmpl_checkout', $data);
-// 注文が完了したので、セッションを破棄します。
-            $this->session->sess_destroy();
 
-            return;
+            return $this->twig->render('shop_tmpl_checkout', $data);
         }
 
-        echo 'システムエラー';
+        return 'システムエラー';
     }
 }
