@@ -2,7 +2,7 @@
 
 namespace Config;
 
-use App\Controllers\BbsValidationRules;
+use App\Libraries\Validation\BbsValidationRules;
 use CodeIgniter\Validation\CreditCardRules;
 use CodeIgniter\Validation\FileRules;
 use CodeIgniter\Validation\FormatRules;

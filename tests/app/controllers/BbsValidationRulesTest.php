@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Libraries\Validation\BbsValidationRules;
 use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 
 class BbsValidationRulesTest extends UnitTestCase

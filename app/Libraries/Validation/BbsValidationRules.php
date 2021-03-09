@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controllers;
+namespace App\Libraries\Validation;
 
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Input;
