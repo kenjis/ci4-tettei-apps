@@ -12,12 +12,22 @@ class FormTest extends FeatureTestCase
     public function test_index(): void
     {
         $output = $this->request('GET', 'form');
+
         $this->assertStringContainsString('<title>コンタクトフォーム</title>', $output);
     }
 
     public function test_confirm_error(): void
     {
-        $output = $this->request('POST', 'form/confirm', ['name' => '']);
+        $output = $this->request(
+            'POST',
+            'form/confirm',
+            [
+                'name' => '',
+                'email' => '',
+                'comment' => '',
+            ]
+        );
+
         $this->assertStringContainsString('名前 は必須項目です', $output);
     }
 
@@ -32,6 +42,7 @@ class FormTest extends FeatureTestCase
                 'comment' => '<s>abc</s>',
             ]
         );
+
         $this->assertStringContainsString('お問い合わせ内容の確認', $output);
         $this->assertStringContainsString('&lt;s&gt;abc&lt;/s&gt;', $output);
         $this->assertStringNotContainsString('<s>abc</s>', $output);
@@ -49,6 +60,7 @@ class FormTest extends FeatureTestCase
                 $CI->email = $email;
             }
         );
+
         $output = $this->request(
             'POST',
             'form/send',
@@ -58,6 +70,7 @@ class FormTest extends FeatureTestCase
                 'comment' => '<s>abc</s>',
             ]
         );
+
         $this->assertStringContainsString('送信しました', $output);
     }
 }

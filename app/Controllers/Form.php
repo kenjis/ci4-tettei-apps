@@ -8,13 +8,12 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Models\Form\FormForm;
 use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI3Compatible\Core\CI_Controller;
 use Kenjis\CI3Compatible\Exception\RuntimeException;
 use Kenjis\CI3Compatible\Library\CI_Email;
 use Kenjis\CI3Compatible\Library\CI_Session;
-
-use function trim;
 
 /**
  * @property CI_Email $email
@@ -29,25 +28,8 @@ class Form extends CI_Controller
     /** @var string[] */
     protected $helpers = ['form', 'url'];
 
-    /**
-     * バリデーションのルール
-     *
-     * @var array<string, array<string, string>>
-     */
-    private $validationRules = [
-        'name' => [
-            'label' => '名前',
-            'rules' => 'trim|required|max_length[20]',
-        ],
-        'email' => [
-            'label' => 'メールアドレス',
-            'rules' => 'trim|required|valid_email',
-        ],
-        'comment' => [
-            'label' => 'コメント',
-            'rules' => 'required|max_length[200]',
-        ],
-    ];
+    /** @var FormForm */
+    private $form;
 
     public function __construct()
     {
@@ -74,16 +56,14 @@ class Form extends CI_Controller
             throw new RuntimeException('不正な入力です。', 400);
         }
 
+        $this->form = new FormForm($this->request->getPost(
+            ['name', 'email', 'comment']
+        ));
+
 // バリデーション(検証)クラスのrun()メソッドを呼び出し、送信されたデータの検証
 // を行います。検証OKなら、確認ページ(form_confirm)を表示します。
-        if ($this->validate($this->validationRules)) {
-            $data = [
-                'name' => trim($this->request->getPost('name')),
-                'email' => trim($this->request->getPost('email')),
-                'comment' => $this->request->getPost('comment'),
-            ];
-
-            $this->load->view('form_confirm', $data);
+        if ($this->validate($this->form->getValidationRules())) {
+            $this->load->view('form_confirm', $this->form->asArray());
 
             return;
         }
@@ -98,8 +78,12 @@ class Form extends CI_Controller
             throw new RuntimeException('不正な入力です。', 400);
         }
 
+        $this->form = new FormForm($this->request->getPost(
+            ['name', 'email', 'comment']
+        ));
+
 // 送信されたデータの検証を行い、検証でエラーの場合、入力ページ(form)を表示します。
-        if (! $this->validate($this->validationRules)) {
+        if (! $this->validate($this->form->getValidationRules())) {
             $this->load->view('form');
 
             return;
@@ -108,11 +92,11 @@ class Form extends CI_Controller
 // 検証OKなら、メールを送信します。
 // メールの内容を設定します。
         $mail = [
-            'from_name' => $this->request->getPost('name'),
-            'from' => $this->request->getPost('email'),
+            'from_name' => $this->form->getName(),
+            'from' => $this->form->getEmail(),
             'to' => 'info@example.jp',
             'subject' => 'コンタクトフォーム',
-            'body' => $this->request->getPost('comment'),
+            'body' => $this->form->getComment(),
         ];
 
 // sendmail()メソッドを呼び出しメールの送信処理を行います。
