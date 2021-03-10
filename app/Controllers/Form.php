@@ -121,18 +121,11 @@ class Form extends CI_Controller
 // $configでEmailクラスを初期化します。
         $this->email->initialize($config);
 
-// メールの内容を変数に代入します。
-        $fromName = $mail['from_name'];
-        $from     = $mail['from'];
-        $to       = $mail['to'];
-        $subject  = $mail['subject'];
-        $body     = $mail['body'];
-
 // 差出人、あて先、件名、本文をEmailクラスに設定します。
-        $this->email->from($from, $fromName);
-        $this->email->to($to);
-        $this->email->subject($subject);
-        $this->email->message($body);
+        $this->email->from($mail['from'], $mail['from_name']);
+        $this->email->to($mail['to']);
+        $this->email->subject($mail['subject']);
+        $this->email->message($mail['body']);
 
 // Emailクラスのsend()メソッドで、実際にメールを送信します。
 // メールの送信が成功した場合はTRUEを、失敗した場合はFALSEを返します。
