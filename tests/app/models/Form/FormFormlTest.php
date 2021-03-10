@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models\Form;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Kenjis\CI3Compatible\Exception\LogicException;
 
 class FormFormlTest extends CIUnitTestCase
 {
@@ -19,7 +20,10 @@ class FormFormlTest extends CIUnitTestCase
             'comment' => 'コメントです',
         ];
 
-        return new FormForm($this->data);
+        $form = new FormForm();
+        $form->setData($this->data);
+
+        return $form;
     }
 
     public function test_インスタンス化できる(): void
@@ -43,7 +47,8 @@ class FormFormlTest extends CIUnitTestCase
             'email' => ' メアドです ',
             'comment' => ' コメントです',
         ];
-        $form = new FormForm($data);
+        $form = new FormForm();
+        $form->setData($data);
 
         $expected = [
             'name' => '名前です',
@@ -58,5 +63,14 @@ class FormFormlTest extends CIUnitTestCase
         $form = $this->createForm();
 
         $this->assertIsArray($form->getValidationRules());
+    }
+
+    public function test_データをセットせずに取得すると例外が返る(): void
+    {
+        $this->expectException(LogicException::class);
+
+        $form = new FormForm();
+
+        $this->assertIsArray($form->asArray());
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models\Form;
 
+use Kenjis\CI3Compatible\Exception\LogicException;
+
 use function trim;
 
 class FormForm
@@ -40,7 +42,7 @@ class FormForm
     /**
      * @param array<string, string> $data
      */
-    public function __construct(array $data)
+    public function setData(array $data): void
     {
         $this->name = trim($data['name']);
         $this->email = trim($data['email']);
@@ -53,9 +55,9 @@ class FormForm
     public function asArray(): array
     {
         return [
-            'name' => $this->name,
-            'email' => $this->email,
-            'comment' => $this->comment,
+            'name' => $this->get('name'),
+            'email' => $this->get('email'),
+            'comment' => $this->get('comment'),
         ];
     }
 
@@ -67,18 +69,29 @@ class FormForm
         return $this->validationRules;
     }
 
+    private function get(string $property): string
+    {
+        if ($this->$property === null) {
+            throw new LogicException(
+                'setData() でデータをセットしてください。'
+            );
+        }
+
+        return $this->$property;
+    }
+
     public function getName(): string
     {
-        return $this->name;
+        return $this->get('name');
     }
 
     public function getEmail(): string
     {
-        return $this->email;
+        return $this->get('email');
     }
 
     public function getComment(): string
     {
-        return $this->comment;
+        return $this->get('comment');
     }
 }

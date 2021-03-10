@@ -51,13 +51,15 @@ class Form extends CI_Controller
             throw new RuntimeException('不正な入力です。', 400);
         }
 
-        $this->form = new FormForm($this->request->getPost(
-            ['name', 'email', 'comment']
-        ));
+        $this->form = new FormForm();
 
 // バリデーション(検証)クラスのrun()メソッドを呼び出し、送信されたデータの検証
 // を行います。検証OKなら、確認ページ(form_confirm)を表示します。
         if ($this->validate($this->form->getValidationRules())) {
+            $this->form->setData($this->request->getPost(
+                ['name', 'email', 'comment']
+            ));
+
             $this->load->view('form_confirm', $this->form->asArray());
 
             return;
@@ -73,9 +75,7 @@ class Form extends CI_Controller
             throw new RuntimeException('不正な入力です。', 400);
         }
 
-        $this->form = new FormForm($this->request->getPost(
-            ['name', 'email', 'comment']
-        ));
+        $this->form = new FormForm();
 
 // 送信されたデータの検証を行い、検証でエラーの場合、入力ページ(form)を表示します。
         if (! $this->validate($this->form->getValidationRules())) {
@@ -85,6 +85,10 @@ class Form extends CI_Controller
         }
 
 // 検証OKなら、メールを送信します。
+        $this->form->setData($this->request->getPost(
+            ['name', 'email', 'comment']
+        ));
+
 // メールの内容を設定します。
         $mail = [
             'from_name' => $this->form->getName(),
