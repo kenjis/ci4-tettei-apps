@@ -38,7 +38,7 @@ class ShopModel extends CI_Model
 // 注文日時をPHPのdate()関数から取得します。
         $date = date('Y/m/d H:i:s');
 
-// カートの情報を取得します。
+// 買い物かごの情報を取得します。
         $cart = $this->cartModel->getAll();
         foreach ($cart['items'] as &$item) {
             $item['price']  = number_format((float) $item['price']);

@@ -196,7 +196,7 @@ class Shop extends MyController
     }
 
     /**
-     * カゴに入れる
+     * 買い物かごに入れる
      */
     public function add(string $prodId = '0'): string
     {
@@ -220,18 +220,18 @@ class Shop extends MyController
 
         $this->cartModel->add($prodId, $qty);
 
-// コントローラのcart()メソッドを呼び出し、カートを表示します。
+// コントローラのcart()メソッドを呼び出し、買い物かごを表示します。
         return $this->cart();
     }
 
     /**
-     * 買い物カゴページ
+     * 買い物かごページ
      */
     public function cart(): string
     {
         $catList = $this->inventoryModel->getCategoryList();
 
-// モデルより、カートの情報を取得します。
+// モデルより、買い物かごの情報を取得します。
         $cart = $this->cartModel->getAll();
 
         $data = [
