@@ -33,11 +33,20 @@ class FormFormlTest extends CIUnitTestCase
         $this->assertInstanceOf(FormForm::class, $form);
     }
 
-    public function test_配列に変換できる(): void
+    public function test_配列としてアクセスできる(): void
     {
         $form = $this->createForm();
 
-        $this->assertSame($this->data, $form->asArray());
+        $this->assertSame($this->data['name'], $form['name']);
+    }
+
+    public function test_存在しないキーにアクセスすると例外が返る(): void
+    {
+        $form = $this->createForm();
+
+        $this->expectException(LogicException::class);
+
+        $form['not_exists'];
     }
 
     public function test_nameとemailがtrimされる(): void

@@ -4,14 +4,21 @@ declare(strict_types=1);
 
 namespace App\Models\Form;
 
+use ArrayAccess;
 use Kenjis\CI3Compatible\Exception\LogicException;
 
+use function assert;
+use function in_array;
+use function is_string;
+use function property_exists;
 use function trim;
 
 /**
  * コンタクトフォーム
+ *
+ * @implements ArrayAccess<string, string>
  */
-class FormForm
+class FormForm implements ArrayAccess
 {
     /** @var string */
     private $name;
@@ -21,6 +28,13 @@ class FormForm
 
     /** @var string */
     private $comment;
+
+    /** @var string[] */
+    private $arrayReadProperties = [
+        'name',
+        'email',
+        'comment',
+    ];
 
     /**
      * バリデーションのルール
@@ -100,5 +114,62 @@ class FormForm
         $this->isset('comment');
 
         return $this->comment;
+    }
+
+    /**
+     * @param string|int $offset
+     */
+    public function offsetExists($offset): bool
+    {
+        assert(is_string($offset));
+
+        if (! isset($this->arrayReadProperties)) {
+            throw new LogicException(
+                'プロパティ $arrayReadProperties に配列としてアクセスできるプロパティを設定してください。'
+            );
+        }
+
+        if (! property_exists($this, $offset)) {
+            throw new LogicException(
+                $offset . ' は存在しません。'
+            );
+        }
+
+        $this->isset($offset);
+
+        return in_array($offset, $this->arrayReadProperties, true);
+    }
+
+    /**
+     * @param string|int $offset
+     *
+     * @return mixed
+     */
+    public function offsetGet($offset)
+    {
+        if ($this->offsetExists($offset)) {
+            return $this->$offset;
+        }
+
+        throw new LogicException($offset . ' は存在しません。');
+    }
+
+    /**
+     * @param string|int $offset
+     * @param mixed      $value
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function offsetSet($offset, $value): void
+    {
+        throw new LogicException($offset . 'は変更できません。');
+    }
+
+    /**
+     * @param string|int $offset
+     */
+    public function offsetUnset($offset): void
+    {
+        throw new LogicException($offset . 'は変更できません。');
     }
 }
