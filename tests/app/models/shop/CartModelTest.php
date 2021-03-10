@@ -65,20 +65,18 @@ class CartModelTest extends UnitTestCase
 
         $expected = [
             'items' => [
-                1 => [
-                    'id' => 1,
-                    'qty' => 1,
-                    'name' => 'CodeIgniter徹底入門',
-                    'price' => '3800',
-                    'amount' => 3800,
-                ],
-                2 => [
-                    'id' => 2,
-                    'qty' => 2,
-                    'name' => 'CodeIgniter徹底入門 CD',
-                    'price' => '3800',
-                    'amount' => 7600,
-                ],
+                1 => new CartItem(
+                    1,
+                    1,
+                    'CodeIgniter徹底入門',
+                    3800
+                ),
+                2 => new CartItem(
+                    2,
+                    2,
+                    'CodeIgniter徹底入門 CD',
+                    3800
+                ),
             ],
             'line' => 2,
             'total' => 11400,

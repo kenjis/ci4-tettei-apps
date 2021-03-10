@@ -40,14 +40,20 @@ class ShopModel extends CI_Model
 
 // 買い物かごの情報を取得します。
         $cart = $this->cartModel->getAll();
-        foreach ($cart['items'] as &$item) {
-            $item['price']  = number_format((float) $item['price']);
-            $item['amount'] = number_format((float) $item['amount']);
+
+        $items = [];
+        foreach ($cart['items'] as $item) {
+            $itemArray = $item->asArray();
+
+            $itemArray['price']  = number_format((float) $itemArray['price']);
+            $itemArray['amount'] = number_format((float) $itemArray['amount']);
+
+            $items[] = $itemArray;
         }
 
         $data = [
             'date'  => $date,
-            'items' => $cart['items'],
+            'items' => $items,
             'line'  => $cart['line'],
             'total' => number_format($cart['total']),
         ];
