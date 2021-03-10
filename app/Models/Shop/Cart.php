@@ -11,7 +11,7 @@ use function count;
  */
 class Cart
 {
-    /** @var CartItem[] 商品 */
+    /** @var array<int, CartItem> 商品 */
     private $items = [];
 
     /** @var int 合計 */
@@ -44,5 +44,13 @@ class Cart
     public function remove(int $productId): void
     {
         unset($this->items[$productId]);
+    }
+
+    /**
+     * @return array<int, CartItem>
+     */
+    public function getItems(): array
+    {
+        return $this->items;
     }
 }

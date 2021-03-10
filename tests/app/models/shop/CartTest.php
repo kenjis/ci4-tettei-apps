@@ -79,4 +79,17 @@ class CartTest extends CIUnitTestCase
 
         $this->assertSame(1, $cart->getLineCount());
     }
+
+    public function test_商品アイテムを取得できる(): void
+    {
+        $cart = new Cart();
+        $cart->add($this->item1);
+        $cart->add($this->item2);
+
+        $expected = [
+            1 => $this->item1,
+            2 => $this->item2,
+        ];
+        $this->assertSame($expected, $cart->getItems());
+    }
 }
