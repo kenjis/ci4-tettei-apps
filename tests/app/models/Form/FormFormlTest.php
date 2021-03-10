@@ -41,14 +41,14 @@ class FormFormlTest extends CIUnitTestCase
         $data = [
             'name' => '   名前です',
             'email' => ' メアドです ',
-            'comment' => 'コメントです',
+            'comment' => ' コメントです',
         ];
         $form = new FormForm($data);
 
         $expected = [
             'name' => '名前です',
             'email' => 'メアドです',
-            'comment' => 'コメントです',
+            'comment' => ' コメントです',
         ];
         $this->assertSame($expected, $form->asArray());
     }
