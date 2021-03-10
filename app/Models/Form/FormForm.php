@@ -8,16 +8,19 @@ use Kenjis\CI3Compatible\Exception\LogicException;
 
 use function trim;
 
+/**
+ * コンタクトフォーム
+ */
 class FormForm
 {
     /** @var string */
-    private $name;
+    private $name; // phpcs:ignore
 
     /** @var string */
-    private $email;
+    private $email; // phpcs:ignore
 
     /** @var string */
-    private $comment;
+    private $comment; // phpcs:ignore
 
     /**
      * バリデーションのルール
