@@ -14,13 +14,13 @@ use function trim;
 class FormForm
 {
     /** @var string */
-    private $name; // phpcs:ignore
+    private $name;
 
     /** @var string */
-    private $email; // phpcs:ignore
+    private $email;
 
     /** @var string */
-    private $comment; // phpcs:ignore
+    private $comment;
 
     /**
      * バリデーションのルール
@@ -43,7 +43,7 @@ class FormForm
     ];
 
     /**
-     * @param array<string, string> $data
+     * @param array{name: string, email: string, comment: string} $data
      */
     public function setData(array $data): void
     {
@@ -53,14 +53,14 @@ class FormForm
     }
 
     /**
-     * @return array<string, string>
+     * @return array{name: string, email: string, comment: string}
      */
     public function asArray(): array
     {
         return [
-            'name' => $this->get('name'),
-            'email' => $this->get('email'),
-            'comment' => $this->get('comment'),
+            'name' => $this->getName(),
+            'email' => $this->getEmail(),
+            'comment' => $this->getComment(),
         ];
     }
 
@@ -72,29 +72,33 @@ class FormForm
         return $this->validationRules;
     }
 
-    private function get(string $property): string
+    private function isset(string $property): void
     {
         if ($this->$property === null) {
             throw new LogicException(
                 'setData() でデータをセットしてください。'
             );
         }
-
-        return $this->$property;
     }
 
     public function getName(): string
     {
-        return $this->get('name');
+        $this->isset('name');
+
+        return $this->name;
     }
 
     public function getEmail(): string
     {
-        return $this->get('email');
+        $this->isset('email');
+
+        return $this->email;
     }
 
     public function getComment(): string
     {
-        return $this->get('comment');
+        $this->isset('comment');
+
+        return $this->comment;
     }
 }
