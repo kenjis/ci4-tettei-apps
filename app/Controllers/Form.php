@@ -13,11 +13,9 @@ use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI3Compatible\Core\CI_Controller;
 use Kenjis\CI3Compatible\Exception\RuntimeException;
 use Kenjis\CI3Compatible\Library\CI_Email;
-use Kenjis\CI3Compatible\Library\CI_Session;
 
 /**
  * @property CI_Email $email
- * @property CI_Session $session
  */
 class Form extends CI_Controller
 {
@@ -36,12 +34,6 @@ class Form extends CI_Controller
 // 親クラスのコンストラクタを呼び出します。コントローラにコンストラクタを
 // 記述する場合は、忘れずに記述してください。
         parent::__construct();
-
-// セッションクラスをロードすることで、セッションを開始します。
-        $this->load->library('session');
-
-// バリデーション(検証)クラスをロードします。
-        $this->load->library('form_validation');
     }
 
     public function index(): void
@@ -102,9 +94,8 @@ class Form extends CI_Controller
 // sendmail()メソッドを呼び出しメールの送信処理を行います。
 // メールの送信に成功したら、完了ページ(form_end)を表示します。
         if ($this->sendmail($mail)) {
-// 完了ページ(form_end)を表示し、セッションを破棄します。
+// 完了ページ(form_end)を表示します。
             $this->load->view('form_end');
-            $this->session->sess_destroy();
 
             return;
         }
