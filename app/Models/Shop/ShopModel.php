@@ -44,7 +44,7 @@ class ShopModel extends CI_Model
 
 // sendmail()メソッドを呼び出し、実際にメールを送信します。メール送信に成功
 // すれば、TRUEを返します。
-        if ($this->mailModel->sendmail($mail)) { // @phpstan-ignore-line 何故か 'to' が array|int|string と判定されてエラーになる
+        if ($this->mailModel->sendmail($mail)) {
             return true;
         }
 
@@ -54,7 +54,7 @@ class ShopModel extends CI_Model
     /**
      * @param array{date: string, items: array<int, array{id: int, qty: int, name: string, price: string, amount: string}>, line: int, total: string, name: string, zip: string, addr: string, tel: string, email: string} $data
      *
-     * @return array<string, string>
+     * @return array{from_name: string, from: string, to: string, bcc: string, subject: string, body: string}
      */
     private function createMail(array $data, string $adminEmail): array
     {
