@@ -34,6 +34,9 @@ class Form extends CI_Controller
 // 親クラスのコンストラクタを呼び出します。コントローラにコンストラクタを
 // 記述する場合は、忘れずに記述してください。
         parent::__construct();
+
+// Emailクラスをロードします。
+        $this->load->library('email');
     }
 
     public function index(): void
@@ -109,9 +112,6 @@ class Form extends CI_Controller
      */
     private function sendmail(array $mail): bool
     {
-// Emailクラスをロードします。
-        $this->load->library('email');
-
         $config = [
 // メールの送信方法を指定します。ここでは、mail()関数を使います。
             'protocol' => 'mail',
