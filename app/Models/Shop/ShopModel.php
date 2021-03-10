@@ -40,7 +40,7 @@ class ShopModel extends CI_Model
         $data = array_merge($data, $this->customerModel->get());
 
         // @phpstan-ignore-next-line
-        $mail = $this->createMail($data, $adminEmail);
+        $mail = $this->createMailData($data, $adminEmail);
 
 // sendmail()メソッドを呼び出し、実際にメールを送信します。メール送信に成功
 // すれば、TRUEを返します。
@@ -56,7 +56,7 @@ class ShopModel extends CI_Model
      *
      * @return array{from_name: string, from: string, to: string, bcc: string, subject: string, body: string}
      */
-    private function createMail(array $data, string $adminEmail): array
+    private function createMailData(array $data, string $adminEmail): array
     {
         // テンプレートパーサクラスでメール本文を作成します。
         $this->load->library('parser');
