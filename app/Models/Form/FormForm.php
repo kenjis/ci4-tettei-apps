@@ -66,4 +66,19 @@ class FormForm
     {
         return $this->validationRules;
     }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getComment(): string
+    {
+        return $this->comment;
+    }
 }
