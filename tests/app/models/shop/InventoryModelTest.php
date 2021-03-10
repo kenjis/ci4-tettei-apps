@@ -34,12 +34,13 @@ class InventoryModelTest extends UnitTestCase
     // region Tests
     public function test_get_category_list(): void
     {
+        $list = $this->obj->getCategoryList();
+
         $expected = [
             1 => '本',
             2 => 'CD',
             3 => 'DVD',
         ];
-        $list = $this->obj->getCategoryList();
         foreach ($list as $category) {
             $this->assertEquals($expected[$category->id], $category->name);
         }
@@ -48,6 +49,7 @@ class InventoryModelTest extends UnitTestCase
     public function test_get_category_name(): void
     {
         $actual = $this->obj->getCategoryName(1);
+
         $expected = '本';
         $this->assertEquals($expected, $actual);
     }
@@ -55,14 +57,16 @@ class InventoryModelTest extends UnitTestCase
     public function test_get_product_count(): void
     {
         $actual = $this->obj->getProductCount(1);
+
         $expected = 36;
         $this->assertEquals($expected, $actual);
     }
 
     public function test_get_product_list(): void
     {
-        $expected = [1 => 'CodeIgniter徹底入門'];
         $list = $this->obj->getProductList(1, 1, 0);
+
+        $expected = [1 => 'CodeIgniter徹底入門'];
         foreach ($list as $product) {
             $this->assertEquals($expected[$product->id], $product->name);
         }
@@ -79,6 +83,7 @@ class InventoryModelTest extends UnitTestCase
     public function test_get_product_by_search(): void
     {
         $results = $this->obj->getProductBySearch('CodeIgniter', 10, 0);
+
         foreach ($results as $record) {
             $this->assertStringContainsString('CodeIgniter', $record->name);
         }
@@ -87,6 +92,7 @@ class InventoryModelTest extends UnitTestCase
     public function test_get_count_by_search(): void
     {
         $actual = $this->obj->getCountBySearch('CodeIgniter');
+
         $expected = 3;
         $this->assertEquals($expected, $actual);
     }
@@ -94,6 +100,7 @@ class InventoryModelTest extends UnitTestCase
     public function test_is_available_product_item_not_available(): void
     {
         $actual = $this->obj->isAvailableProductItem(9999999999);
+
         $this->assertFalse($actual);
     }
     // endregion

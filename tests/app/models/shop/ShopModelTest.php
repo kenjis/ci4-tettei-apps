@@ -33,9 +33,11 @@ class ShopModelTest extends UnitTestCase
         $this->CI->cartModel->add(2, 2);
 
         $actual = $this->obj->order('admin@example.jp');
+
         $this->assertTrue($actual);
 
         $mail = $this->CI->email->_get_data();
+
         $this->assertEquals($this->CI->admin, $mail['from']);
         $this->assertStringContainsString('注文合計： 11,400円', $mail['message']);
     }
@@ -48,6 +50,7 @@ class ShopModelTest extends UnitTestCase
         $this->CI->cartModel->add(2, 2);
 
         $actual = $this->obj->order('admin@example.jp');
+
         $this->assertFalse($actual);
     }
     // endregion

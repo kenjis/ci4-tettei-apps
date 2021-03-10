@@ -33,6 +33,7 @@ class CustomerModelTest extends UnitTestCase
         $this->obj->set($expected);
 
         $actual = $this->obj->get();
+
         $this->assertEquals($expected, $actual);
     }
 }

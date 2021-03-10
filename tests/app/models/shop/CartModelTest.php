@@ -39,7 +39,9 @@ class CartModelTest extends UnitTestCase
     {
         $this->obj->add(1, 1);
         $this->obj->add(2, 2);
+
         $actual = $this->obj->count();
+
         $this->assertEquals(2, $actual);
     }
 
@@ -47,7 +49,9 @@ class CartModelTest extends UnitTestCase
     {
         $this->obj->add(2, 2);
         $this->obj->add(2, 0);
+
         $actual = $this->obj->count();
+
         $this->assertEquals(0, $actual);
     }
 
@@ -58,6 +62,7 @@ class CartModelTest extends UnitTestCase
         $this->obj->add(2, 2);
 
         $actual = $this->obj->getAll();
+
         $expected = [
             'items' => [
                 1 => [
