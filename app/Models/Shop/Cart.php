@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
+use App\Libraries\SystemClock;
+
 use function count;
+use function number_format;
 
 /**
  * 買い物かご
@@ -16,6 +19,20 @@ class Cart
 
     /** @var int 合計 */
     private $total = 0;
+
+    /** @var SystemClock */
+    private $clock;
+
+    public function __construct(?SystemClock $clock = null)
+    {
+        if ($clock === null) {
+            $this->clock = new SystemClock();
+
+            return;
+        }
+
+        $this->clock = $clock;
+    }
 
     /**
      * 商品アイテム数を返す
@@ -52,5 +69,30 @@ class Cart
     public function getItems(): array
     {
         return $this->items;
+    }
+
+    /**
+     * 注文確認データを取得する
+     *
+     * @return array{date: string, items: array<int, array{id: int, qty: int, name: string, price: string, amount: string}>, line: int, total: string}
+     */
+    public function getOrderConfirmationData(): array
+    {
+        $items = [];
+        foreach ($this->getItems() as $item) {
+            $itemArray = $item->asArray();
+
+            $itemArray['price']  = number_format((float) $itemArray['price']);
+            $itemArray['amount'] = number_format((float) $itemArray['amount']);
+
+            $items[] = $itemArray;
+        }
+
+        return [
+            'date'  => $this->clock->now()->format('Y/m/d H:i:s'),
+            'items' => $items,
+            'line'  => $this->getLineCount(),
+            'total' => number_format($this->getTotal()),
+        ];
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
+use App\Libraries\SystemClock;
 use CodeIgniter\Test\CIUnitTestCase;
 
 class CartTest extends CIUnitTestCase
@@ -91,5 +92,38 @@ class CartTest extends CIUnitTestCase
             2 => $this->item2,
         ];
         $this->assertSame($expected, $cart->getItems());
+    }
+
+    public function test_注文確認データを取得できる(): void
+    {
+        $clock = new SystemClock();
+        $clock->freeze('2021-03-10 12:31:45');
+
+        $cart = new Cart($clock);
+        $cart->add($this->item1);
+        $cart->add($this->item2);
+
+        $expected = [
+            'date'  => '2021/03/10 12:31:45',
+            'items' => [
+                [
+                    'id' => 1,
+                    'qty' => 1,
+                    'name' => 'CodeIgniter徹底入門',
+                    'price' => '3,800',
+                    'amount' => '3,800',
+                ],
+                [
+                    'id' => 2,
+                    'qty' => 1,
+                    'name' => 'CodeIgniter徹底入門 CD',
+                    'price' => '3,800',
+                    'amount' => '3,800',
+                ],
+            ],
+            'line'  => 2,
+            'total' => '7,600',
+        ];
+        $this->assertSame($expected, $cart->getOrderConfirmationData());
     }
 }
