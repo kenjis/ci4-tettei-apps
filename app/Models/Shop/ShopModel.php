@@ -9,8 +9,6 @@ use Kenjis\CI3Compatible\Core\CI_Model;
 use Kenjis\CI3Compatible\Library\CI_Parser;
 
 use function array_merge;
-use function date;
-use function number_format;
 
 /**
  * @property CartModel $cartModel
@@ -35,49 +33,14 @@ class ShopModel extends CI_Model
      */
     public function order(string $adminEmail): bool
     {
-// 注文日時をPHPのdate()関数から取得します。
-        $date = date('Y/m/d H:i:s');
-
 // 買い物かごの情報を取得します。
-        $cart = $this->cartModel->getAll();
-
-        $items = [];
-        foreach ($cart['items'] as $item) {
-            $itemArray = $item->asArray();
-
-            $itemArray['price']  = number_format((float) $itemArray['price']);
-            $itemArray['amount'] = number_format((float) $itemArray['amount']);
-
-            $items[] = $itemArray;
-        }
-
-        $data = [
-            'date'  => $date,
-            'items' => $items,
-            'line'  => $cart['line'],
-            'total' => number_format($cart['total']),
-        ];
+        $data = $this->cartModel->getCart()->getOrderConfirmationData();
 
 // お客様情報を取得します。
         $data = array_merge($data, $this->customerModel->get());
 
-// テンプレートパーサクラスでメール本文を作成します。
-        $this->load->library('parser');
-        $body = $this->parser->parse(
-            'templates/mail/shop_order',
-            $data,
-            true
-        );
-
-// メールのヘッダを設定します。Bccで同じメールを管理者にも送るようにします。
-        $mail = [
-            'from_name' => 'CIショップ',
-            'from'      => $adminEmail,
-            'to'        => $data['email'],
-            'bcc'       => $adminEmail,
-            'subject'   => '【注文メール】CIショップ',
-            'body'      => $body,
-        ];
+        // @phpstan-ignore-next-line
+        $mail = $this->createMail($data, $adminEmail);
 
 // sendmail()メソッドを呼び出し、実際にメールを送信します。メール送信に成功
 // すれば、TRUEを返します。
@@ -86,5 +49,32 @@ class ShopModel extends CI_Model
         }
 
         return false;
+    }
+
+    /**
+     * @param array{date: string, items: array<int, array{id: int, qty: int, name: string, price: string, amount: string}>, line: int, total: string, name: string, zip: string, addr: string, tel: string, email: string} $data
+     *
+     * @return array<string, string>
+     */
+    private function createMail(array $data, string $adminEmail): array
+    {
+        // テンプレートパーサクラスでメール本文を作成します。
+        $this->load->library('parser');
+
+        $body = $this->parser->parse(
+            'templates/mail/shop_order',
+            $data,
+            true
+        );
+
+// メールのヘッダを設定します。Bccで同じメールを管理者にも送るようにします。
+        return [
+            'from_name' => 'CIショップ',
+            'from'      => $adminEmail,
+            'to'        => $data['email'],
+            'bcc'       => $adminEmail,
+            'subject'   => '【注文メール】CIショップ',
+            'body'      => $body,
+        ];
     }
 }

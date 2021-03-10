@@ -60,7 +60,7 @@ class CartItem
     }
 
     /**
-     * @return array<string, int|string>
+     * @return array{id: int, qty: int, name: string, price: int, amount: int}
      */
     public function asArray(): array
     {

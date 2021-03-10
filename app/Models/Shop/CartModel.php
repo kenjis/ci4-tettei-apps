@@ -25,10 +25,10 @@ class CartModel extends CI_Model
         $this->load->library('session');
         $this->load->model('shop/inventoryModel');
 
-        $this->getCart();
+        $this->restoreCart();
     }
 
-    private function getCart(): void
+    private function restoreCart(): void
     {
         $this->cart = $this->session->userdata('Cart');
         if ($this->cart !== null) {
@@ -36,6 +36,11 @@ class CartModel extends CI_Model
         }
 
         $this->cart = new Cart();
+    }
+
+    public function getCart(): Cart
+    {
+        return $this->cart;
     }
 
     /**
