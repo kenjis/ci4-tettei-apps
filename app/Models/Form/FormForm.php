@@ -4,33 +4,26 @@ declare(strict_types=1);
 
 namespace App\Models\Form;
 
-use ArrayAccess;
-use Kenjis\CI3Compatible\Exception\LogicException;
+use App\Libraries\FormData;
 
-use function assert;
-use function in_array;
-use function is_string;
-use function property_exists;
 use function trim;
 
 /**
  * コンタクトフォーム
- *
- * @implements ArrayAccess<string, string>
  */
-class FormForm implements ArrayAccess
+class FormForm extends FormData
 {
     /** @var string */
-    private $name;
+    protected $name;
 
     /** @var string */
-    private $email;
+    protected $email;
 
     /** @var string */
-    private $comment;
+    protected $comment;
 
     /** @var string[] */
-    private $arrayReadProperties = [
+    protected $arrayReadProperties = [
         'name',
         'email',
         'comment',
@@ -41,7 +34,7 @@ class FormForm implements ArrayAccess
      *
      * @var array<string, array<string, string>>
      */
-    private $validationRules = [
+    protected $validationRules = [
         'name' => [
             'label' => '名前',
             'rules' => 'trim|required|max_length[20]',
@@ -66,23 +59,6 @@ class FormForm implements ArrayAccess
         $this->comment = $data['comment'];
     }
 
-    /**
-     * @return array<string, array<string, string>>
-     */
-    public function getValidationRules(): array
-    {
-        return $this->validationRules;
-    }
-
-    private function isset(string $property): void
-    {
-        if ($this->$property === null) {
-            throw new LogicException(
-                'setData() でデータをセットしてください。'
-            );
-        }
-    }
-
     public function getName(): string
     {
         $this->isset('name');
@@ -102,62 +78,5 @@ class FormForm implements ArrayAccess
         $this->isset('comment');
 
         return $this->comment;
-    }
-
-    /**
-     * @param string|int $offset
-     */
-    public function offsetExists($offset): bool
-    {
-        assert(is_string($offset));
-
-        if (! isset($this->arrayReadProperties)) {
-            throw new LogicException(
-                'プロパティ $arrayReadProperties に配列としてアクセスできるプロパティを設定してください。'
-            );
-        }
-
-        if (! property_exists($this, $offset)) {
-            throw new LogicException(
-                $offset . ' は存在しません。'
-            );
-        }
-
-        $this->isset($offset);
-
-        return in_array($offset, $this->arrayReadProperties, true);
-    }
-
-    /**
-     * @param string|int $offset
-     *
-     * @return mixed
-     */
-    public function offsetGet($offset)
-    {
-        if ($this->offsetExists($offset)) {
-            return $this->$offset;
-        }
-
-        throw new LogicException($offset . ' は存在しません。');
-    }
-
-    /**
-     * @param string|int $offset
-     * @param mixed      $value
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function offsetSet($offset, $value): void
-    {
-        throw new LogicException($offset . 'は変更できません。');
-    }
-
-    /**
-     * @param string|int $offset
-     */
-    public function offsetUnset($offset): void
-    {
-        throw new LogicException($offset . 'は変更できません。');
     }
 }
