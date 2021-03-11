@@ -10,7 +10,6 @@ namespace App\Controllers;
 
 use App\Libraries\GeneratePagination;
 use App\Libraries\Validation\FieldValidation;
-use App\Libraries\Validation\ShopValidationCustomer;
 use App\Models\Shop\CartModel;
 use App\Models\Shop\CustomerInfoForm;
 use App\Models\Shop\CustomerModel;
@@ -33,7 +32,6 @@ use function trim;
  * @property CartModel $cartModel
  * @property CustomerModel $customerModel
  * @property FieldValidation $fieldValidation
- * @property ShopValidationCustomer $shopValidationCustomer
  * @property GeneratePagination $generatePagination
  * @property CI_Session $session
  * @property CI_Config $config
