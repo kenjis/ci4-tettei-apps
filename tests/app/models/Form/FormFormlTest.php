@@ -64,7 +64,9 @@ class FormFormlTest extends CIUnitTestCase
             'email' => 'メアドです',
             'comment' => ' コメントです',
         ];
-        $this->assertSame($expected, $form->asArray());
+        $this->assertSame($expected['name'], $form['name']);
+        $this->assertSame($expected['email'], $form['email']);
+        $this->assertSame($expected['comment'], $form['comment']);
     }
 
     public function test_バリデーションルールを取得できる(): void
@@ -80,6 +82,6 @@ class FormFormlTest extends CIUnitTestCase
 
         $form = new FormForm();
 
-        $this->assertIsArray($form->asArray());
+        $this->assertIsArray($form['name']);
     }
 }

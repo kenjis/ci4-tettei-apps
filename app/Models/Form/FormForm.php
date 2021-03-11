@@ -67,18 +67,6 @@ class FormForm implements ArrayAccess
     }
 
     /**
-     * @return array{name: string, email: string, comment: string}
-     */
-    public function asArray(): array
-    {
-        return [
-            'name' => $this->getName(),
-            'email' => $this->getEmail(),
-            'comment' => $this->getComment(),
-        ];
-    }
-
-    /**
      * @return array<string, array<string, string>>
      */
     public function getValidationRules(): array
