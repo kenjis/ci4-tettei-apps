@@ -22,8 +22,10 @@ trait ArrayReadable
     public function offsetExists($offset): bool
     {
         assert(is_string($offset));
-
-        $this->isArrayReadPropertiesSet();
+        assert(
+            isset($this->arrayReadProperties),
+            'プロパティ $arrayReadProperties に配列としてアクセスできるプロパティを設定してください。'
+        );
 
         if (! property_exists($this, $offset)) {
             throw new LogicException(
@@ -32,16 +34,6 @@ trait ArrayReadable
         }
 
         return in_array($offset, $this->arrayReadProperties, true);
-    }
-
-    private function isArrayReadPropertiesSet(): void
-    {
-        if (! isset($this->arrayReadProperties)) {
-            throw new LogicException(
-                'プロパティ $arrayReadProperties に配列としてアクセスできるプロパティを設定してください。
-                '
-            );
-        }
     }
 
     /**
@@ -82,7 +74,10 @@ trait ArrayReadable
      */
     public function asArray(): array
     {
-        $this->isArrayReadPropertiesSet();
+        assert(
+            isset($this->arrayReadProperties),
+            'プロパティ $arrayReadProperties に配列としてアクセスできるプロパティを設定してください。'
+        );
 
         $array = [];
 
