@@ -58,7 +58,7 @@ class ShopModel extends CI_Model
      */
     private function createMailData(array $data, string $adminEmail): array
     {
-        // テンプレートパーサクラスでメール本文を作成します。
+// テンプレートパーサクラスでメール本文を作成します。
         $this->load->library('parser');
 
         $body = $this->parser->parse(
@@ -67,7 +67,7 @@ class ShopModel extends CI_Model
             true
         );
 
-// メールのヘッダを設定します。Bccで同じメールを管理者にも送るようにします。
+// メールのデータを作成します。Bccで同じメールを管理者にも送るようにします。
         return [
             'from_name' => 'CIショップ',
             'from'      => $adminEmail,
