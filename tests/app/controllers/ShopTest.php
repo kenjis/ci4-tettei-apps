@@ -7,6 +7,10 @@ namespace App\Controllers;
 use App\Models\Shop\CartModel;
 use App\Models\Shop\CustomerModel;
 use App\Models\Shop\ShopModel;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\Session\Session;
+use CodeIgniter\Validation\Validation;
+use Config\Services;
 use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
 use Kenjis\CI3Compatible\Test\Traits\UnitTest;
@@ -71,6 +75,28 @@ class ShopTest extends FeatureTestCase
     // region Unit Tests
     public function test_confirm_pass(): void
     {
+        $this->resetServices();
+        $request = $this->getDouble(
+            IncomingRequest::class,
+            [
+                'getMethod' => 'post',
+                'getLocale' => 'ja',
+                'getPost' => [
+                    'name'  => '名前',
+                    'zip'   => '111-1111',
+                    'addr'  => '東京都千代田区',
+                    'tel'   => '03-3333-3333',
+                    'email' => 'foo@example.jp',
+                ],
+            ]
+        );
+        $session = $this->getDouble(
+            Session::class,
+            []
+        );
+        Services::injectMock('request', $request);
+        Services::injectMock('session', $session);
+
         /**
          * @var Shop
          */
@@ -80,10 +106,11 @@ class ShopTest extends FeatureTestCase
         $this->verifyInvokedOnce($model, 'set');
 
         $validation = $this->getDouble(
-            CI_Form_validation::class,
+            Validation::class,
             ['run' => true],
-            true
+            false
         );
+        Services::injectMock('validation', $validation);
 
         $twig = $this->getDouble(Environment::class, []);
         $this->verifyInvokedMultipleTimes(
@@ -95,7 +122,6 @@ class ShopTest extends FeatureTestCase
             ]
         );
 
-        $obj->form_validation = $validation;
         $this->setPrivateProperty($obj, 'twig', $twig);
         $obj->customerModel = $model;
 

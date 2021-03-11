@@ -12,13 +12,14 @@ use App\Libraries\GeneratePagination;
 use App\Libraries\Validation\FieldValidation;
 use App\Libraries\Validation\ShopValidationCustomer;
 use App\Models\Shop\CartModel;
+use App\Models\Shop\CustomerInfoForm;
 use App\Models\Shop\CustomerModel;
 use App\Models\Shop\InventoryModel;
 use App\Models\Shop\ShopModel;
 use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Input;
-use Kenjis\CI3Compatible\Library\CI_Form_validation;
+use Kenjis\CI3Compatible\Exception\RuntimeException;
 use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI4Twig\Twig;
 
@@ -35,7 +36,6 @@ use function trim;
  * @property ShopValidationCustomer $shopValidationCustomer
  * @property GeneratePagination $generatePagination
  * @property CI_Session $session
- * @property CI_Form_validation $form_validation
  * @property CI_Config $config
  * @property CI_Input $input
  */
@@ -55,6 +55,9 @@ class Shop extends MyController
 
     /** @var string[] */
     protected $helpers = ['form', 'url'];
+
+    /** @var CustomerInfoForm */
+    private $customerInfo;
 
     public function __construct()
     {
@@ -342,9 +345,13 @@ class Shop extends MyController
      */
     public function confirm(): string
     {
-        $this->load->library('validation/shopValidationCustomer');
+        if ($this->request->getMethod() !== 'post') {
+            throw new RuntimeException('不正な入力です。', 400);
+        }
 
-        if (! $this->shopValidationCustomer->run()) {
+        $this->customerInfo = new CustomerInfoForm();
+
+        if (! $this->validate($this->customerInfo->getValidationRules())) {
             $data = [
                 'action' => 'お客様情報の入力',
                 'main' => 'shop_customer_info',
@@ -354,23 +361,23 @@ class Shop extends MyController
         }
 
 // 検証をパスした入力データは、モデルを使って保存します。
-        $customerData = $this->request->getPost([
+        $this->customerInfo->setData($this->request->getPost([
             'name',
             'zip',
             'addr',
             'tel',
             'email',
-        ]);
-        $this->customerModel->set($customerData);
+        ]));
+        $this->customerModel->set($this->customerInfo);
 
         $cart = $this->cartModel->getAll();
 
         $data = [
-            'name' => $customerData['name'],
-            'zip' => $customerData['zip'],
-            'addr' => $customerData['addr'],
-            'tel' => $customerData['tel'],
-            'email' => $customerData['email'],
+            'name' => $this->customerInfo['name'],
+            'zip' => $this->customerInfo['zip'],
+            'addr' => $this->customerInfo['addr'],
+            'tel' => $this->customerInfo['tel'],
+            'email' => $this->customerInfo['email'],
             'total' => $cart['total'],
             'cart' => $cart['items'],
             'action' => '注文内容の確認',

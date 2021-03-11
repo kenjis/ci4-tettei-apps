@@ -21,10 +21,7 @@ class CustomerModel extends CI_Model
         $this->load->library('session');
     }
 
-    /**
-     * @param array{name: string, zip: string, addr: string, tel: string, email: string} $data
-     */
-    public function set(array $data): void
+    public function set(CustomerInfoForm $data): void
     {
         foreach ($data as $key => $val) {
             $this->session->set_userdata($key, $val);

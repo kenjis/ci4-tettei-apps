@@ -30,7 +30,10 @@ class CustomerModelTest extends UnitTestCase
             'tel'   => '03-3333-3333',
             'email' => 'foo@example.jp',
         ];
-        $this->obj->set($expected);
+        $form = new CustomerInfoForm();
+        $form->setData($expected);
+
+        $this->obj->set($form);
 
         $actual = $this->obj->get();
 
