@@ -33,4 +33,16 @@ class CustomerInfoFormTest extends CIUnitTestCase
 
         $this->assertSame($this->data['name'], $form['name']);
     }
+
+    public function test_イテレートできる(): void
+    {
+        $form = $this->createForm();
+
+        $array = [];
+        foreach ($form as $key => $val) {
+            $array[$key] = $val;
+        }
+
+        $this->assertSame($this->data, $array);
+    }
 }

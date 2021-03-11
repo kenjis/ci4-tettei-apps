@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models\Shop;
 
 use ArrayAccess;
+use Iterator;
 use Kenjis\CI3Compatible\Exception\LogicException;
 
 use function assert;
@@ -17,23 +18,24 @@ use function trim;
  * お客様情報
  *
  * @implements ArrayAccess<string, string>
+ * @implements Iterator<string, string>
  */
-class CustomerInfoForm implements ArrayAccess
+class CustomerInfoForm implements ArrayAccess, Iterator
 {
     /** @var string */
-    private $name;
+    private $name; // phpcs:ignore
 
     /** @var string */
-    private $zip;
+    private $zip; // phpcs:ignore
 
     /** @var string */
-    private $addr;
+    private $addr; // phpcs:ignore
 
     /** @var string */
-    private $tel;
+    private $tel; // phpcs:ignore
 
     /** @var string */
-    private $email;
+    private $email; // phpcs:ignore
 
     /** @var string[] */
     private $arrayReadProperties = [
@@ -43,6 +45,9 @@ class CustomerInfoForm implements ArrayAccess
         'tel',
         'email',
     ];
+
+    /** @var int イテレータの位置 */
+    private $position = 0;
 
     /**
      * バリデーションのルール
@@ -156,5 +161,32 @@ class CustomerInfoForm implements ArrayAccess
     public function offsetUnset($offset): void
     {
         throw new LogicException($offset . 'は変更できません。');
+    }
+
+    public function current()
+    {
+        $property = $this->arrayReadProperties[$this->position];
+
+        return $this->$property;
+    }
+
+    public function next(): void
+    {
+        ++$this->position;
+    }
+
+    public function key()
+    {
+        return $this->arrayReadProperties[$this->position];
+    }
+
+    public function valid()
+    {
+        return isset($this->arrayReadProperties[$this->position]);
+    }
+
+    public function rewind(): void
+    {
+        $this->position = 0;
     }
 }
