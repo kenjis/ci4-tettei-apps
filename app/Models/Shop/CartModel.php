@@ -91,8 +91,6 @@ class CartModel extends CI_Model
      */
     public function count(): int
     {
-        $cart = $this->getAll();
-
-        return $cart['line'];
+        return $this->cart->getLineCount();
     }
 }
