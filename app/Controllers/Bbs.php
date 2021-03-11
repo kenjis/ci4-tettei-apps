@@ -36,7 +36,7 @@ class Bbs extends CI_Controller
 
 // 記事表示ページで、1ページに表示する記事の件数を設定します。
     /** @var int 1ページに表示する記事の件数 */
-    public $limit = 5;
+    private $limit = 5;
 
     /** @var string[] */
     protected $helpers = ['form', 'url'];

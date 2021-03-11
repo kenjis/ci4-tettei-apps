@@ -45,10 +45,10 @@ class Shop extends MyController
     protected $request;
 
     /** @var int 1ページに表示する商品の数 */
-    public $limit;
+    private $limit;
 
     /** @var string 管理者のメールアドレス */
-    public $admin;
+    private $admin;
 
     /** @var Twig */
     private $twig;
