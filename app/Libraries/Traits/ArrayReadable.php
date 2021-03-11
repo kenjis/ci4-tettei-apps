@@ -23,12 +23,7 @@ trait ArrayReadable
     {
         assert(is_string($offset));
 
-        if (! isset($this->arrayReadProperties)) {
-            throw new LogicException(
-                'プロパティ $arrayReadProperties に配列としてアクセスできるプロパティを設定してください。
-                '
-            );
-        }
+        $this->isArrayReadPropertiesSet();
 
         if (! property_exists($this, $offset)) {
             throw new LogicException(
@@ -37,6 +32,16 @@ trait ArrayReadable
         }
 
         return in_array($offset, $this->arrayReadProperties, true);
+    }
+
+    private function isArrayReadPropertiesSet(): void
+    {
+        if (! isset($this->arrayReadProperties)) {
+            throw new LogicException(
+                'プロパティ $arrayReadProperties に配列としてアクセスできるプロパティを設定してください。
+                '
+            );
+        }
     }
 
     /**
@@ -70,5 +75,21 @@ trait ArrayReadable
     public function offsetUnset($offset): void
     {
         throw new LogicException($offset . 'は変更できません。');
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function asArray(): array
+    {
+        $this->isArrayReadPropertiesSet();
+
+        $array = [];
+
+        foreach ($this->arrayReadProperties as $property) {
+            $array[$property] = $this[$property];
+        }
+
+        return $array;
     }
 }

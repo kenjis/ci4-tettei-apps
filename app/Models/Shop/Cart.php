@@ -74,7 +74,7 @@ class Cart
     /**
      * 注文確認データを取得する
      *
-     * @return array{date: string, items: array<int, array{id: int, qty: int, name: string, price: string, amount: string}>, line: int, total: string}
+     * @return array{date: string, items: array<int, array<string, mixed>>, line: int, total: string}
      */
     public function getOrderConfirmationData(): array
     {

@@ -11,13 +11,14 @@ use ArrayAccess;
  * 買い物かごの中の商品
  *
  * @implements ArrayAccess<string, int|string>
+ * @SuppressWarnings(PHPMD.UnusedPrivateField)
  */
 class CartItem implements ArrayAccess
 {
     use ArrayReadable;
 
     /** @var string[] */
-    private $arrayReadProperties = [
+    private $arrayReadProperties = [ // phpcs:ignore
         'id',
         'qty',
         'name',
@@ -73,19 +74,5 @@ class CartItem implements ArrayAccess
     public function getAmount(): int
     {
         return $this->amount;
-    }
-
-    /**
-     * @return array{id: int, qty: int, name: string, price: int, amount: int}
-     */
-    public function asArray(): array
-    {
-        $array = [];
-
-        foreach ($this->arrayReadProperties as $property) {
-            $array[$property] = $this[$property];
-        }
-
-        return $array;
     }
 }
