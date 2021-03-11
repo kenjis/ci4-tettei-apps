@@ -253,9 +253,15 @@ class Bbs extends CI_Controller
 // ページを表示します。
         $row = $query->row();
 
-        $data             = $this->getBasicPostData();
-        $data['id']       = $row->id;
-        $data['datetime'] = $row->datetime;
+        $data = [
+            'id'       => $row->id,
+            'name'     => $row->name,
+            'email'    => $row->email,
+            'subject'  => $row->subject,
+            'datetime' => $row->datetime,
+            'body'     => $row->body,
+            'password' => $row->password,
+        ];
 
         $this->loadView('bbs_delete_confirm', $data);
     }
