@@ -21,6 +21,7 @@ class FormFormlTest extends CIUnitTestCase
         ];
 
         $form = new FormForm();
+        $form->getValidationRules();
         $form->setData($this->data);
 
         return $form;
@@ -57,6 +58,7 @@ class FormFormlTest extends CIUnitTestCase
             'comment' => ' コメントです',
         ];
         $form = new FormForm();
+        $form->getValidationRules();
         $form->setData($data);
 
         $expected = [
@@ -81,6 +83,7 @@ class FormFormlTest extends CIUnitTestCase
         $this->expectException(LogicException::class);
 
         $form = new FormForm();
+        $form->getValidationRules();
 
         $this->assertIsArray($form['name']);
     }

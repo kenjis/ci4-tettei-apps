@@ -31,6 +31,7 @@ class CustomerModelTest extends UnitTestCase
             'email' => 'foo@example.jp',
         ];
         $form = new CustomerInfoForm();
+        $form->getValidationRules();
         $form->setData($expected);
 
         $this->obj->set($form);

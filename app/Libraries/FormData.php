@@ -8,6 +8,9 @@ use ArrayAccess;
 use Iterator;
 use Kenjis\CI3Compatible\Exception\LogicException;
 
+use function array_key_exists;
+use function array_keys;
+use function array_merge;
 use function assert;
 use function in_array;
 use function is_string;
@@ -34,21 +37,59 @@ abstract class FormData implements ArrayAccess, Iterator
     /**
      * バリデーションのルール
      *
-     * @var array<string, array<string, string>>
+     * @var array<string, array<string, array<string, string>>>
      */
     protected $validationRules = [];
 
     /**
+     * 現在のバリデーションルール
+     *
+     * @var array<string, array<string, string>>
+     */
+    protected $currentRules;
+
+    /**
      * @param array<string, mixed> $data
      */
-    abstract public function setData(array $data): void;
+    abstract public function setData(array $data): FormData;
 
     /**
      * @return array<string, array<string, string>>
      */
-    public function getValidationRules(): array
+    public function getValidationRules(string $group = 'common'): array
     {
-        return $this->validationRules;
+        assert(array_key_exists('common', $this->validationRules));
+
+        $rules = $this->validationRules['common'];
+
+        if (array_key_exists($group, $this->validationRules)) {
+            $rules = array_merge($rules, $this->validationRules[$group]);
+        }
+
+        $this->currentRules = $rules;
+
+        $this->arrayReadProperties = array_keys($rules);
+
+        return $this->currentRules;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function asArray(): array
+    {
+        assert(
+            isset($this->arrayReadProperties),
+            'プロパティ $arrayReadProperties に配列としてアクセスできるプロパティを設定してください。'
+        );
+
+        $array = [];
+
+        foreach ($this->arrayReadProperties as $property) {
+            $array[$property] = $this[$property];
+        }
+
+        return $array;
     }
 
     protected function isset(string $property): void

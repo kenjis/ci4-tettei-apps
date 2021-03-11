@@ -22,6 +22,7 @@ class CustomerInfoFormTest extends CIUnitTestCase
         ];
 
         $form = new CustomerInfoForm();
+        $form->getValidationRules();
         $form->setData($this->data);
 
         return $form;
