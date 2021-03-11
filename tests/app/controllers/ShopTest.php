@@ -37,37 +37,44 @@ class ShopTest extends FeatureTestCase
     public function test_index(): void
     {
         $output = $this->request('GET', 'shop/index/1');
+
         $this->assertStringContainsString('<title>CIショップ</title>', $output);
     }
 
     public function test_product(): void
     {
         $output = $this->request('GET', 'shop/product/1');
+
         $this->assertStringContainsString('CodeIgniter徹底入門', $output);
     }
 
     public function test_add(): void
     {
         $output = $this->request('POST', 'shop/add/3', ['qty' => '3']);
+
         $this->assertStringContainsString('CodeIgniter徹底入門 DVD', $output);
     }
 
     public function test_search(): void
     {
         $output = $this->request('GET', 'shop/search', ['q' => '徹底入門']);
+
         $this->assertStringContainsString('「徹底入門」の検索結果', $output);
     }
 
     public function test_customer_info(): void
     {
         $output = $this->request('POST', 'shop/add/1', ['qty' => '1']);
+
         $this->assertStringContainsString('CodeIgniter徹底入門', $output);
 
         $output = $this->request('GET', 'shop/cart');
+
         $this->assertStringContainsString('買い物かご', $output);
         $this->assertStringContainsString('CodeIgniter徹底入門', $output);
 
         $output = $this->request('POST', 'shop/customer_info');
+
         $this->assertStringContainsString('お客様情報の入力', $output);
     }
     // endregion
