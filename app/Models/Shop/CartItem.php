@@ -4,11 +4,27 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
+use App\Libraries\Traits\ArrayReadable;
+use ArrayAccess;
+
 /**
  * 買い物かごの中の商品
+ *
+ * @implements ArrayAccess<string, int|string>
  */
-class CartItem
+class CartItem implements ArrayAccess
 {
+    use ArrayReadable;
+
+    /** @var string[] */
+    private $arrayReadProperties = [
+        'id',
+        'qty',
+        'name',
+        'price',
+        'amount',
+    ];
+
     /** @var int 商品ID */
     private $id;
 
@@ -64,12 +80,12 @@ class CartItem
      */
     public function asArray(): array
     {
-        return [
-            'id' => $this->id,
-            'qty' => $this->qty,
-            'name' => $this->name,
-            'price' => $this->price,
-            'amount' => $this->amount,
-        ];
+        $array = [];
+
+        foreach ($this->arrayReadProperties as $property) {
+            $array[$property] = $this[$property];
+        }
+
+        return $array;
     }
 }

@@ -82,8 +82,8 @@ class Cart
         foreach ($this->getItems() as $item) {
             $itemArray = $item->asArray();
 
-            $itemArray['price']  = number_format((float) $itemArray['price']);
-            $itemArray['amount'] = number_format((float) $itemArray['amount']);
+            $itemArray['price']  = number_format((float) $item['price']);
+            $itemArray['amount'] = number_format((float) $item['amount']);
 
             $items[] = $itemArray;
         }
