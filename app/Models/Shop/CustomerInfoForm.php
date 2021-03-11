@@ -37,9 +37,6 @@ class CustomerInfoForm extends FormData
         'email',
     ];
 
-    /** @var int イテレータの位置 */
-    protected $position = 0;
-
     /**
      * バリデーションのルール
      *
