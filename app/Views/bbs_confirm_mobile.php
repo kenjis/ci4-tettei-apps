@@ -28,39 +28,39 @@
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td bgcolor="#EEEEEE">名前<br><?= html_escape($name); ?></td>
+<td bgcolor="#EEEEEE">名前<br><?= html_escape($form['name']); ?></td>
 </tr>
 <tr>
-<td>ﾒｰﾙｱﾄﾞﾚｽ<br><?php if ($email == '') { echo '(なし)'; } else { echo html_escape($email); } ?></td>
+<td>ﾒｰﾙｱﾄﾞﾚｽ<br><?php if ($form['email'] == '') { echo '(なし)'; } else { echo html_escape($form['email']); } ?></td>
 </tr>
 <tr>
-<td bgcolor="#EEEEEE">件名<br><?= html_escape($subject); ?></td>
+<td bgcolor="#EEEEEE">件名<br><?= html_escape($form['subject']); ?></td>
 </tr>
 <tr>
-<td>内容<br><?= nl2br(html_escape($body)); ?></td>
+<td>内容<br><?= nl2br(html_escape($form['body'])); ?></td>
 </tr>
 <tr>
-<td bgcolor="#EEEEEE">削除ﾊﾟｽﾜｰﾄﾞ<br><?php if ($password == '') { echo '(なし)'; } else { echo html_escape($password); } ?></td>
+<td bgcolor="#EEEEEE">削除ﾊﾟｽﾜｰﾄﾞ<br><?php if ($form['password'] == '') { echo '(なし)'; } else { echo html_escape($form['password']); } ?></td>
 </tr>
 <tr>
 <td>
 <?= form_open('bbs/post', ['accept-charset' => 'Shift_JIS']); ?>
-<?= form_hidden('name',     $name); ?>
-<?= form_hidden('email',    $email); ?>
-<?= form_hidden('subject',  $subject); ?>
-<?= form_hidden('body',     $body); ?>
-<?= form_hidden('password', $password); ?>
+<?= form_hidden('name',     $form['name']); ?>
+<?= form_hidden('email',    $form['email']); ?>
+<?= form_hidden('subject',  $form['subject']); ?>
+<?= form_hidden('body',     $form['body']); ?>
+<?= form_hidden('password', $form['password']); ?>
 <input type="submit" value="修正する" />
 <?= form_close(); ?>
 <br>
 <?= form_open('bbs/insert', ['accept-charset' => 'Shift_JIS']); ?>
-<?= form_hidden('name',     $name); ?>
-<?= form_hidden('email',    $email); ?>
-<?= form_hidden('subject',  $subject); ?>
-<?= form_hidden('body',     $body); ?>
-<?= form_hidden('password', $password); ?>
-<?= form_hidden('key',      $key); ?>
-<?= form_hidden('captcha',  $captcha); ?>
+<?= form_hidden('name',     $form['name']); ?>
+<?= form_hidden('email',    $form['email']); ?>
+<?= form_hidden('subject',  $form['subject']); ?>
+<?= form_hidden('body',     $form['body']); ?>
+<?= form_hidden('password', $form['password']); ?>
+<?= form_hidden('key',      $form['key']); ?>
+<?= form_hidden('captcha',  $form['captcha']); ?>
 <input type="submit" value="送信する" />
 <?= form_close(); ?>
 </td>

@@ -28,38 +28,38 @@
 <div class="confirm">
 
 <div class="field">名前: </div>
-<?= html_escape($name); ?>
+<?= html_escape($form['name']); ?>
 
 <div class="field">メールアドレス: </div>
-<?php if ($email == '') { echo '(なし)'; } else { echo html_escape($email); } ?>
+<?php if ($form['email'] == '') { echo '(なし)'; } else { echo html_escape($form['email']); } ?>
 
 <div class="field">件名: </div>
-<?= html_escape($subject); ?>
+<?= html_escape($form['subject']); ?>
 
 <div class="field">内容: </div>
-<?= nl2br(html_escape($body)); ?>
+<?= nl2br(html_escape($form['body'])); ?>
 
 <div class="field">削除パスワード: </div>
-<?php if ($password == '') { echo '(なし)'; } else { echo html_escape($password); } ?>
+<?php if ($form['password'] == '') { echo '(なし)'; } else { echo html_escape($form['password']); } ?>
 </div>
 
 <?= form_open('bbs/post'); ?>
-<?= form_hidden('name',     $name); ?>
-<?= form_hidden('email',    $email); ?>
-<?= form_hidden('subject',  $subject); ?>
-<?= form_hidden('body',     $body); ?>
-<?= form_hidden('password', $password); ?>
+<?= form_hidden('name',     $form['name']); ?>
+<?= form_hidden('email',    $form['email']); ?>
+<?= form_hidden('subject',  $form['subject']); ?>
+<?= form_hidden('body',     $form['body']); ?>
+<?= form_hidden('password', $form['password']); ?>
 <input type="submit" value="修正" />
 <?= form_close(); ?>
 
 <?= form_open('bbs/insert'); ?>
-<?= form_hidden('name',     $name); ?>
-<?= form_hidden('email',    $email); ?>
-<?= form_hidden('subject',  $subject); ?>
-<?= form_hidden('body',     $body); ?>
-<?= form_hidden('password', $password); ?>
-<?= form_hidden('key',      $key); ?>
-<?= form_hidden('captcha',  $captcha); ?>
+<?= form_hidden('name',     $form['name']); ?>
+<?= form_hidden('email',    $form['email']); ?>
+<?= form_hidden('subject',  $form['subject']); ?>
+<?= form_hidden('body',     $form['body']); ?>
+<?= form_hidden('password', $form['password']); ?>
+<?= form_hidden('key',      $form['key']); ?>
+<?= form_hidden('captcha',  $form['captcha']); ?>
 <input type="submit" value="送信" />
 <?= form_close();?>
 

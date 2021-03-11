@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Models\Bbs\PostForm;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use Kenjis\CI3Compatible\Core\CI_Config;
@@ -15,7 +16,6 @@ use Kenjis\CI3Compatible\Core\CI_Controller;
 use Kenjis\CI3Compatible\Core\CI_Input;
 use Kenjis\CI3Compatible\Database\CI_DB;
 use Kenjis\CI3Compatible\Database\CI_DB_result;
-use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Library\CI_Pagination;
 use Kenjis\CI3Compatible\Library\CI_User_agent;
 
@@ -25,7 +25,6 @@ use function max;
  * @property CI_DB $db
  * @property CI_User_agent $agent
  * @property CI_Pagination $pagination
- * @property CI_Form_validation $form_validation
  * @property CI_Input $input
  * @property CI_Config $config
  */
@@ -40,6 +39,9 @@ class Bbs extends CI_Controller
 
     /** @var string[] */
     protected $helpers = ['form', 'url'];
+
+    /** @var PostForm */
+    private $form;
 
     public function __construct()
     {
@@ -107,7 +109,6 @@ class Bbs extends CI_Controller
     {
 // バリデーションを設定し、新規投稿ページを表示します。実際の処理は、他でも
 // 使いますので、プライベートメソッドにしています。
-        $this->setValidation();
         $this->showPostPage();
     }
 
@@ -116,11 +117,10 @@ class Bbs extends CI_Controller
      */
     public function confirm(): void
     {
-// 検証ルールを設定します。
-        $this->setValidation();
+        $this->form = new PostForm();
 
 // 検証をパスしなかった場合は、新規投稿ページを表示します。
-        if ($this->form_validation->run() === false) {
+        if (! $this->validate($this->form->getValidationRules('confirm'))) {
 // 投稿されたIDのキャプチャを削除します。
             $this->deleteCaptchaData();
 
@@ -130,10 +130,20 @@ class Bbs extends CI_Controller
         }
 
 // 検証をパスした場合は、投稿確認ページ(bbs_confirm)を表示します。
-        $data            = $this->getBasicPostData();
-        $data['key']     = $this->request->getPost('key');
-        $data['captcha'] = $this->request->getPost('captcha');
-        $this->loadView('bbs_confirm', $data);
+        $this->form->setData($this->request->getPost([
+            'name',
+            'email',
+            'subject',
+            'body',
+            'password',
+            'captcha',
+            'key',
+        ]));
+
+        $this->loadView(
+            'bbs_confirm',
+            ['form' => $this->form]
+        );
     }
 
     /**
@@ -281,61 +291,24 @@ class Bbs extends CI_Controller
     }
 
     /**
-     * バリデーションを設定
-     */
-    private function setValidation(): void
-    {
-        $this->load->library('form_validation');
-
-// 整形・検証ルールを設定します。alpha_numericは英数字のみ、numericは数字のみ
-// となります。captcha_checkは、ユーザが定義したcaptcha_check()メソッド
-// で検証することを意味します。
-        $this->form_validation->set_rules(
-            'name',
-            '名前',
-            'trim|required|max_length[16]'
-        );
-        $this->form_validation->set_rules(
-            'email',
-            'メールアドレス',
-            'trim|permit_empty|valid_email|max_length[64]'
-        );
-        $this->form_validation->set_rules(
-            'subject',
-            '件名',
-            'trim|required|max_length[32]'
-        );
-        $this->form_validation->set_rules(
-            'body',
-            '内容',
-            'trim|required|max_length[200]'
-        );
-        $this->form_validation->set_rules(
-            'password',
-            '削除パスワード',
-            'max_length[32]'
-        );
-        $this->form_validation->set_rules(
-            'captcha',
-            '画像認証コード',
-            'trim|required|alpha_numeric|captcha_check'
-        );
-// keyフィールドは、キャプチャのID番号です。隠しフィールドに仕込まれるのみで
-// ユーザの目に触れることはありません。
-        $this->form_validation->set_rules('key', 'key', 'numeric');
-    }
-
-    /**
      * 投稿された記事をデータベースに登録
      */
     public function insert(): ?RedirectResponse
     {
-// 検証ルールを設定します。
-        $this->setValidation();
+        $this->form = new PostForm();
 
 // 検証にパスした場合は、送られたデータとIPアドレスをbbsテーブルに登録します。
-        if ($this->form_validation->run()) {
-            $this->insertToDb();
+        if ($this->validate($this->form->getValidationRules())) {
+            $data = $this->form->setData($this->request->getPost([
+                'name',
+                'email',
+                'subject',
+                'body',
+                'password',
+            ]))->asArray();
+            $data['ip_address'] = $this->request->getServer('REMOTE_ADDR');
+
+            $this->insertToDb($data);
 
 // 投稿されたIDのキャプチャを削除します。
             $this->deleteCaptchaData();
@@ -353,10 +326,11 @@ class Bbs extends CI_Controller
         return null;
     }
 
-    private function insertToDb(): void
+    /**
+     * @param array<string, string> $data
+     */
+    private function insertToDb(array $data): void
     {
-        $data = $this->getBasicPostData();
-        $data['ip_address'] = $this->request->getServer('REMOTE_ADDR');
         $this->db->insert('bbs', $data);
     }
 
