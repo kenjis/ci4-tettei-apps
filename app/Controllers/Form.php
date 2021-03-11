@@ -60,7 +60,10 @@ class Form extends CI_Controller
                 ['name', 'email', 'comment']
             ));
 
-            $this->load->view('form_confirm', $this->form->asArray());
+            $this->load->view(
+                'form_confirm',
+                ['form' => $this->form]
+            );
 
             return;
         }

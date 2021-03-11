@@ -20,13 +20,13 @@
 <p class="center">お問い合わせ内容の確認</p>
 <table>
 <tr><th>名前</th>
-	<td><?= esc($name); ?></td>
+	<td><?= esc($form['name']); ?></td>
 </tr>
 <tr><th>メールアドレス</th>
-	<td><?= esc($email); ?></td>
+	<td><?= esc($form['email']); ?></td>
 </tr>
 <tr><th>コメント</th>
-	<td><pre><?= esc($comment); ?></pre></td>
+	<td><pre><?= esc($form['comment']); ?></pre></td>
 </tr>
 <tr><td></td>
 	<td class="center">
@@ -34,18 +34,18 @@
 フォームを表示します。Formヘルパーで値を表示する場合、自動的に文字参照に
 置換されます。 -->
 	<?= form_open('form'); ?>
-	<?= form_hidden('name',    $name); ?>
-	<?= form_hidden('email',   $email); ?>
-	<?= form_hidden('comment', $comment); ?>
+	<?= form_hidden('name',    $form['name']); ?>
+	<?= form_hidden('email',   $form['email']); ?>
+	<?= form_hidden('comment', $form['comment']); ?>
 	<input class="button" type="submit" value="修正" />
 	<?= form_close(); ?>
 <!-- 入力がOKの場合に、次の完了ページへ進むためのフォームを表示します。
 ここでも、同様に、隠しフィールドに入力値を仕込み、次のページに渡します。
 ワンタイムチケットを忘れないようにしましょう。 -->
 	<?= form_open('form/send'); ?>
-	<?= form_hidden('name',    $name); ?>
-	<?= form_hidden('email',   $email); ?>
-	<?= form_hidden('comment', $comment); ?>
+	<?= form_hidden('name',    $form['name']); ?>
+	<?= form_hidden('email',   $form['email']); ?>
+	<?= form_hidden('comment', $form['comment']); ?>
 	<input class="button" type="submit" value="送信" />
 	<?= form_close(); ?>
 	</td>
