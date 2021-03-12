@@ -4,54 +4,68 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
+use Kenjis\CI3Compatible\Library\CI_Email;
 use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 use Kenjis\CI3Compatible\Test\Traits\SessionTest;
-use Tests\Support\Libraries\Mock_Libraries_Email;
 
 class ShopModelTest extends UnitTestCase
 {
     use SessionTest;
 
-    /** @var ShopModel */
-    private $obj;
-
     /** @var string */
     private $admin = 'admin@example.jp';
+
+    /** @var ShopModel */
+    private $shopModel;
+
+    /** @var CartModel */
+    private $cartModel;
+
+    /** @var CI_Email */
+    private $ciEmail;
 
     // region Fixture
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->obj = $this->newModel(ShopModel::class);
-        $this->CI->email = new Mock_Libraries_Email();
+        $this->cartModel = new CartModel(new InventoryModel());
+        $this->ciEmail = new CI_Email();
+        $mailModel = new MailModel($this->ciEmail);
+        $customerModel = new CustomerModel();
+        $this->shopModel = new ShopModel($this->cartModel, $customerModel, $mailModel);
     }
     // endregion
 
     // region Tests
     public function test_order(): void
     {
-        $this->CI->cartModel->add(1, 1);
-        $this->CI->cartModel->add(2, 2);
+        $this->cartModel->add(1, 1);
+        $this->cartModel->add(2, 2);
 
-        $actual = $this->obj->order($this->admin);
+        $actual = $this->shopModel->order($this->admin);
 
         $this->assertTrue($actual);
 
-        $mail = $this->CI->email->_get_data();
+        $ci4MockEmail = $this->ciEmail->getCI4Library();
+        $mail = $ci4MockEmail->archive;
 
-        $this->assertEquals($this->admin, $mail['from']);
-        $this->assertStringContainsString('注文合計： 11,400円', $mail['message']);
+        $this->assertEquals($this->admin, $mail['fromEmail']);
+        $this->assertStringContainsString('注文合計： 11,400円', $mail['body']);
     }
 
     public function test_order_mail_fails(): void
     {
-        $this->CI->email->return_send = false;
+        $ci4MockEmail = $this->ciEmail->getCI4Library();
+        $ci4MockEmail->returnValue = false;
+        $mailModel = new MailModel($this->ciEmail);
+        $customerModel = new CustomerModel();
+        $this->shopModel = new ShopModel($this->cartModel, $customerModel, $mailModel);
 
-        $this->CI->cartModel->add(1, 1);
-        $this->CI->cartModel->add(2, 2);
+        $this->cartModel->add(1, 1);
+        $this->cartModel->add(2, 2);
 
-        $actual = $this->obj->order($this->admin);
+        $actual = $this->shopModel->order($this->admin);
 
         $this->assertFalse($actual);
     }

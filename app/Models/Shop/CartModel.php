@@ -9,7 +9,6 @@ use Kenjis\CI3Compatible\Core\CI_Model;
 use Kenjis\CI3Compatible\Library\CI_Session;
 
 /**
- * @property InventoryModel $inventoryModel
  * @property CI_Session $session
  * @property CI_Loader $load
  */
@@ -18,12 +17,16 @@ class CartModel extends CI_Model
     /** @var Cart */
     private $cart;
 
-    public function __construct()
+    /** @var InventoryModel */
+    private $inventoryModel;
+
+    public function __construct(InventoryModel $inventoryModel)
     {
         parent::__construct();
 
         $this->load->library('session');
-        $this->load->model('shop/inventoryModel');
+
+        $this->inventoryModel = $inventoryModel;
 
         $this->restoreCart();
     }

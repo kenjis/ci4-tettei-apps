@@ -14,7 +14,7 @@ class CartModelTest extends UnitTestCase
     use SessionTest;
 
     /** @var CartModel */
-    private $obj;
+    private $cartModel;
 
     public static function setUpBeforeClass(): void
     {
@@ -32,36 +32,36 @@ class CartModelTest extends UnitTestCase
         // CartModel が Session に依存しているためリセットする
         $_SESSION = [];
 
-        $this->obj = $this->newModel(CartModel::class);
+        $this->cartModel = new CartModel(new InventoryModel());
     }
 
     public function test_add(): void
     {
-        $this->obj->add(1, 1);
-        $this->obj->add(2, 2);
+        $this->cartModel->add(1, 1);
+        $this->cartModel->add(2, 2);
 
-        $actual = $this->obj->count();
+        $actual = $this->cartModel->count();
 
         $this->assertEquals(2, $actual);
     }
 
     public function test_delete(): void
     {
-        $this->obj->add(2, 2);
-        $this->obj->add(2, 0);
+        $this->cartModel->add(2, 2);
+        $this->cartModel->add(2, 0);
 
-        $actual = $this->obj->count();
+        $actual = $this->cartModel->count();
 
         $this->assertEquals(0, $actual);
     }
 
     public function test_get_all(): void
     {
-        $this->obj->add(1, 1);
-        $this->obj->add(1, 1);
-        $this->obj->add(2, 2);
+        $this->cartModel->add(1, 1);
+        $this->cartModel->add(1, 1);
+        $this->cartModel->add(2, 2);
 
-        $actual = $this->obj->getAll();
+        $actual = $this->cartModel->getAll();
 
         $expected = [
             'items' => [

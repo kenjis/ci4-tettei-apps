@@ -14,12 +14,14 @@ use App\Models\Shop\CartModel;
 use App\Models\Shop\CustomerInfoForm;
 use App\Models\Shop\CustomerModel;
 use App\Models\Shop\InventoryModel;
+use App\Models\Shop\MailModel;
 use App\Models\Shop\ShopModel;
 use CodeIgniter\HTTP\IncomingRequest;
 use Config\Services;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Input;
 use Kenjis\CI3Compatible\Exception\RuntimeException;
+use Kenjis\CI3Compatible\Library\CI_Email;
 use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI4Twig\Twig;
 
@@ -28,10 +30,6 @@ use function mb_convert_kana;
 use function trim;
 
 /**
- * @property ShopModel $shopModel
- * @property InventoryModel $inventoryModel
- * @property CartModel $cartModel
- * @property CustomerModel $customerModel
  * @property GeneratePagination $generatePagination
  * @property CI_Session $session
  * @property CI_Config $config
@@ -60,23 +58,34 @@ class Shop extends MyController
     /** @var FieldValidation */
     private $fieldValidation;
 
+    /** @var ShopModel */
+    private $shopModel;
+
+    /** @var InventoryModel */
+    private $inventoryModel;
+
+    /** @var CartModel */
+    private $cartModel;
+
+    /** @var CustomerModel */
+    private $customerModel;
+
     public function __construct()
     {
         parent::__construct();
 
-        $this->fieldValidation = new FieldValidation(Services::validation());
-
         $this->load->library(['session']);
+
+        $this->fieldValidation = new FieldValidation(Services::validation());
         $this->twig = new Twig();
 
 // モデルをロードします。ロード後のモデルオブジェクトは、$this->shop_modelなど
 // として利用できます。
-        $this->load->model([
-            'shop/shopModel',
-            'shop/inventoryModel',
-            'shop/cartModel',
-            'shop/customerModel',
-        ]);
+        $mailModel = new MailModel(new CI_Email());
+        $this->inventoryModel = new InventoryModel();
+        $this->cartModel = new CartModel($this->inventoryModel);
+        $this->customerModel = new CustomerModel();
+        $this->shopModel = new ShopModel($this->cartModel, $this->customerModel, $mailModel);
 
 // このアプリケーション専用の設定ファイルConfigShop.phpを読み込みます。
 // load()メソッドの第2引数にTRUEを指定すると、他の設定ファイルで使われている

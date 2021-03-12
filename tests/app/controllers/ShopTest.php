@@ -130,7 +130,7 @@ class ShopTest extends FeatureTestCase
         );
 
         $this->setPrivateProperty($obj, 'twig', $twig);
-        $obj->customerModel = $model;
+        $this->setPrivateProperty($obj, 'customerModel', $model);
 
         $obj->confirm();
     }
@@ -176,7 +176,7 @@ class ShopTest extends FeatureTestCase
         $obj = $this->newController(Shop::class);
 
         $cart = $this->getDouble(CartModel::class, ['count' => 0]);
-        $obj->cartModel = $cart;
+        $this->setPrivateProperty($obj, 'cartModel', $cart);
 
         $output = $obj->order();
 
@@ -192,8 +192,8 @@ class ShopTest extends FeatureTestCase
 
         $cart = $this->getDouble(CartModel::class, ['count' => 1]);
         $shop = $this->getDouble(ShopModel::class, ['order' => true]);
-        $obj->cartModel = $cart;
-        $obj->shopModel = $shop;
+        $this->setPrivateProperty($obj, 'cartModel', $cart);
+        $this->setPrivateProperty($obj, 'shopModel', $shop);
 
         $output = $obj->order();
 
@@ -209,8 +209,8 @@ class ShopTest extends FeatureTestCase
 
         $cart = $this->getDouble(CartModel::class, ['count' => 1]);
         $shop = $this->getDouble(ShopModel::class, ['order' => false]);
-        $obj->cartModel = $cart;
-        $obj->shopModel = $shop;
+        $this->setPrivateProperty($obj, 'cartModel', $cart);
+        $this->setPrivateProperty($obj, 'shopModel', $shop);
 
         $output = $obj->order();
 

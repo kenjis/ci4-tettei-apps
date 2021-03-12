@@ -4,21 +4,16 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
-use Kenjis\CI3Compatible\Core\CI_Loader;
-use Kenjis\CI3Compatible\Core\CI_Model;
 use Kenjis\CI3Compatible\Library\CI_Email;
 
-/**
- * @property CI_Email $email
- * @property CI_Loader $load
- */
-class MailModel extends CI_Model
+class MailModel
 {
-    public function __construct()
-    {
-        parent::__construct();
+    /** @var CI_Email */
+    private $email;
 
-        $this->load->library('email');
+    public function __construct(CI_Email $email)
+    {
+        $this->email = $email;
     }
 
     /**

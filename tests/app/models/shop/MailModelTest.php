@@ -4,20 +4,27 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
+use Kenjis\CI3Compatible\Library\CI_Email;
 use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
-use Tests\Support\Libraries\Mock_Libraries_Email;
 
 class MailModelTest extends UnitTestCase
 {
     /** @var MailModel */
-    private $obj;
+    private $mailModel;
+
+    /** @var CI_Email */
+    private $ciEmail;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->obj = $this->newModel(MailModel::class);
-        $this->CI->email = new Mock_Libraries_Email();
+        $this->ciEmail = $this->getDouble(
+            CI_Email::class,
+            ['send' => true],
+            true
+        );
+        $this->mailModel = new MailModel($this->ciEmail);
     }
 
     public function test_sendmail(): void
@@ -28,14 +35,19 @@ class MailModelTest extends UnitTestCase
         $mail['bcc']       = 'admin@exaple.jp';
         $mail['subject']   = '【注文メール】CIショップ';
         $mail['body']      = 'CIショップにご注文いただきありがとうございます。';
-        $actual = $this->obj->sendmail($mail);
+        $actual = $this->mailModel->sendmail($mail);
 
         $this->assertTrue($actual);
     }
 
     public function test_sendmail_fail(): void
     {
-        $this->CI->email->return_send = false;
+        $this->ciEmail = $this->getDouble(
+            CI_Email::class,
+            ['send' => false],
+            true
+        );
+        $this->mailModel = new MailModel($this->ciEmail);
 
         $mail['from_name'] = 'CIショップ';
         $mail['from']      = 'from@example.jp';
@@ -43,7 +55,7 @@ class MailModelTest extends UnitTestCase
         $mail['bcc']       = 'admin@exaple.jp';
         $mail['subject']   = '【注文メール】CIショップ';
         $mail['body']      = 'CIショップにご注文いただきありがとうございます。';
-        $actual = $this->obj->sendmail($mail);
+        $actual = $this->mailModel->sendmail($mail);
 
         $this->assertFalse($actual);
     }

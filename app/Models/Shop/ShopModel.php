@@ -11,21 +11,32 @@ use Kenjis\CI3Compatible\Library\CI_Parser;
 use function array_merge;
 
 /**
- * @property CartModel $cartModel
- * @property CustomerModel $customerModel
- * @property MailModel $mailModel
  * @property CI_Parser $parser
  * @property CI_Loader $load
  */
 class ShopModel extends CI_Model
 {
-    public function __construct()
-    {
+    /** @var CartModel */
+    private $cartModel;
+
+    /** @var CustomerModel */
+    private $customerModel;
+
+    /** @var MailModel */
+    private $mailModel;
+
+    public function __construct(
+        CartModel $cartModel,
+        CustomerModel $customerModel,
+        MailModel $mailModel
+    ) {
         parent::__construct();
 
-        $this->load->model('shop/cartModel');
-        $this->load->model('shop/customerModel');
-        $this->load->model('shop/mailModel');
+        $this->load->library('parser');
+
+        $this->cartModel = $cartModel;
+        $this->customerModel = $customerModel;
+        $this->mailModel = $mailModel;
     }
 
     /**
@@ -59,8 +70,6 @@ class ShopModel extends CI_Model
     private function createMailData(array $data, string $adminEmail): array
     {
 // テンプレートパーサクラスでメール本文を作成します。
-        $this->load->library('parser');
-
         $body = $this->parser->parse(
             'templates/mail/shop_order',
             $data,
