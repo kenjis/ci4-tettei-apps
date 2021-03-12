@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Controllers;
+namespace App\Libraries\Validation;
 
-use App\Libraries\Validation\BbsValidationRules;
+use App\Controllers\Bbs;
 use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 
-class BbsValidationRulesTest extends UnitTestCase
+class CaptchaRulesTest extends UnitTestCase
 {
     public function test_captcha_check_failure(): void
     {
         $controller = $this->newController(Bbs::class);
         $controller->load->database();
 
-        $validationRule = new BbsValidationRules();
+        $validationRule = new CaptchaRules();
 
         $data = [
             'name' => '発火太郎',

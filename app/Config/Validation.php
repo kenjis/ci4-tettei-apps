@@ -2,7 +2,7 @@
 
 namespace Config;
 
-use App\Libraries\Validation\BbsValidationRules;
+use App\Libraries\Validation\CaptchaRules;
 use CodeIgniter\Validation\CreditCardRules;
 use CodeIgniter\Validation\FileRules;
 use CodeIgniter\Validation\FormatRules;
@@ -25,7 +25,7 @@ class Validation
 		FormatRules::class,
 		FileRules::class,
 		CreditCardRules::class,
-        BbsValidationRules::class,
+        CaptchaRules::class,
 	];
 
 	/**

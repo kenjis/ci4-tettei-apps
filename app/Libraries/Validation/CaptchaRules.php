@@ -10,7 +10,7 @@ use function assert;
 use function get_instance;
 use function time;
 
-class BbsValidationRules
+class CaptchaRules
 {
     /** @var CI_DB */
     private $db;
