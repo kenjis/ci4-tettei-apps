@@ -16,6 +16,7 @@ use App\Models\Shop\CustomerModel;
 use App\Models\Shop\InventoryModel;
 use App\Models\Shop\ShopModel;
 use CodeIgniter\HTTP\IncomingRequest;
+use Config\Services;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Input;
 use Kenjis\CI3Compatible\Exception\RuntimeException;
@@ -31,7 +32,6 @@ use function trim;
  * @property InventoryModel $inventoryModel
  * @property CartModel $cartModel
  * @property CustomerModel $customerModel
- * @property FieldValidation $fieldValidation
  * @property GeneratePagination $generatePagination
  * @property CI_Session $session
  * @property CI_Config $config
@@ -57,14 +57,16 @@ class Shop extends MyController
     /** @var CustomerInfoForm */
     private $customerInfo;
 
+    /** @var FieldValidation */
+    private $fieldValidation;
+
     public function __construct()
     {
         parent::__construct();
 
-        $this->load->library([
-            'validation/fieldValidation',
-            'session',
-        ]);
+        $this->fieldValidation = new FieldValidation(Services::validation());
+
+        $this->load->library(['session']);
         $this->twig = new Twig();
 
 // モデルをロードします。ロード後のモデルオブジェクトは、$this->shop_modelなど
