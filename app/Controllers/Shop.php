@@ -23,6 +23,7 @@ use Kenjis\CI3Compatible\Core\CI_Input;
 use Kenjis\CI3Compatible\Database\CI_DB;
 use Kenjis\CI3Compatible\Exception\RuntimeException;
 use Kenjis\CI3Compatible\Library\CI_Email;
+use Kenjis\CI3Compatible\Library\CI_Parser;
 use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI4Twig\Twig;
 
@@ -33,6 +34,7 @@ use function trim;
 /**
  * @property GeneratePagination $generatePagination
  * @property CI_Session $session
+ * @property CI_Parser $parser
  * @property CI_Config $config
  * @property CI_Input $input
  * @property CI_DB $db
@@ -76,7 +78,7 @@ class Shop extends MyController
     {
         parent::__construct();
 
-        $this->load->library(['session']);
+        $this->load->library(['session', 'parser']);
 
         $this->load->database();
 
@@ -89,7 +91,12 @@ class Shop extends MyController
         $this->inventoryModel = new InventoryModel($this->db);
         $this->cartModel = new CartModel($this->inventoryModel, $this->session);
         $this->customerModel = new CustomerModel($this->session);
-        $this->shopModel = new ShopModel($this->cartModel, $this->customerModel, $mailModel);
+        $this->shopModel = new ShopModel(
+            $this->cartModel,
+            $this->customerModel,
+            $mailModel,
+            $this->parser
+        );
 
 // このアプリケーション専用の設定ファイルConfigShop.phpを読み込みます。
 // load()メソッドの第2引数にTRUEを指定すると、他の設定ファイルで使われている

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models\Shop;
 
 use Kenjis\CI3Compatible\Library\CI_Email;
+use Kenjis\CI3Compatible\Library\CI_Parser;
 use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 use Kenjis\CI3Compatible\Test\Traits\SessionTest;
@@ -37,7 +38,12 @@ class ShopModelTest extends UnitTestCase
         $this->ciEmail = new CI_Email();
         $mailModel = new MailModel($this->ciEmail);
         $customerModel = new CustomerModel($session);
-        $this->shopModel = new ShopModel($this->cartModel, $customerModel, $mailModel);
+        $this->shopModel = new ShopModel(
+            $this->cartModel,
+            $customerModel,
+            $mailModel,
+            new CI_Parser()
+        );
     }
     // endregion
 
@@ -65,7 +71,12 @@ class ShopModelTest extends UnitTestCase
         $mailModel = new MailModel($this->ciEmail);
         $session = new CI_Session();
         $customerModel = new CustomerModel($session);
-        $this->shopModel = new ShopModel($this->cartModel, $customerModel, $mailModel);
+        $this->shopModel = new ShopModel(
+            $this->cartModel,
+            $customerModel,
+            $mailModel,
+            new CI_Parser()
+        );
 
         $this->cartModel->add(1, 1);
         $this->cartModel->add(2, 2);

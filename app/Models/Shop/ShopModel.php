@@ -11,7 +11,6 @@ use Kenjis\CI3Compatible\Library\CI_Parser;
 use function array_merge;
 
 /**
- * @property CI_Parser $parser
  * @property CI_Loader $load
  */
 class ShopModel extends CI_Model
@@ -25,18 +24,21 @@ class ShopModel extends CI_Model
     /** @var MailModel */
     private $mailModel;
 
+    /** @var CI_Parser */
+    private $parser;
+
     public function __construct(
         CartModel $cartModel,
         CustomerModel $customerModel,
-        MailModel $mailModel
+        MailModel $mailModel,
+        CI_Parser $parser
     ) {
         parent::__construct();
-
-        $this->load->library('parser');
 
         $this->cartModel = $cartModel;
         $this->customerModel = $customerModel;
         $this->mailModel = $mailModel;
+        $this->parser = $parser;
     }
 
     /**
