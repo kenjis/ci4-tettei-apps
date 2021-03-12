@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
+use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 use Kenjis\CI3Compatible\Test\Traits\SessionTest;
 
@@ -12,13 +13,13 @@ class CustomerModelTest extends UnitTestCase
     use SessionTest;
 
     /** @var CustomerModel */
-    private $obj;
+    private $customerModel;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->obj = $this->newModel(CustomerModel::class);
+        $this->customerModel = new CustomerModel(new CI_Session());
     }
 
     public function test_set_and_get(): void
@@ -34,9 +35,9 @@ class CustomerModelTest extends UnitTestCase
         $form->getValidationRules();
         $form->setData($expected);
 
-        $this->obj->set($form);
+        $this->customerModel->set($form);
 
-        $actual = $this->obj->get();
+        $actual = $this->customerModel->get();
 
         $this->assertEquals($expected, $actual);
     }

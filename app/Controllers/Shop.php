@@ -87,8 +87,8 @@ class Shop extends MyController
 // として利用できます。
         $mailModel = new MailModel(new CI_Email());
         $this->inventoryModel = new InventoryModel($this->db);
-        $this->cartModel = new CartModel($this->inventoryModel);
-        $this->customerModel = new CustomerModel();
+        $this->cartModel = new CartModel($this->inventoryModel, $this->session);
+        $this->customerModel = new CustomerModel($this->session);
         $this->shopModel = new ShopModel($this->cartModel, $this->customerModel, $mailModel);
 
 // このアプリケーション専用の設定ファイルConfigShop.phpを読み込みます。

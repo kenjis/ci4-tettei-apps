@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
+use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 use Kenjis\CI3Compatible\Test\Traits\SessionTest;
 
@@ -34,7 +35,7 @@ class CartModelTest extends UnitTestCase
 
         $CI =& get_instance();
         $CI->load->database();
-        $this->cartModel = new CartModel(new InventoryModel($CI->db));
+        $this->cartModel = new CartModel(new InventoryModel($CI->db), new CI_Session());
     }
 
     public function test_add(): void

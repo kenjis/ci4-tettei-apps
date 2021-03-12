@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
-use Kenjis\CI3Compatible\Core\CI_Loader;
 use Kenjis\CI3Compatible\Core\CI_Model;
 use Kenjis\CI3Compatible\Library\CI_Session;
 
-/**
- * @property CI_Session $session
- * @property CI_Loader $load
- */
 class CustomerModel extends CI_Model
 {
-    public function __construct()
+    /** @var CI_Session */
+    private $session;
+
+    public function __construct(CI_Session $session)
     {
         parent::__construct();
 
-        $this->load->library('session');
+        $this->session = $session;
     }
 
     public function set(CustomerInfoForm $data): void
