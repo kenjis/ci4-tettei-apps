@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
-use Kenjis\CI3Compatible\Core\CI_Model;
 use Kenjis\CI3Compatible\Library\CI_Session;
 
-class CartModel extends CI_Model
+class CartModel
 {
     /** @var Cart */
     private $cart;
@@ -20,8 +19,6 @@ class CartModel extends CI_Model
 
     public function __construct(InventoryModel $inventoryModel, CI_Session $session)
     {
-        parent::__construct();
-
         $this->inventoryModel = $inventoryModel;
         $this->session = $session;
 

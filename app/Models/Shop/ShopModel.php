@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
-use Kenjis\CI3Compatible\Core\CI_Loader;
-use Kenjis\CI3Compatible\Core\CI_Model;
 use Kenjis\CI3Compatible\Library\CI_Parser;
 
 use function array_merge;
 
-/**
- * @property CI_Loader $load
- */
-class ShopModel extends CI_Model
+class ShopModel
 {
     /** @var CartModel */
     private $cartModel;
@@ -33,8 +28,6 @@ class ShopModel extends CI_Model
         MailModel $mailModel,
         CI_Parser $parser
     ) {
-        parent::__construct();
-
         $this->cartModel = $cartModel;
         $this->customerModel = $customerModel;
         $this->mailModel = $mailModel;
