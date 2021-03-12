@@ -10,6 +10,7 @@ use Kenjis\CI3Compatible\Database\CI_DB;
 use Kenjis\CI3Compatible\Exception\RuntimeException;
 use stdClass;
 
+use function array_map;
 use function explode;
 
 /**
@@ -26,14 +27,22 @@ class InventoryModel extends CI_Model
     }
 
     /**
-     * @return stdClass[]
+     * @return Category[]
      */
     public function getCategoryList(): array
     {
         $this->db->order_by('id');
         $query = $this->db->get('category');
 
-        return $query->result();
+        return array_map(
+            static function (stdClass $category) {
+                return new Category(
+                    (int) $category->id,
+                    $category->name
+                );
+            },
+            $query->result()
+        );
     }
 
     public function getCategoryName(int $id): string
