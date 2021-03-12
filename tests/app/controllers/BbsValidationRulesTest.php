@@ -16,8 +16,22 @@ class BbsValidationRulesTest extends UnitTestCase
 
         $validationRule = new BbsValidationRules();
 
+        $data = [
+            'name' => '発火太郎',
+            'email' => 'test@example.jp',
+            'subject' => '新しい投稿',
+            'body' => '新しい投稿です。',
+            'password' => 'secret',
+            'captcha' => 'bad_input',
+            'key' => '100',
+        ];
         $error = '';
-        $actual = $validationRule->captcha_check('bad_input', $error);
+        $actual = $validationRule->captcha_check(
+            'bad_input',
+            '100',
+            $data,
+            $error
+        );
 
         $this->assertFalse($actual);
 

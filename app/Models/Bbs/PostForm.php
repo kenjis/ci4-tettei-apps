@@ -66,7 +66,7 @@ class PostForm extends FormData
         'confirm' => [
             'captcha' => [
                 'label' => '画像認証コード',
-                'rules' => 'trim|required|alpha_numeric|captcha_check',
+                'rules' => 'trim|required|alpha_numeric|captcha_check[{key}]',
             ],
 // keyフィールドは、キャプチャのID番号です。隠しフィールドに仕込まれるのみで
 // ユーザの目に触れることはありません。

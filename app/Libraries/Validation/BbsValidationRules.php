@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Libraries\Validation;
 
-use Kenjis\CI3Compatible\Core\CI_Input;
 use Kenjis\CI3Compatible\Database\CI_DB;
 
 use function assert;
@@ -13,7 +12,6 @@ use function time;
 
 /**
  * @property CI_DB $db
- * @property CI_Input $input
  */
 class BbsValidationRules
 {
@@ -21,8 +19,15 @@ class BbsValidationRules
      * キャプチャの検証をするメソッド
      *
      * バリデーション(認証)クラスより呼ばれる
+     *
+     * @param string               $str    検証する文字列
+     * @param string               $fields パラメータ文字列
+     * @param array<string, mixed> $data   全検証データの配列
+     * @param string|null          $error  エラーメッセージ
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function captcha_check(string $str, ?string &$error): bool
+    public function captcha_check(string $str, string $fields, array $data, ?string &$error): bool
     {
 // 環境がtestingまたはacceptanceの場合は、キャプチャの検証をスキップします。
         if (ENVIRONMENT === 'testing' || ENVIRONMENT === 'acceptance') { // @phpstan-ignore-line
@@ -30,6 +35,8 @@ class BbsValidationRules
                 return true;
             }
         }
+
+        $key = (int) $fields;
 
         $CI = get_instance();
         $db = $CI->db; // @phpstan-ignore-line
@@ -48,8 +55,7 @@ class BbsValidationRules
 // where()メソッドは、複数回呼ばれると、AND条件になります。
         $db->select('COUNT(*) AS count');
         $db->where('word', $str);
-        // @phpstan-ignore-next-line
-        $db->where('captcha_id', $CI->input->post('key'));
+        $db->where('captcha_id', $key);
         $db->where('captcha_time >', $expiration);
         $query = $db->get('captcha');
         $row = $query->row();

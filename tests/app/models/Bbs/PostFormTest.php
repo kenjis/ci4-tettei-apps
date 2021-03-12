@@ -114,7 +114,7 @@ class PostFormTest extends CIUnitTestCase
             ],
             'captcha' => [
                 'label' => '画像認証コード',
-                'rules' => 'trim|required|alpha_numeric|captcha_check',
+                'rules' => 'trim|required|alpha_numeric|captcha_check[{key}]',
             ],
             'key' => [
                 'label' => 'key',
