@@ -12,7 +12,12 @@ use function is_string;
 use function property_exists;
 
 /**
- *  implements ArrayAccess
+ * 配列としてリード可能にする
+ *
+ * $arrayReadProperties に記載したプロパティは $obj['key] としてリード可能になる。
+ * また、$obj->key でもリード可能。
+ *
+ * 使用するクラスで implements ArrayAccess を記載すること。
  */
 trait ArrayReadable
 {
@@ -86,5 +91,19 @@ trait ArrayReadable
         }
 
         return $array;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function __get(string $key)
+    {
+        if ($this->offsetExists($key)) {
+            return $this->$key;
+        }
+
+        throw new LogicException(
+            $key . ' はアクセスできません。'
+        );
     }
 }
