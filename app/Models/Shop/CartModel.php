@@ -60,10 +60,10 @@ class CartModel extends CI_Model
 // 買い物かごに追加します。
             $product = $this->inventoryModel->getProductItem($id);
             $item = new CartItem(
-                (int) $product->id,
+                $product->id,
                 $qty,
                 $product->name,
-                (int) $product->price
+                $product->price
             );
             $this->cart->add($item);
         }
