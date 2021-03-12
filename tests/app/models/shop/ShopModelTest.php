@@ -15,6 +15,9 @@ class ShopModelTest extends UnitTestCase
     /** @var ShopModel */
     private $obj;
 
+    /** @var string */
+    private $admin = 'admin@example.jp';
+
     // region Fixture
     public function setUp(): void
     {
@@ -22,7 +25,6 @@ class ShopModelTest extends UnitTestCase
 
         $this->obj = $this->newModel(ShopModel::class);
         $this->CI->email = new Mock_Libraries_Email();
-        $this->CI->admin = 'admin@example.jp';
     }
     // endregion
 
@@ -32,13 +34,13 @@ class ShopModelTest extends UnitTestCase
         $this->CI->cartModel->add(1, 1);
         $this->CI->cartModel->add(2, 2);
 
-        $actual = $this->obj->order('admin@example.jp');
+        $actual = $this->obj->order($this->admin);
 
         $this->assertTrue($actual);
 
         $mail = $this->CI->email->_get_data();
 
-        $this->assertEquals($this->CI->admin, $mail['from']);
+        $this->assertEquals($this->admin, $mail['from']);
         $this->assertStringContainsString('注文合計： 11,400円', $mail['message']);
     }
 
@@ -49,7 +51,7 @@ class ShopModelTest extends UnitTestCase
         $this->CI->cartModel->add(1, 1);
         $this->CI->cartModel->add(2, 2);
 
-        $actual = $this->obj->order('admin@example.jp');
+        $actual = $this->obj->order($this->admin);
 
         $this->assertFalse($actual);
     }
