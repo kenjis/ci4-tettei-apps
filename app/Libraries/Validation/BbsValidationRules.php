@@ -10,11 +10,19 @@ use function assert;
 use function get_instance;
 use function time;
 
-/**
- * @property CI_DB $db
- */
 class BbsValidationRules
 {
+    /** @var CI_DB */
+    private $db;
+
+    public function __construct()
+    {
+        $CI = get_instance();
+        $CI->load->database();
+        $this->db = $CI->db; // @phpstan-ignore-line
+        assert($this->db instanceof CI_DB);
+    }
+
     /**
      * キャプチャの検証をするメソッド
      *
@@ -38,26 +46,22 @@ class BbsValidationRules
 
         $key = (int) $fields;
 
-        $CI = get_instance();
-        $db = $CI->db; // @phpstan-ignore-line
-        assert($db instanceof CI_DB);
-
 // 有効期限を2時間に設定し、それ以前に生成されたキャプチャをデータベースから
 // 削除します。delete()メソッドの第2引数では、「captcha_time <」を配列のキーに
 // していますが、このように記述することで、WHERE句の条件の演算子を指定できます。
         $expiration = time() - 7200;    // 有効期限 2時間
-        $db->delete('captcha', ['captcha_time <' => $expiration]);
+        $this->db->delete('captcha', ['captcha_time <' => $expiration]);
 
 // バリデーション(検証)クラスより引数$strに渡された、ユーザからの入力値がデータ
 // ベースに保存されている値と一致するかどうかを調べます。隠しフィールドである
 // keyフィールドの値と$strを条件に、有効期限内のレコードをデータベースから
 // 検索します。条件に合うレコードが存在すれば、一致したと判断します。
 // where()メソッドは、複数回呼ばれると、AND条件になります。
-        $db->select('COUNT(*) AS count');
-        $db->where('word', $str);
-        $db->where('captcha_id', $key);
-        $db->where('captcha_time >', $expiration);
-        $query = $db->get('captcha');
+        $this->db->select('COUNT(*) AS count');
+        $this->db->where('word', $str);
+        $this->db->where('captcha_id', $key);
+        $this->db->where('captcha_time >', $expiration);
+        $query = $this->db->get('captcha');
         $row = $query->row();
 
 // レコードが0件の場合、つまり、一致しなかった場合は、captcha_checkルール
