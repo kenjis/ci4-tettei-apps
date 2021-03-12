@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
-use Kenjis\CI3Compatible\Core\CI_Loader;
-use Kenjis\CI3Compatible\Core\CI_Model;
 use Kenjis\CI3Compatible\Database\CI_DB;
 use Kenjis\CI3Compatible\Exception\RuntimeException;
 use stdClass;
@@ -13,18 +11,13 @@ use stdClass;
 use function array_map;
 use function explode;
 
-/**
- * @property CI_Loader $load
- */
-class InventoryModel extends CI_Model
+class InventoryModel
 {
     /** @var CI_DB */
     private $db;
 
     public function __construct(CI_DB $db)
     {
-        parent::__construct();
-
         $this->db = $db;
     }
 
