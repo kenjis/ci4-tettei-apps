@@ -35,9 +35,6 @@ class Order extends MyController
     /** @var IncomingRequest */
     protected $request;
 
-    /** @var int 1ページに表示する商品の数 */
-    private $limit;
-
     /** @var string 管理者のメールアドレス */
     private $admin;
 

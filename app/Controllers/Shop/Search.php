@@ -12,7 +12,6 @@ use App\Controllers\MyController;
 use App\Libraries\GeneratePagination;
 use App\Libraries\Validation\FieldValidation;
 use App\Models\Shop\CartModel;
-use App\Models\Shop\CustomerModel;
 use App\Models\Shop\InventoryModel;
 use CodeIgniter\HTTP\IncomingRequest;
 use Config\Services;
@@ -41,9 +40,6 @@ class Search extends MyController
     /** @var int 1ページに表示する商品の数 */
     private $limit;
 
-    /** @var string 管理者のメールアドレス */
-    private $admin;
-
     /** @var Twig */
     private $twig;
 
@@ -58,9 +54,6 @@ class Search extends MyController
 
     /** @var CartModel */
     private $cartModel;
-
-    /** @var CustomerModel */
-    private $customerModel;
 
     public function __construct()
     {
@@ -81,7 +74,6 @@ class Search extends MyController
 // モデルをロードします。
         $this->inventoryModel = new InventoryModel($this->db);
         $this->cartModel = new CartModel($this->inventoryModel, $this->session);
-        $this->customerModel = new CustomerModel($this->session);
     }
 
     private function loadConfig(): void

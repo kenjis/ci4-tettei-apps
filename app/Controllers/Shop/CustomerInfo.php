@@ -9,13 +9,11 @@ declare(strict_types=1);
 namespace App\Controllers\Shop;
 
 use App\Controllers\MyController;
-use App\Libraries\Validation\FieldValidation;
 use App\Models\Shop\CartModel;
 use App\Models\Shop\CustomerInfoForm;
 use App\Models\Shop\CustomerModel;
 use App\Models\Shop\InventoryModel;
 use CodeIgniter\HTTP\IncomingRequest;
-use Config\Services;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Input;
 use Kenjis\CI3Compatible\Database\CI_DB;
@@ -34,12 +32,6 @@ class CustomerInfo extends MyController
     /** @var IncomingRequest */
     protected $request;
 
-    /** @var int 1ページに表示する商品の数 */
-    private $limit;
-
-    /** @var string 管理者のメールアドレス */
-    private $admin;
-
     /** @var Twig */
     private $twig;
 
@@ -48,9 +40,6 @@ class CustomerInfo extends MyController
 
     /** @var CustomerInfoForm */
     private $customerInfo;
-
-    /** @var FieldValidation */
-    private $fieldValidation;
 
     /** @var InventoryModel */
     private $inventoryModel;
@@ -73,7 +62,6 @@ class CustomerInfo extends MyController
 
     private function loadDependencies(): void
     {
-        $this->fieldValidation = new FieldValidation(Services::validation());
         $this->twig = new Twig();
 
 // モデルをロードします。
