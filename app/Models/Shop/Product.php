@@ -10,6 +10,12 @@ use ArrayAccess;
 /**
  * 商品
  *
+ * @property-read int $id
+ * @property-read int $categoryId
+ * @property-read string $name
+ * @property-read string $detail
+ * @property-read int $price
+ * @property-read string $img
  * @implements ArrayAccess<string, int|string>
  * @SuppressWarnings(PHPMD.UnusedPrivateField)
  */

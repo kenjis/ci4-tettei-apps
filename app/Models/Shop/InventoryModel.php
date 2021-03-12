@@ -60,7 +60,7 @@ class InventoryModel extends CI_Model
     }
 
     /**
-     * @return stdClass[]
+     * @return Product[]
      */
     public function getProductList(int $catId, int $limit, int $offset): array
     {
@@ -68,7 +68,19 @@ class InventoryModel extends CI_Model
         $this->db->order_by('id');
         $query = $this->db->get('product', $limit, $offset);
 
-        return $query->result();
+        return array_map(
+            static function (stdClass $product) {
+                return new Product(
+                    (int) $product->id,
+                    (int) $product->category_id, // phpcs:ignore
+                    $product->name,
+                    $product->detail,
+                    (int) $product->price,
+                    (string) $product->img
+                );
+            },
+            $query->result()
+        );
     }
 
     public function getProductCount(int $catId): int
@@ -79,12 +91,21 @@ class InventoryModel extends CI_Model
         return $query->num_rows();
     }
 
-    public function getProductItem(int $id): stdClass
+    public function getProductItem(int $id): Product
     {
         $this->db->where('id', $id);
         $query = $this->db->get('product');
 
-        return $query->row();
+        $product = $query->row();
+
+        return new Product(
+            (int) $product->id,
+            (int) $product->category_id, // phpcs:ignore
+            $product->name,
+            $product->detail,
+            (int) $product->price,
+            (string) $product->img
+        );
     }
 
     public function isAvailableProductItem(int $id): bool
@@ -96,7 +117,7 @@ class InventoryModel extends CI_Model
     }
 
     /**
-     * @return stdClass[]
+     * @return Product[]
      */
     public function getProductBySearch(string $q, int $limit, int $offset): array
     {
@@ -111,7 +132,19 @@ class InventoryModel extends CI_Model
         $this->db->order_by('id');
         $query = $this->db->get('product', $limit, $offset);
 
-        return $query->result();
+        return array_map(
+            static function (stdClass $product) {
+                return new Product(
+                    (int) $product->id,
+                    (int) $product->category_id, // phpcs:ignore
+                    $product->name,
+                    $product->detail,
+                    (int) $product->price,
+                    (string) $product->img
+                );
+            },
+            $query->result()
+        );
     }
 
     public function getCountBySearch(string $q): int
