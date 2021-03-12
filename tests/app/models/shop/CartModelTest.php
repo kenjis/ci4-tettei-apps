@@ -32,7 +32,9 @@ class CartModelTest extends UnitTestCase
         // CartModel が Session に依存しているためリセットする
         $_SESSION = [];
 
-        $this->cartModel = new CartModel(new InventoryModel());
+        $CI =& get_instance();
+        $CI->load->database();
+        $this->cartModel = new CartModel(new InventoryModel($CI->db));
     }
 
     public function test_add(): void

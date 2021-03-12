@@ -14,16 +14,18 @@ use function array_map;
 use function explode;
 
 /**
- * @property CI_DB $db
  * @property CI_Loader $load
  */
 class InventoryModel extends CI_Model
 {
-    public function __construct()
+    /** @var CI_DB */
+    private $db;
+
+    public function __construct(CI_DB $db)
     {
         parent::__construct();
 
-        $this->load->database();
+        $this->db = $db;
     }
 
     /**

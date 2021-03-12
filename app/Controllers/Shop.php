@@ -20,6 +20,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use Config\Services;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Input;
+use Kenjis\CI3Compatible\Database\CI_DB;
 use Kenjis\CI3Compatible\Exception\RuntimeException;
 use Kenjis\CI3Compatible\Library\CI_Email;
 use Kenjis\CI3Compatible\Library\CI_Session;
@@ -34,6 +35,7 @@ use function trim;
  * @property CI_Session $session
  * @property CI_Config $config
  * @property CI_Input $input
+ * @property CI_DB $db
  */
 class Shop extends MyController
 {
@@ -76,13 +78,15 @@ class Shop extends MyController
 
         $this->load->library(['session']);
 
+        $this->load->database();
+
         $this->fieldValidation = new FieldValidation(Services::validation());
         $this->twig = new Twig();
 
 // モデルをロードします。ロード後のモデルオブジェクトは、$this->shop_modelなど
 // として利用できます。
         $mailModel = new MailModel(new CI_Email());
-        $this->inventoryModel = new InventoryModel();
+        $this->inventoryModel = new InventoryModel($this->db);
         $this->cartModel = new CartModel($this->inventoryModel);
         $this->customerModel = new CustomerModel();
         $this->shopModel = new ShopModel($this->cartModel, $this->customerModel, $mailModel);

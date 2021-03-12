@@ -29,7 +29,9 @@ class ShopModelTest extends UnitTestCase
     {
         parent::setUp();
 
-        $this->cartModel = new CartModel(new InventoryModel());
+        $CI =& get_instance();
+        $CI->load->database();
+        $this->cartModel = new CartModel(new InventoryModel($CI->db));
         $this->ciEmail = new CI_Email();
         $mailModel = new MailModel($this->ciEmail);
         $customerModel = new CustomerModel();

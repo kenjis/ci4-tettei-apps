@@ -11,7 +11,7 @@ use function get_instance;
 class InventoryModelTest extends UnitTestCase
 {
     /** @var InventoryModel */
-    private $obj;
+    private $inventoryModel;
 
     // region Fixture
     public static function setUpBeforeClass(): void
@@ -27,14 +27,16 @@ class InventoryModelTest extends UnitTestCase
     {
         parent::setUp();
 
-        $this->obj = $this->newModel(InventoryModel::class);
+        $CI =& get_instance();
+        $CI->load->database();
+        $this->inventoryModel = new InventoryModel($CI->db);
     }
     // endregion
 
     // region Tests
     public function test_get_category_list(): void
     {
-        $list = $this->obj->getCategoryList();
+        $list = $this->inventoryModel->getCategoryList();
 
         $expected = [
             1 => '本',
@@ -48,7 +50,7 @@ class InventoryModelTest extends UnitTestCase
 
     public function test_get_category_name(): void
     {
-        $actual = $this->obj->getCategoryName(1);
+        $actual = $this->inventoryModel->getCategoryName(1);
 
         $expected = '本';
         $this->assertEquals($expected, $actual);
@@ -56,7 +58,7 @@ class InventoryModelTest extends UnitTestCase
 
     public function test_get_product_count(): void
     {
-        $actual = $this->obj->getProductCount(1);
+        $actual = $this->inventoryModel->getProductCount(1);
 
         $expected = 36;
         $this->assertEquals($expected, $actual);
@@ -64,7 +66,7 @@ class InventoryModelTest extends UnitTestCase
 
     public function test_get_product_list(): void
     {
-        $list = $this->obj->getProductList(1, 1, 0);
+        $list = $this->inventoryModel->getProductList(1, 1, 0);
 
         $expected = [1 => 'CodeIgniter徹底入門'];
         foreach ($list as $product) {
@@ -74,7 +76,7 @@ class InventoryModelTest extends UnitTestCase
 
     public function test_get_product_item(): void
     {
-        $item = $this->obj->getProductItem(1);
+        $item = $this->inventoryModel->getProductItem(1);
 
         $expected = 'CodeIgniter徹底入門';
         $this->assertEquals($expected, $item->name);
@@ -82,7 +84,7 @@ class InventoryModelTest extends UnitTestCase
 
     public function test_get_product_by_search(): void
     {
-        $results = $this->obj->getProductBySearch('CodeIgniter', 10, 0);
+        $results = $this->inventoryModel->getProductBySearch('CodeIgniter', 10, 0);
 
         foreach ($results as $record) {
             $this->assertStringContainsString('CodeIgniter', $record->name);
@@ -91,7 +93,7 @@ class InventoryModelTest extends UnitTestCase
 
     public function test_get_count_by_search(): void
     {
-        $actual = $this->obj->getCountBySearch('CodeIgniter');
+        $actual = $this->inventoryModel->getCountBySearch('CodeIgniter');
 
         $expected = 3;
         $this->assertEquals($expected, $actual);
@@ -99,7 +101,7 @@ class InventoryModelTest extends UnitTestCase
 
     public function test_is_available_product_item_not_available(): void
     {
-        $actual = $this->obj->isAvailableProductItem(9999999999);
+        $actual = $this->inventoryModel->isAvailableProductItem(9999999999);
 
         $this->assertFalse($actual);
     }
