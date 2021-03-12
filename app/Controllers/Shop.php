@@ -79,14 +79,18 @@ class Shop extends MyController
         parent::__construct();
 
         $this->load->library(['session', 'parser']);
-
         $this->load->database();
 
+        $this->loadConfig();
+        $this->loadDependencies();
+    }
+
+    private function loadDependencies(): void
+    {
         $this->fieldValidation = new FieldValidation(Services::validation());
         $this->twig = new Twig();
 
-// モデルをロードします。ロード後のモデルオブジェクトは、$this->shop_modelなど
-// として利用できます。
+// モデルをロードします。
         $mailModel = new MailModel(new CI_Email());
         $this->inventoryModel = new InventoryModel($this->db);
         $this->cartModel = new CartModel($this->inventoryModel, $this->session);
@@ -97,7 +101,10 @@ class Shop extends MyController
             $mailModel,
             $this->parser
         );
+    }
 
+    private function loadConfig(): void
+    {
 // このアプリケーション専用の設定ファイルConfigShop.phpを読み込みます。
 // load()メソッドの第2引数にTRUEを指定すると、他の設定ファイルで使われている
 // 設定項目名との衝突を気にしなくても済みます。
