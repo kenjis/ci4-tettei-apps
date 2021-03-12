@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Controllers\Shop\CustomerInfo;
+use App\Controllers\Shop\Order;
 use App\Models\Shop\CartModel;
 use App\Models\Shop\CustomerModel;
 use App\Models\Shop\ShopModel;
@@ -105,9 +107,9 @@ class ShopTest extends FeatureTestCase
         Services::injectMock('session', $session);
 
         /**
-         * @var Shop
+         * @var CustomerInfo
          */
-        $obj = $this->newController(Shop::class);
+        $obj = $this->newController(CustomerInfo::class);
 
         $model = $this->getDouble(CustomerModel::class, []);
         $this->verifyInvokedOnce($model, 'set');
@@ -138,9 +140,9 @@ class ShopTest extends FeatureTestCase
     public function test_confirm_fail(): void
     {
         /**
-         * @var Shop
+         * @var CustomerInfo
          */
-        $obj = $this->newController(Shop::class);
+        $obj = $this->newController(CustomerInfo::class);
 
         $model = $this->getDouble(CustomerModel::class, []);
         $this->verifyNeverInvoked($model, 'set');
@@ -171,14 +173,14 @@ class ShopTest extends FeatureTestCase
     public function test_order_cart_is_empty(): void
     {
         /**
-         * @var Shop
+         * @var Order
          */
-        $obj = $this->newController(Shop::class);
+        $obj = $this->newController(Order::class);
 
         $cart = $this->getDouble(CartModel::class, ['count' => 0]);
         $this->setPrivateProperty($obj, 'cartModel', $cart);
 
-        $output = $obj->order();
+        $output = $obj->index();
 
         $this->assertStringContainsString('買い物カゴには何も入っていません', $output);
     }
@@ -186,16 +188,16 @@ class ShopTest extends FeatureTestCase
     public function test_order(): void
     {
         /**
-         * @var Shop
+         * @var Order
          */
-        $obj = $this->newController(Shop::class);
+        $obj = $this->newController(Order::class);
 
         $cart = $this->getDouble(CartModel::class, ['count' => 1]);
         $shop = $this->getDouble(ShopModel::class, ['order' => true]);
         $this->setPrivateProperty($obj, 'cartModel', $cart);
         $this->setPrivateProperty($obj, 'shopModel', $shop);
 
-        $output = $obj->order();
+        $output = $obj->index();
 
         $this->assertStringContainsString('ご注文ありがとうございます', $output);
     }
@@ -203,16 +205,16 @@ class ShopTest extends FeatureTestCase
     public function test_order_system_error(): void
     {
         /**
-         * @var Shop
+         * @var Order
          */
-        $obj = $this->newController(Shop::class);
+        $obj = $this->newController(Order::class);
 
         $cart = $this->getDouble(CartModel::class, ['count' => 1]);
         $shop = $this->getDouble(ShopModel::class, ['order' => false]);
         $this->setPrivateProperty($obj, 'cartModel', $cart);
         $this->setPrivateProperty($obj, 'shopModel', $shop);
 
-        $output = $obj->order();
+        $output = $obj->index();
 
         $this->assertStringContainsString('システムエラー', $output);
     }
