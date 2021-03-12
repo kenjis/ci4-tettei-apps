@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Libraries\Validation;
 
 use CodeIgniter\Validation\Validation;
-use Config\Services;
 use Kenjis\CI3Compatible\Exception\RuntimeException;
 
 class FieldValidation
@@ -13,9 +12,9 @@ class FieldValidation
     /** @var Validation */
     private $validation;
 
-    public function __construct()
+    public function __construct(Validation $validation)
     {
-        $this->validation =  Services::validation();
+        $this->validation =  $validation;
     }
 
     /**
