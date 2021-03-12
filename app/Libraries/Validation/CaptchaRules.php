@@ -17,6 +17,7 @@ class CaptchaRules
 
     public function __construct()
     {
+        // Validationクラスがインスタンス化するので、CI_DBを注入する方法がない
         $CI = get_instance();
         $CI->load->database();
         $this->db = $CI->db; // @phpstan-ignore-line
