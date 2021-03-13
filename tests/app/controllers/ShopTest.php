@@ -16,9 +16,9 @@ use CodeIgniter\Session\Session;
 use CodeIgniter\Validation\Validation;
 use Config\Services;
 use Kenjis\CI3Compatible\Library\CI_Form_validation;
-use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
 use Kenjis\CI3Compatible\Test\Traits\SessionTest;
 use Kenjis\CI3Compatible\Test\Traits\UnitTest;
+use Tests\Support\FeatureTestCase;
 use Twig\Environment;
 
 use function get_instance;
