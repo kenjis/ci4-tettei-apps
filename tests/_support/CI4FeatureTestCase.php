@@ -38,7 +38,7 @@ class CI4FeatureTestCase extends TestCase
      * Values to be set in the SESSION global
      * before running the test.
      *
-     * @var array
+     * @var array<int|string, mixed>
      */
     protected $session = [];
 
@@ -52,7 +52,7 @@ class CI4FeatureTestCase extends TestCase
     /**
      * Custom request's headers
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $headers = [];
 

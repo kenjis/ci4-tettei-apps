@@ -28,7 +28,7 @@ class CI3Module extends AbstractModule
         $this->bind(CI_Parser::class)->in(Scope::SINGLETON);
     }
 
-    private function bind_CI_DB(): void
+    private function bind_CI_DB(): void // phpcs:ignore
     {
         $this->CI = get_instance();
 
