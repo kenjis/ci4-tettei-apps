@@ -7,10 +7,10 @@ namespace App\Models\Shop;
 use Kenjis\CI3Compatible\Library\CI_Email;
 use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 
-class MailModelTest extends UnitTestCase
+class MailServiceTest extends UnitTestCase
 {
-    /** @var MailModel */
-    private $mailModel;
+    /** @var MailService */
+    private $mailService;
 
     /** @var CI_Email */
     private $ciEmail;
@@ -24,7 +24,7 @@ class MailModelTest extends UnitTestCase
             ['send' => true],
             true
         );
-        $this->mailModel = new MailModel($this->ciEmail);
+        $this->mailService = new MailService($this->ciEmail);
     }
 
     public function test_sendmail(): void
@@ -35,7 +35,7 @@ class MailModelTest extends UnitTestCase
         $mail['bcc']       = 'admin@exaple.jp';
         $mail['subject']   = '【注文メール】CIショップ';
         $mail['body']      = 'CIショップにご注文いただきありがとうございます。';
-        $actual = $this->mailModel->sendmail($mail);
+        $actual = $this->mailService->sendmail($mail);
 
         $this->assertTrue($actual);
     }
@@ -47,7 +47,7 @@ class MailModelTest extends UnitTestCase
             ['send' => false],
             true
         );
-        $this->mailModel = new MailModel($this->ciEmail);
+        $this->mailService = new MailService($this->ciEmail);
 
         $mail['from_name'] = 'CIショップ';
         $mail['from']      = 'from@example.jp';
@@ -55,7 +55,7 @@ class MailModelTest extends UnitTestCase
         $mail['bcc']       = 'admin@exaple.jp';
         $mail['subject']   = '【注文メール】CIショップ';
         $mail['body']      = 'CIショップにご注文いただきありがとうございます。';
-        $actual = $this->mailModel->sendmail($mail);
+        $actual = $this->mailService->sendmail($mail);
 
         $this->assertFalse($actual);
     }

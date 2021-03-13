@@ -6,7 +6,7 @@ namespace App\Models\Shop;
 
 use Kenjis\CI3Compatible\Library\CI_Email;
 
-class MailModel
+class MailService
 {
     /** @var CI_Email */
     private $email;

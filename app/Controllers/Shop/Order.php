@@ -11,7 +11,7 @@ namespace App\Controllers\Shop;
 use App\Controllers\MyController;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerInfoRepository;
-use App\Models\Shop\MailModel;
+use App\Models\Shop\MailService;
 use App\Models\Shop\ShopModel;
 use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI3Compatible\Core\CI_Config;
@@ -68,12 +68,12 @@ class Order extends MyController
         $this->twig = new Twig();
 
 // モデルをロードします。
-        $mailModel = new MailModel(new CI_Email());
+        $mailService = new MailService(new CI_Email());
         $this->cartRepository = new CartRepository($this->session);
         $this->customerInfoRepository = new CustomerInfoRepository($this->session);
         $this->shopModel = new ShopModel(
             $this->customerInfoRepository,
-            $mailModel,
+            $mailService,
             $this->parser,
             $this->cartRepository,
         );

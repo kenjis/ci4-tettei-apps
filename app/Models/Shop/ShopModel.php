@@ -13,8 +13,8 @@ class ShopModel
     /** @var CustomerInfoRepository */
     private $customerInfoRepository;
 
-    /** @var MailModel */
-    private $mailModel;
+    /** @var MailService */
+    private $mailService;
 
     /** @var CI_Parser */
     private $parser;
@@ -24,12 +24,12 @@ class ShopModel
 
     public function __construct(
         CustomerInfoRepository $customerInfoRepository,
-        MailModel $mailModel,
+        MailService $mailService,
         CI_Parser $parser,
         CartRepository $cartRepository
     ) {
         $this->customerInfoRepository = $customerInfoRepository;
-        $this->mailModel = $mailModel;
+        $this->mailService = $mailService;
         $this->parser = $parser;
         $this->cartRepository = $cartRepository;
     }
@@ -52,7 +52,7 @@ class ShopModel
 
 // sendmail()メソッドを呼び出し、実際にメールを送信します。メール送信に成功
 // すれば、TRUEを返します。
-        if ($this->mailModel->sendmail($mail)) {
+        if ($this->mailService->sendmail($mail)) {
             return true;
         }
 

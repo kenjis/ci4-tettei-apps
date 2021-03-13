@@ -41,7 +41,7 @@ class ShopModelTest extends UnitTestCase
         $CI->load->database();
         $session = new CI_Session();
         $this->ciEmail = new CI_Email();
-        $mailModel = new MailModel($this->ciEmail);
+        $mailModel = new MailService($this->ciEmail);
         $this->customerInfoRepository = new CustomerInfoRepository($session);
         $this->cartRepository = new CartRepository($session);
         $this->productRepository = new ProductRepository($CI->db);
@@ -89,7 +89,7 @@ class ShopModelTest extends UnitTestCase
     {
         $ci4MockEmail = $this->ciEmail->getCI4Library();
         $ci4MockEmail->returnValue = false;
-        $mailModel = new MailModel($this->ciEmail);
+        $mailModel = new MailService($this->ciEmail);
         $session = new CI_Session();
         $this->customerInfoRepository = new CustomerInfoRepository($session);
         $this->shopModel = new ShopModel(
