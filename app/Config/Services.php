@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\MyCodeIgniter;
 use CodeIgniter\Config\Services as CoreService;
 
 /**
@@ -28,4 +29,15 @@ class Services extends CoreService
 	//
 	//     return new \CodeIgniter\Example();
 	// }
+
+    public static function codeigniter(App $config = null, bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('codeigniter', $config);
+        }
+
+        $config = $config ?? config('App');
+
+        return new MyCodeIgniter($config);
+    }
 }
