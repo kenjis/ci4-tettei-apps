@@ -11,7 +11,6 @@ namespace App\Controllers\Shop;
 use App\Controllers\MyController;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerModel;
-use App\Models\Shop\InventoryModel;
 use App\Models\Shop\MailModel;
 use App\Models\Shop\ShopModel;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -47,9 +46,6 @@ class Order extends MyController
     /** @var ShopModel */
     private $shopModel;
 
-    /** @var InventoryModel */
-    private $inventoryModel;
-
     /** @var CustomerModel */
     private $customerModel;
 
@@ -73,7 +69,6 @@ class Order extends MyController
 
 // モデルをロードします。
         $mailModel = new MailModel(new CI_Email());
-        $this->inventoryModel = new InventoryModel($this->db);
         $this->cartRepository = new CartRepository($this->session);
         $this->customerModel = new CustomerModel($this->session);
         $this->shopModel = new ShopModel(

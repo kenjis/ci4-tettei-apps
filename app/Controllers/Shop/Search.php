@@ -12,7 +12,8 @@ use App\Controllers\MyController;
 use App\Libraries\GeneratePagination;
 use App\Libraries\Validation\FieldValidation;
 use App\Models\Shop\CartRepository;
-use App\Models\Shop\InventoryModel;
+use App\Models\Shop\CategoryRepository;
+use App\Models\Shop\ProductRepository;
 use CodeIgniter\HTTP\IncomingRequest;
 use Config\Services;
 use Kenjis\CI3Compatible\Core\CI_Config;
@@ -49,11 +50,14 @@ class Search extends MyController
     /** @var FieldValidation */
     private $fieldValidation;
 
-    /** @var InventoryModel */
-    private $inventoryModel;
-
     /** @var CartRepository */
     private $cartRepository;
+
+    /** @var ProductRepository */
+    private $productRepository;
+
+    /** @var CategoryRepository */
+    private $categoryRepository;
 
     public function __construct()
     {
@@ -72,7 +76,8 @@ class Search extends MyController
         $this->twig = new Twig();
 
 // モデルをロードします。
-        $this->inventoryModel = new InventoryModel($this->db);
+        $this->productRepository = new ProductRepository($this->db);
+        $this->categoryRepository = new CategoryRepository($this->db);
         $this->cartRepository = new CartRepository($this->session);
     }
 
@@ -115,10 +120,10 @@ class Search extends MyController
             'max_length[100]'
         );
 
-        $catList = $this->inventoryModel->getCategoryList();
+        $catList = $this->categoryRepository->getCategoryList();
 
 // モデルから、キーワードで検索した商品データを取得します。
-        $list = $this->inventoryModel->getProductBySearch(
+        $list = $this->productRepository->getProductBySearch(
             $q,
             $this->limit,
             $offset
@@ -149,7 +154,7 @@ class Search extends MyController
     {
 // ページネーションを生成します。
         $path  = '/shop/search';
-        $total = $this->inventoryModel->getCountBySearch($q);
+        $total = $this->productRepository->getCountBySearch($q);
 
         $config = [
 // リンク先のURLを指定します。

@@ -12,7 +12,8 @@ use App\Controllers\MyController;
 use App\Libraries\Validation\FieldValidation;
 use App\Models\Shop\AddToCartUseCase;
 use App\Models\Shop\CartRepository;
-use App\Models\Shop\InventoryModel;
+use App\Models\Shop\CategoryRepository;
+use App\Models\Shop\ProductRepository;
 use CodeIgniter\HTTP\IncomingRequest;
 use Config\Services;
 use Kenjis\CI3Compatible\Core\CI_Config;
@@ -41,14 +42,17 @@ class Cart extends MyController
     /** @var FieldValidation */
     private $fieldValidation;
 
-    /** @var InventoryModel */
-    private $inventoryModel;
+    /** @var ProductRepository */
+    private $productRepository;
 
     /** @var AddToCartUseCase */
     private $addToCartUseCase;
 
     /** @var CartRepository */
     private $cartRepository;
+
+    /** @var CategoryRepository */
+    private $categoryRepository;
 
     public function __construct()
     {
@@ -66,11 +70,12 @@ class Cart extends MyController
         $this->twig = new Twig();
 
 // モデルをロードします。
-        $this->inventoryModel = new InventoryModel($this->db);
+        $this->productRepository = new ProductRepository($this->db);
+        $this->categoryRepository = new CategoryRepository($this->db);
         $this->cartRepository = new CartRepository($this->session);
         $this->addToCartUseCase = new AddToCartUseCase(
             $this->cartRepository,
-            $this->inventoryModel
+            $this->productRepository
         );
     }
 
@@ -108,7 +113,7 @@ class Cart extends MyController
      */
     public function index(): string
     {
-        $catList = $this->inventoryModel->getCategoryList();
+        $catList = $this->categoryRepository->getCategoryList();
 
 // モデルより、買い物かごの情報を取得します。
         $cart = $this->cartRepository->find();

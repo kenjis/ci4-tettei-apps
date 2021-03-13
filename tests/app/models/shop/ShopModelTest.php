@@ -27,7 +27,7 @@ class ShopModelTest extends UnitTestCase
     private $cartRepository;
 
     /** @var InventoryModel */
-    private $inventoryModel;
+    private $productRepository;
 
     // region Fixture
     public function setUp(): void
@@ -41,7 +41,7 @@ class ShopModelTest extends UnitTestCase
         $mailModel = new MailModel($this->ciEmail);
         $customerModel = new CustomerModel($session);
         $this->cartRepository = new CartRepository($session);
-        $this->inventoryModel = new InventoryModel($CI->db);
+        $this->productRepository = new ProductRepository($CI->db);
         $this->shopModel = new ShopModel(
             $customerModel,
             $mailModel,
@@ -54,7 +54,7 @@ class ShopModelTest extends UnitTestCase
     // region Tests
     public function test_order(): void
     {
-        $addToCartUseCase = new AddToCartUseCase($this->cartRepository, $this->inventoryModel);
+        $addToCartUseCase = new AddToCartUseCase($this->cartRepository, $this->productRepository);
         $addToCartUseCase->add(1, 1);
         $addToCartUseCase->add(2, 2);
 
@@ -83,7 +83,7 @@ class ShopModelTest extends UnitTestCase
             $this->cartRepository
         );
 
-        $addToCartUseCase = new AddToCartUseCase($this->cartRepository, $this->inventoryModel);
+        $addToCartUseCase = new AddToCartUseCase($this->cartRepository, $this->productRepository);
         $addToCartUseCase->add(1, 1);
         $addToCartUseCase->add(2, 2);
 

@@ -14,7 +14,7 @@ class AddToCartUseCaselTest extends UnitTestCase
 {
     use SessionTest;
 
-    /** @var CartModel */
+    /** @var AddToCartUseCase */
     private $addToCartUseCase;
 
     /** @var CartRepository */
@@ -42,7 +42,7 @@ class AddToCartUseCaselTest extends UnitTestCase
         $this->cartRepository = new CartRepository(new CI_Session());
         $this->addToCartUseCase = new AddToCartUseCase(
             $this->cartRepository,
-            new InventoryModel($CI->db)
+            new ProductRepository($CI->db)
         );
     }
 

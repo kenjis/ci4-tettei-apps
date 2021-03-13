@@ -12,7 +12,8 @@ use App\Controllers\MyController;
 use App\Libraries\GeneratePagination;
 use App\Libraries\Validation\FieldValidation;
 use App\Models\Shop\CartRepository;
-use App\Models\Shop\InventoryModel;
+use App\Models\Shop\CategoryRepository;
+use App\Models\Shop\ProductRepository;
 use CodeIgniter\HTTP\IncomingRequest;
 use Config\Services;
 use Kenjis\CI3Compatible\Core\CI_Config;
@@ -47,11 +48,14 @@ class Index extends MyController
     /** @var FieldValidation */
     private $fieldValidation;
 
-    /** @var InventoryModel */
-    private $inventoryModel;
-
     /** @var CartRepository */
     private $cartRepository;
+
+    /** @var CategoryRepository */
+    private $categoryRepository;
+
+    /** @var ProductRepository */
+    private $productRepository;
 
     public function __construct()
     {
@@ -70,7 +74,8 @@ class Index extends MyController
         $this->twig = new Twig();
 
 // モデルをロードします。
-        $this->inventoryModel = new InventoryModel($this->db);
+        $this->categoryRepository = new CategoryRepository($this->db);
+        $this->productRepository = new ProductRepository($this->db);
         $this->cartRepository = new CartRepository($this->session);
     }
 
@@ -107,17 +112,17 @@ class Index extends MyController
         );
 
 // モデルからカテゴリの一覧を取得します。
-        $catList = $this->inventoryModel->getCategoryList();
+        $catList = $this->categoryRepository->getCategoryList();
 
 // カテゴリIDとoffset値と、1ページに表示する商品の数を渡し、モデルより
 // 商品一覧を取得します。
-        $list = $this->inventoryModel->getProductList(
+        $list = $this->productRepository->getProductList(
             $catId,
             $this->limit,
             $offset
         );
 // カテゴリIDより、カテゴリ名を取得します。
-        $category = $this->inventoryModel->getCategoryName($catId);
+        $category = $this->categoryRepository->getCategoryName($catId);
 
 // ページネーションを生成します。
         [$total, $pagination] = $this->createPaginationCategory($catId);
@@ -147,7 +152,7 @@ class Index extends MyController
     {
 // モデルよりそのカテゴリの商品数を取得し、ページネーションを生成します。
         $path  = '/shop/index/' . $catId;
-        $total = $this->inventoryModel->getProductCount($catId);
+        $total = $this->productRepository->getProductCount($catId);
 
         $config = [
 // リンク先のURLを指定します。

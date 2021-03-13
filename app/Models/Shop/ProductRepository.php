@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace App\Models\Shop;
 
 use Kenjis\CI3Compatible\Database\CI_DB;
-use Kenjis\CI3Compatible\Exception\RuntimeException;
 use stdClass;
 
 use function array_map;
 use function explode;
 
-class InventoryModel
+class ProductRepository
 {
     /** @var CI_DB */
     private $db;
@@ -19,39 +18,6 @@ class InventoryModel
     public function __construct(CI_DB $db)
     {
         $this->db = $db;
-    }
-
-    /**
-     * @return Category[]
-     */
-    public function getCategoryList(): array
-    {
-        $this->db->order_by('id');
-        $query = $this->db->get('category');
-
-        return array_map(
-            static function (stdClass $category) {
-                return new Category(
-                    (int) $category->id,
-                    $category->name
-                );
-            },
-            $query->result()
-        );
-    }
-
-    public function getCategoryName(int $id): string
-    {
-        $this->db->select('name');
-        $this->db->where('id', $id);
-        $query = $this->db->get('category');
-        $row = $query->row();
-
-        if ($row === null) {
-            throw new RuntimeException('不正な入力です。');
-        }
-
-        return $row->name;
     }
 
     /**
@@ -103,14 +69,6 @@ class InventoryModel
         );
     }
 
-    public function isAvailableProductItem(int $id): bool
-    {
-        $this->db->where('id', $id);
-        $query = $this->db->get('product');
-
-        return $query->num_rows() === 1;
-    }
-
     /**
      * @return Product[]
      */
@@ -154,5 +112,13 @@ class InventoryModel
         $query = $this->db->get('product');
 
         return $query->num_rows();
+    }
+
+    public function isAvailableProductItem(int $id): bool
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->get('product');
+
+        return $query->num_rows() === 1;
     }
 }

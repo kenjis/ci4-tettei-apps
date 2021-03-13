@@ -12,7 +12,6 @@ use App\Controllers\MyController;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerInfoForm;
 use App\Models\Shop\CustomerModel;
-use App\Models\Shop\InventoryModel;
 use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Input;
@@ -41,9 +40,6 @@ class CustomerInfo extends MyController
     /** @var CustomerInfoForm */
     private $customerInfo;
 
-    /** @var InventoryModel */
-    private $inventoryModel;
-
     /** @var CustomerModel */
     private $customerModel;
 
@@ -65,7 +61,6 @@ class CustomerInfo extends MyController
         $this->twig = new Twig();
 
 // モデルをロードします。
-        $this->inventoryModel = new InventoryModel($this->db);
         $this->cartRepository = new CartRepository($this->session);
         $this->customerModel = new CustomerModel($this->session);
     }

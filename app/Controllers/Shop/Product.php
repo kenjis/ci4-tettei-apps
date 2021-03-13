@@ -11,7 +11,8 @@ namespace App\Controllers\Shop;
 use App\Controllers\MyController;
 use App\Libraries\Validation\FieldValidation;
 use App\Models\Shop\CartRepository;
-use App\Models\Shop\InventoryModel;
+use App\Models\Shop\CategoryRepository;
+use App\Models\Shop\ProductRepository;
 use CodeIgniter\HTTP\IncomingRequest;
 use Config\Services;
 use Kenjis\CI3Compatible\Core\CI_Config;
@@ -40,11 +41,14 @@ class Product extends MyController
     /** @var FieldValidation */
     private $fieldValidation;
 
-    /** @var InventoryModel */
-    private $inventoryModel;
-
     /** @var CartRepository */
     private $cartRepository;
+
+    /** @var ProductRepository */
+    private $productRepository;
+
+    /** @var CategoryRepository */
+    private $categoryRepository;
 
     public function __construct()
     {
@@ -62,7 +66,8 @@ class Product extends MyController
         $this->twig = new Twig();
 
 // モデルをロードします。
-        $this->inventoryModel = new InventoryModel($this->db);
+        $this->productRepository = new ProductRepository($this->db);
+        $this->categoryRepository = new CategoryRepository($this->db);
         $this->cartRepository = new CartRepository($this->session);
     }
 
@@ -79,10 +84,10 @@ class Product extends MyController
             'required|is_natural|max_length[11]'
         );
 
-        $catList = $this->inventoryModel->getCategoryList();
+        $catList = $this->categoryRepository->getCategoryList();
 
 // モデルより商品データを取得します。
-        $item = $this->inventoryModel->getProductItem($prodId);
+        $item = $this->productRepository->getProductItem($prodId);
 
         $cart = $this->cartRepository->find();
         $itemCount = $cart->getLineCount();

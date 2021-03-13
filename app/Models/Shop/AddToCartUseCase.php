@@ -6,16 +6,18 @@ namespace App\Models\Shop;
 
 class AddToCartUseCase
 {
-    /** @var InventoryModel */
-    private $inventoryModel;
-
     /** @var CartRepository */
     private $cartRepository;
 
-    public function __construct(CartRepository $cartRepository, InventoryModel $inventoryModel)
-    {
+    /** @var ProductRepository */
+    private $productRepository;
+
+    public function __construct(
+        CartRepository $cartRepository,
+        ProductRepository $productRepository
+    ) {
         $this->cartRepository = $cartRepository;
-        $this->inventoryModel = $inventoryModel;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -32,10 +34,10 @@ class AddToCartUseCase
 // 削除します。
         if ($qty <= 0) {
             $cart->remove($id);
-        } elseif ($this->inventoryModel->isAvailableProductItem($id)) {
+        } elseif ($this->productRepository->isAvailableProductItem($id)) {
 // 指定の数量が1以上の場合は、その商品が存在するかチェックした後に、商品と数量を
 // 買い物かごに追加します。
-            $product = $this->inventoryModel->getProductItem($id);
+            $product = $this->productRepository->getProductItem($id);
             $item = new CartItem(
                 $product->id,
                 $qty,
