@@ -23,9 +23,9 @@ class ShopModel
     private $cartRepository;
 
     public function __construct(
+        CI_Parser $parser,
         CustomerInfoRepository $customerInfoRepository,
         MailService $mailService,
-        CI_Parser $parser,
         CartRepository $cartRepository
     ) {
         $this->customerInfoRepository = $customerInfoRepository;

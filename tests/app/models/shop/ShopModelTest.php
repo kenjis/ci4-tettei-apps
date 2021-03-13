@@ -46,9 +46,9 @@ class ShopModelTest extends UnitTestCase
         $this->cartRepository = new CartRepository($session);
         $this->productRepository = new ProductRepository($CI->db);
         $this->shopModel = new ShopModel(
+            new CI_Parser(),
             $this->customerInfoRepository,
             $mailModel,
-            new CI_Parser(),
             $this->cartRepository
         );
     }
@@ -93,9 +93,9 @@ class ShopModelTest extends UnitTestCase
         $session = new CI_Session();
         $this->customerInfoRepository = new CustomerInfoRepository($session);
         $this->shopModel = new ShopModel(
+            new CI_Parser(),
             $this->customerInfoRepository,
             $mailModel,
-            new CI_Parser(),
             $this->cartRepository
         );
 

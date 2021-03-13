@@ -72,9 +72,9 @@ class Order extends MyController
         $this->cartRepository = new CartRepository($this->session);
         $this->customerInfoRepository = new CustomerInfoRepository($this->session);
         $this->shopModel = new ShopModel(
+            $this->parser,
             $this->customerInfoRepository,
             $mailService,
-            $this->parser,
             $this->cartRepository,
         );
     }
