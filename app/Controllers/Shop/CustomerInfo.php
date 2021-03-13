@@ -13,19 +13,9 @@ use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerInfoForm;
 use App\Models\Shop\CustomerInfoRepository;
 use CodeIgniter\HTTP\IncomingRequest;
-use Kenjis\CI3Compatible\Core\CI_Config;
-use Kenjis\CI3Compatible\Core\CI_Input;
-use Kenjis\CI3Compatible\Database\CI_DB;
 use Kenjis\CI3Compatible\Exception\RuntimeException;
-use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI4Twig\Twig;
 
-/**
- * @property CI_Session $session
- * @property CI_Config $config
- * @property CI_Input $input
- * @property CI_DB $db
- */
 class CustomerInfo extends MyController
 {
     /** @var IncomingRequest */
@@ -46,23 +36,20 @@ class CustomerInfo extends MyController
     /** @var CartRepository */
     private $cartRepository;
 
-    public function __construct()
-    {
+    public function __construct(
+        CartRepository $cartRepository,
+        CustomerInfoRepository $customerInfoRepository,
+        Twig $twig
+    ) {
         parent::__construct();
 
         $this->load->library(['session']);
         $this->load->database();
 
-        $this->loadDependencies();
-    }
+        $this->cartRepository = $cartRepository;
+        $this->customerInfoRepository = $customerInfoRepository;
 
-    private function loadDependencies(): void
-    {
-        $this->twig = new Twig();
-
-// モデルをロードします。
-        $this->cartRepository = new CartRepository($this->session);
-        $this->customerInfoRepository = new CustomerInfoRepository($this->session);
+        $this->twig = $twig;
     }
 
     /**

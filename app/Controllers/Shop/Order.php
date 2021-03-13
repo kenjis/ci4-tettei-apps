@@ -11,23 +11,14 @@ namespace App\Controllers\Shop;
 use App\Controllers\MyController;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerInfoRepository;
-use App\Models\Shop\MailService;
 use App\Models\Shop\OrderUseCase;
 use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI3Compatible\Core\CI_Config;
-use Kenjis\CI3Compatible\Core\CI_Input;
-use Kenjis\CI3Compatible\Database\CI_DB;
-use Kenjis\CI3Compatible\Library\CI_Email;
-use Kenjis\CI3Compatible\Library\CI_Parser;
 use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI4Twig\Twig;
 
 /**
- * @property CI_Session $session
- * @property CI_Parser $parser
  * @property CI_Config $config
- * @property CI_Input $input
- * @property CI_DB $db
  */
 class Order extends MyController
 {
@@ -52,31 +43,26 @@ class Order extends MyController
     /** @var CartRepository */
     private $cartRepository;
 
-    public function __construct()
-    {
+    /** @var CI_Session */
+    private $session;
+
+    public function __construct(
+        CartRepository $cartRepository,
+        CustomerInfoRepository $customerInfoRepository,
+        OrderUseCase $orderUseCase,
+        Twig $twig,
+        CI_Session $session
+    ) {
         parent::__construct();
 
-        $this->load->library(['session', 'parser']);
-        $this->load->database();
-
         $this->loadConfig();
-        $this->loadDependencies();
-    }
 
-    private function loadDependencies(): void
-    {
-        $this->twig = new Twig();
+        $this->cartRepository = $cartRepository;
+        $this->customerInfoRepository = $customerInfoRepository;
+        $this->orderUseCase = $orderUseCase;
 
-// モデルをロードします。
-        $mailService = new MailService(new CI_Email());
-        $this->cartRepository = new CartRepository($this->session);
-        $this->customerInfoRepository = new CustomerInfoRepository($this->session);
-        $this->orderUseCase = new OrderUseCase(
-            $this->parser,
-            $this->customerInfoRepository,
-            $mailService,
-            $this->cartRepository,
-        );
+        $this->twig = $twig;
+        $this->session = $session;
     }
 
     private function loadConfig(): void
