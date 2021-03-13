@@ -37,7 +37,7 @@ class CategoryRepositoryTest extends UnitTestCase
     // region Tests
     public function test_get_category_list(): void
     {
-        $list = $this->categoryRepository->getCategoryList();
+        $list = $this->categoryRepository->findAll();
 
         $expected = [
             1 => '本',
@@ -51,7 +51,7 @@ class CategoryRepositoryTest extends UnitTestCase
 
     public function test_get_category_name(): void
     {
-        $actual = $this->categoryRepository->getCategoryName(1);
+        $actual = $this->categoryRepository->findNameById(1);
 
         $expected = '本';
         $this->assertEquals($expected, $actual);

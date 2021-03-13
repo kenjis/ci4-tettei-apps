@@ -23,7 +23,7 @@ class CategoryRepository
     /**
      * @return Category[]
      */
-    public function getCategoryList(): array
+    public function findAll(): array
     {
         $this->db->order_by('id');
         $query = $this->db->get('category');
@@ -39,7 +39,7 @@ class CategoryRepository
         );
     }
 
-    public function getCategoryName(int $id): string
+    public function findNameById(int $id): string
     {
         $this->db->select('name');
         $this->db->where('id', $id);

@@ -112,7 +112,7 @@ class Index extends MyController
         );
 
 // モデルからカテゴリの一覧を取得します。
-        $catList = $this->categoryRepository->getCategoryList();
+        $catList = $this->categoryRepository->findAll();
 
 // カテゴリIDとoffset値と、1ページに表示する商品の数を渡し、モデルより
 // 商品一覧を取得します。
@@ -122,7 +122,7 @@ class Index extends MyController
             $offset
         );
 // カテゴリIDより、カテゴリ名を取得します。
-        $category = $this->categoryRepository->getCategoryName($catId);
+        $category = $this->categoryRepository->findNameById($catId);
 
 // ページネーションを生成します。
         [$total, $pagination] = $this->createPaginationCategory($catId);

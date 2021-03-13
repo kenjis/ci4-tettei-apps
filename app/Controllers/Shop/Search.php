@@ -120,7 +120,7 @@ class Search extends MyController
             'max_length[100]'
         );
 
-        $catList = $this->categoryRepository->getCategoryList();
+        $catList = $this->categoryRepository->findAll();
 
 // モデルから、キーワードで検索した商品データを取得します。
         $list = $this->productRepository->findBySearch(

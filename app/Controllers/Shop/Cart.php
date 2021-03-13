@@ -113,7 +113,7 @@ class Cart extends MyController
      */
     public function index(): string
     {
-        $catList = $this->categoryRepository->getCategoryList();
+        $catList = $this->categoryRepository->findAll();
 
 // モデルより、買い物かごの情報を取得します。
         $cart = $this->cartRepository->find();

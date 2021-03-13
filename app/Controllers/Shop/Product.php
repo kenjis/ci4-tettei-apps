@@ -84,7 +84,7 @@ class Product extends MyController
             'required|is_natural|max_length[11]'
         );
 
-        $catList = $this->categoryRepository->getCategoryList();
+        $catList = $this->categoryRepository->findAll();
 
 // モデルより商品データを取得します。
         $item = $this->productRepository->findById($prodId);
