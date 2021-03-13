@@ -23,7 +23,7 @@ class ProductRepository
     /**
      * @return Product[]
      */
-    public function getProductList(int $catId, int $limit, int $offset): array
+    public function fiindListByCategoryId(int $catId, int $limit, int $offset): array
     {
         $this->db->where('category_id', $catId);
         $this->db->order_by('id');
@@ -44,7 +44,7 @@ class ProductRepository
         );
     }
 
-    public function getProductCount(int $catId): int
+    public function countByCategoryId(int $catId): int
     {
         $this->db->where('category_id', $catId);
         $query = $this->db->get('product');
@@ -52,7 +52,7 @@ class ProductRepository
         return $query->num_rows();
     }
 
-    public function getProductItem(int $id): Product
+    public function findById(int $id): Product
     {
         $this->db->where('id', $id);
         $query = $this->db->get('product');
@@ -72,7 +72,7 @@ class ProductRepository
     /**
      * @return Product[]
      */
-    public function getProductBySearch(string $q, int $limit, int $offset): array
+    public function findBySearch(string $q, int $limit, int $offset): array
     {
 // 検索キーワードをスペースで分割し、like()メソッドでLIKE句を指定します。
 // 複数回like()メソッドを呼んだ場合は、AND条件になります。
@@ -100,7 +100,7 @@ class ProductRepository
         );
     }
 
-    public function getCountBySearch(string $q): int
+    public function countBySearch(string $q): int
     {
         $this->db->select('name');
         $keywords = explode(' ', $q);
@@ -114,7 +114,7 @@ class ProductRepository
         return $query->num_rows();
     }
 
-    public function isAvailableProductItem(int $id): bool
+    public function isAvailableById(int $id): bool
     {
         $this->db->where('id', $id);
         $query = $this->db->get('product');

@@ -35,17 +35,17 @@ class ProductRepositoryTest extends UnitTestCase
     // endregion
 
     // region Tests
-    public function test_get_product_count(): void
+    public function test_カテゴリIDで商品数を取得できる(): void
     {
-        $actual = $this->productRepository->getProductCount(1);
+        $actual = $this->productRepository->countByCategoryId(1);
 
         $expected = 36;
         $this->assertEquals($expected, $actual);
     }
 
-    public function test_get_product_list(): void
+    public function test_カテゴリIDで商品リストを取得できる(): void
     {
-        $list = $this->productRepository->getProductList(1, 1, 0);
+        $list = $this->productRepository->fiindListByCategoryId(1, 1, 0);
 
         $expected = [1 => 'CodeIgniter徹底入門'];
         foreach ($list as $product) {
@@ -53,34 +53,34 @@ class ProductRepositoryTest extends UnitTestCase
         }
     }
 
-    public function test_get_product_item(): void
+    public function test_商品IDで商品を取得できる(): void
     {
-        $item = $this->productRepository->getProductItem(1);
+        $item = $this->productRepository->findById(1);
 
         $expected = 'CodeIgniter徹底入門';
         $this->assertEquals($expected, $item->name);
     }
 
-    public function test_get_product_by_search(): void
+    public function test_キーワードで商品を検索できる(): void
     {
-        $results = $this->productRepository->getProductBySearch('CodeIgniter', 10, 0);
+        $results = $this->productRepository->findBySearch('CodeIgniter', 10, 0);
 
         foreach ($results as $record) {
             $this->assertStringContainsString('CodeIgniter', $record->name);
         }
     }
 
-    public function test_get_count_by_search(): void
+    public function test_キーワードで商品数を取得できる(): void
     {
-        $actual = $this->productRepository->getCountBySearch('CodeIgniter');
+        $actual = $this->productRepository->countBySearch('CodeIgniter');
 
         $expected = 3;
         $this->assertEquals($expected, $actual);
     }
 
-    public function test_is_available_product_item_not_available(): void
+    public function test_存在しない商品IDの場合はfalseが返る(): void
     {
-        $actual = $this->productRepository->isAvailableProductItem(9999999999);
+        $actual = $this->productRepository->isAvailableById(9999999999);
 
         $this->assertFalse($actual);
     }

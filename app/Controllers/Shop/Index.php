@@ -116,7 +116,7 @@ class Index extends MyController
 
 // カテゴリIDとoffset値と、1ページに表示する商品の数を渡し、モデルより
 // 商品一覧を取得します。
-        $list = $this->productRepository->getProductList(
+        $list = $this->productRepository->fiindListByCategoryId(
             $catId,
             $this->limit,
             $offset
@@ -152,7 +152,7 @@ class Index extends MyController
     {
 // モデルよりそのカテゴリの商品数を取得し、ページネーションを生成します。
         $path  = '/shop/index/' . $catId;
-        $total = $this->productRepository->getProductCount($catId);
+        $total = $this->productRepository->countByCategoryId($catId);
 
         $config = [
 // リンク先のURLを指定します。

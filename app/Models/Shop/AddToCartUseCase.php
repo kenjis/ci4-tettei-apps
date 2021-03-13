@@ -34,10 +34,10 @@ class AddToCartUseCase
 // 削除します。
         if ($qty <= 0) {
             $cart->remove($id);
-        } elseif ($this->productRepository->isAvailableProductItem($id)) {
+        } elseif ($this->productRepository->isAvailableById($id)) {
 // 指定の数量が1以上の場合は、その商品が存在するかチェックした後に、商品と数量を
 // 買い物かごに追加します。
-            $product = $this->productRepository->getProductItem($id);
+            $product = $this->productRepository->findById($id);
             $item = new CartItem(
                 $product->id,
                 $qty,

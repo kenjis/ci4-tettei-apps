@@ -87,7 +87,7 @@ class Product extends MyController
         $catList = $this->categoryRepository->getCategoryList();
 
 // モデルより商品データを取得します。
-        $item = $this->productRepository->getProductItem($prodId);
+        $item = $this->productRepository->findById($prodId);
 
         $cart = $this->cartRepository->find();
         $itemCount = $cart->getLineCount();

@@ -123,7 +123,7 @@ class Search extends MyController
         $catList = $this->categoryRepository->getCategoryList();
 
 // モデルから、キーワードで検索した商品データを取得します。
-        $list = $this->productRepository->getProductBySearch(
+        $list = $this->productRepository->findBySearch(
             $q,
             $this->limit,
             $offset
@@ -154,7 +154,7 @@ class Search extends MyController
     {
 // ページネーションを生成します。
         $path  = '/shop/search';
-        $total = $this->productRepository->getCountBySearch($q);
+        $total = $this->productRepository->countBySearch($q);
 
         $config = [
 // リンク先のURLを指定します。
