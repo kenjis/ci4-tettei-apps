@@ -50,6 +50,7 @@
 追加されたComposerのパッケージ
 
 - CodeIgniter 3 to 4 Upgrade Helper <https://github.com/kenjis/ci3-to-4-upgrade-helper>
+- Ray.Di <https://github.com/Ray-Di/Ray.Di>
 - PHPUnit Helper <https://github.com/kenjis/phpunit-helper>
 - bear/qatools <https://github.com/bearsunday/BEAR.QATools>
 
