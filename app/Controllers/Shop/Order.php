@@ -12,7 +12,7 @@ use App\Controllers\MyController;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerInfoRepository;
 use App\Models\Shop\MailService;
-use App\Models\Shop\ShopModel;
+use App\Models\Shop\OrderUseCase;
 use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Input;
@@ -43,8 +43,8 @@ class Order extends MyController
     /** @var string[] */
     protected $helpers = ['form', 'url'];
 
-    /** @var ShopModel */
-    private $shopModel;
+    /** @var OrderUseCase */
+    private $orderUseCase;
 
     /** @var CustomerInfoRepository */
     private $customerInfoRepository;
@@ -71,7 +71,7 @@ class Order extends MyController
         $mailService = new MailService(new CI_Email());
         $this->cartRepository = new CartRepository($this->session);
         $this->customerInfoRepository = new CustomerInfoRepository($this->session);
-        $this->shopModel = new ShopModel(
+        $this->orderUseCase = new OrderUseCase(
             $this->parser,
             $this->customerInfoRepository,
             $mailService,
@@ -102,7 +102,7 @@ class Order extends MyController
         }
 
 // モデルのorder()メソッドを呼び出し、注文データの処理を依頼します。
-        if ($this->shopModel->order($this->admin)) {
+        if ($this->orderUseCase->order($this->admin)) {
             // 注文が完了したので、セッションを破棄します。
             $this->session->sess_destroy();
 

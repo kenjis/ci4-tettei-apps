@@ -8,7 +8,7 @@ use Kenjis\CI3Compatible\Library\CI_Parser;
 
 use function array_merge;
 
-class ShopModel
+class OrderUseCase
 {
     /** @var CustomerInfoRepository */
     private $customerInfoRepository;

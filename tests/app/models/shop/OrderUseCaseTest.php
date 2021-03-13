@@ -10,15 +10,15 @@ use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 use Kenjis\CI3Compatible\Test\Traits\SessionTest;
 
-class ShopModelTest extends UnitTestCase
+class OrderUseCaseTest extends UnitTestCase
 {
     use SessionTest;
 
     /** @var string */
     private $admin = 'admin@example.jp';
 
-    /** @var ShopModel */
-    private $shopModel;
+    /** @var OrderUseCase */
+    private $orderUseCase;
 
     /** @var CI_Email */
     private $ciEmail;
@@ -41,14 +41,14 @@ class ShopModelTest extends UnitTestCase
         $CI->load->database();
         $session = new CI_Session();
         $this->ciEmail = new CI_Email();
-        $mailModel = new MailService($this->ciEmail);
+        $mailService = new MailService($this->ciEmail);
         $this->customerInfoRepository = new CustomerInfoRepository($session);
         $this->cartRepository = new CartRepository($session);
         $this->productRepository = new ProductRepository($CI->db);
-        $this->shopModel = new ShopModel(
+        $this->orderUseCase = new OrderUseCase(
             new CI_Parser(),
             $this->customerInfoRepository,
-            $mailModel,
+            $mailService,
             $this->cartRepository
         );
     }
@@ -74,7 +74,7 @@ class ShopModelTest extends UnitTestCase
         );
         $this->customerInfoRepository->save($customerInfo);
 
-        $actual = $this->shopModel->order($this->admin);
+        $actual = $this->orderUseCase->order($this->admin);
 
         $this->assertTrue($actual);
 
@@ -89,13 +89,13 @@ class ShopModelTest extends UnitTestCase
     {
         $ci4MockEmail = $this->ciEmail->getCI4Library();
         $ci4MockEmail->returnValue = false;
-        $mailModel = new MailService($this->ciEmail);
+        $mailService = new MailService($this->ciEmail);
         $session = new CI_Session();
         $this->customerInfoRepository = new CustomerInfoRepository($session);
-        $this->shopModel = new ShopModel(
+        $this->orderUseCase = new OrderUseCase(
             new CI_Parser(),
             $this->customerInfoRepository,
-            $mailModel,
+            $mailService,
             $this->cartRepository
         );
 
@@ -103,7 +103,7 @@ class ShopModelTest extends UnitTestCase
         $addToCartUseCase->add(1, 1);
         $addToCartUseCase->add(2, 2);
 
-        $actual = $this->shopModel->order($this->admin);
+        $actual = $this->orderUseCase->order($this->admin);
 
         $this->assertFalse($actual);
     }

@@ -10,7 +10,7 @@ use App\Models\Shop\Cart;
 use App\Models\Shop\CartItem;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerInfoRepository;
-use App\Models\Shop\ShopModel;
+use App\Models\Shop\OrderUseCase;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Validation\Validation;
@@ -221,8 +221,8 @@ class ShopTest extends FeatureTestCase
         );
         $this->setPrivateProperty($obj, 'cartRepository', $cartRepository);
 
-        $shop = $this->getDouble(ShopModel::class, ['order' => true]);
-        $this->setPrivateProperty($obj, 'shopModel', $shop);
+        $useCase = $this->getDouble(OrderUseCase::class, ['order' => true]);
+        $this->setPrivateProperty($obj, 'orderUseCase', $useCase);
 
         $output = $obj->index();
 
@@ -247,8 +247,8 @@ class ShopTest extends FeatureTestCase
         );
         $this->setPrivateProperty($obj, 'cartRepository', $cartRepository);
 
-        $shop = $this->getDouble(ShopModel::class, ['order' => false]);
-        $this->setPrivateProperty($obj, 'shopModel', $shop);
+        $useCasee = $this->getDouble(OrderUseCase::class, ['order' => false]);
+        $this->setPrivateProperty($obj, 'orderUseCase', $useCasee);
 
         $output = $obj->index();
 
