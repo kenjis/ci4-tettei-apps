@@ -10,7 +10,6 @@ namespace App\Controllers\Shop;
 
 use App\Controllers\MyController;
 use App\Models\Shop\CartRepository;
-use App\Models\Shop\CustomerInfoRepository;
 use App\Models\Shop\OrderUseCase;
 use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI3Compatible\Core\CI_Config;
@@ -37,9 +36,6 @@ class Order extends MyController
     /** @var OrderUseCase */
     private $orderUseCase;
 
-    /** @var CustomerInfoRepository */
-    private $customerInfoRepository;
-
     /** @var CartRepository */
     private $cartRepository;
 
@@ -48,7 +44,6 @@ class Order extends MyController
 
     public function __construct(
         CartRepository $cartRepository,
-        CustomerInfoRepository $customerInfoRepository,
         OrderUseCase $orderUseCase,
         Twig $twig,
         CI_Session $session
@@ -58,7 +53,6 @@ class Order extends MyController
         $this->loadConfig();
 
         $this->cartRepository = $cartRepository;
-        $this->customerInfoRepository = $customerInfoRepository;
         $this->orderUseCase = $orderUseCase;
 
         $this->twig = $twig;

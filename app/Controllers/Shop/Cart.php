@@ -13,7 +13,6 @@ use App\Libraries\Validation\FieldValidation;
 use App\Models\Shop\AddToCartUseCase;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CategoryRepository;
-use App\Models\Shop\ProductRepository;
 use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI4Twig\Twig;
 
@@ -31,9 +30,6 @@ class Cart extends MyController
     /** @var FieldValidation */
     private $fieldValidation;
 
-    /** @var ProductRepository */
-    private $productRepository;
-
     /** @var AddToCartUseCase */
     private $addToCartUseCase;
 
@@ -45,7 +41,6 @@ class Cart extends MyController
 
     public function __construct(
         CategoryRepository $categoryRepository,
-        ProductRepository $productRepository,
         CartRepository $cartRepository,
         AddToCartUseCase $addToCartUseCase,
         FieldValidation $fieldValidation,
@@ -54,7 +49,6 @@ class Cart extends MyController
         parent::__construct();
 
         $this->categoryRepository = $categoryRepository;
-        $this->productRepository = $productRepository;
         $this->cartRepository = $cartRepository;
         $this->addToCartUseCase = $addToCartUseCase;
 
