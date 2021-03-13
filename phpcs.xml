@@ -20,6 +20,7 @@
     <file>app/Helpers</file>
     <file>app/Libraries</file>
     <file>app/Models</file>
+    <file>app/Module</file>
     <file>tests</file>
     <exclude-pattern>tests/_support/Libraries/Mock_Libraries_Email.php</exclude-pattern>
 
