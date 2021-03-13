@@ -63,7 +63,7 @@ class ProductRepositoryTest extends UnitTestCase
 
     public function test_キーワードで商品を検索できる(): void
     {
-        $results = $this->productRepository->findBySearch('CodeIgniter', 10, 0);
+        $results = $this->productRepository->findByKeyword('CodeIgniter', 10, 0);
 
         foreach ($results as $record) {
             $this->assertStringContainsString('CodeIgniter', $record->name);

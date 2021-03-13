@@ -117,7 +117,7 @@ class Search extends MyController
         $catList = $this->categoryRepository->findAll();
 
 // モデルから、キーワードで検索した商品データを取得します。
-        $list = $this->productRepository->findBySearch(
+        $list = $this->productRepository->findByKeyword(
             $q,
             $this->limit,
             $offset

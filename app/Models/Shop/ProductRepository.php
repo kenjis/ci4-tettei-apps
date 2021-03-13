@@ -72,7 +72,7 @@ class ProductRepository
     /**
      * @return Product[]
      */
-    public function findBySearch(string $q, int $limit, int $offset): array
+    public function findByKeyword(string $q, int $limit, int $offset): array
     {
 // 検索キーワードをスペースで分割し、like()メソッドでLIKE句を指定します。
 // 複数回like()メソッドを呼んだ場合は、AND条件になります。
