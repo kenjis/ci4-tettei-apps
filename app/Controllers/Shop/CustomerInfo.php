@@ -43,9 +43,6 @@ class CustomerInfo extends MyController
     ) {
         parent::__construct();
 
-        $this->load->library(['session']);
-        $this->load->database();
-
         $this->cartRepository = $cartRepository;
         $this->customerInfoRepository = $customerInfoRepository;
 
