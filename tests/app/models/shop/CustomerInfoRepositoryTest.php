@@ -8,18 +8,18 @@ use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 use Kenjis\CI3Compatible\Test\Traits\SessionTest;
 
-class CustomerModelTest extends UnitTestCase
+class CustomerInfoRepositoryTest extends UnitTestCase
 {
     use SessionTest;
 
-    /** @var CustomerModel */
-    private $customerModel;
+    /** @var CustomerInfoRepository */
+    private $customerInfoRepository;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->customerModel = new CustomerModel(new CI_Session());
+        $this->customerInfoRepository = new CustomerInfoRepository(new CI_Session());
     }
 
     public function test_set_and_get(): void
@@ -35,10 +35,11 @@ class CustomerModelTest extends UnitTestCase
         $form->getValidationRules();
         $form->setData($expected);
 
-        $this->customerModel->set($form);
+        $this->customerInfoRepository->save($form);
 
-        $actual = $this->customerModel->get();
+        $actual = $this->customerInfoRepository->find();
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expected['name'], $actual['name']);
+        $this->assertEquals($expected['email'], $actual['email']);
     }
 }

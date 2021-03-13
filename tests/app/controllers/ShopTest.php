@@ -9,7 +9,7 @@ use App\Controllers\Shop\Order;
 use App\Models\Shop\Cart;
 use App\Models\Shop\CartItem;
 use App\Models\Shop\CartRepository;
-use App\Models\Shop\CustomerModel;
+use App\Models\Shop\CustomerInfoRepository;
 use App\Models\Shop\ShopModel;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Session\Session;
@@ -113,10 +113,10 @@ class ShopTest extends FeatureTestCase
         /**
          * @var CustomerInfo
          */
-        $obj = $this->newController(CustomerInfo::class);
+        $customerInfoController = $this->newController(CustomerInfo::class);
 
-        $model = $this->getDouble(CustomerModel::class, []);
-        $this->verifyInvokedOnce($model, 'set');
+        $customerInfoRepository = $this->getDouble(CustomerInfoRepository::class, []);
+        $this->verifyInvokedOnce($customerInfoRepository, 'save');
 
         $validation = $this->getDouble(
             Validation::class,
@@ -135,10 +135,14 @@ class ShopTest extends FeatureTestCase
             ]
         );
 
-        $this->setPrivateProperty($obj, 'twig', $twig);
-        $this->setPrivateProperty($obj, 'customerModel', $model);
+        $this->setPrivateProperty($customerInfoController, 'twig', $twig);
+        $this->setPrivateProperty(
+            $customerInfoController,
+            'customerInfoRepository',
+            $customerInfoRepository
+        );
 
-        $obj->confirm();
+        $customerInfoController->confirm();
     }
 
     public function test_confirm_fail(): void
@@ -146,10 +150,10 @@ class ShopTest extends FeatureTestCase
         /**
          * @var CustomerInfo
          */
-        $obj = $this->newController(CustomerInfo::class);
+        $customerInfoController = $this->newController(CustomerInfo::class);
 
-        $model = $this->getDouble(CustomerModel::class, []);
-        $this->verifyNeverInvoked($model, 'set');
+        $customerInfoRepository = $this->getDouble(CustomerInfoRepository::class, []);
+        $this->verifyNeverInvoked($customerInfoRepository, 'save');
         $validation = $this->getDouble(
             CI_Form_validation::class,
             ['run' => false],
@@ -167,11 +171,15 @@ class ShopTest extends FeatureTestCase
                 ['shop_tmpl_checkout', $data],
             ]
         );
-        $obj->form_validation = $validation;
-        $this->setPrivateProperty($obj, 'twig', $twig);
-        $obj->Customer_model = $model;
+        $customerInfoController->form_validation = $validation;
+        $this->setPrivateProperty($customerInfoController, 'twig', $twig);
+        $this->setPrivateProperty(
+            $customerInfoController,
+            'customerInfoRepository',
+            $customerInfoRepository
+        );
 
-        $obj->confirm();
+        $customerInfoController->confirm();
     }
 
     public function test_order_cart_is_empty(): void

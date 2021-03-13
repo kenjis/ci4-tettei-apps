@@ -10,8 +10,8 @@ use function array_merge;
 
 class ShopModel
 {
-    /** @var CustomerModel */
-    private $customerModel;
+    /** @var CustomerInfoRepository */
+    private $customerInfoRepository;
 
     /** @var MailModel */
     private $mailModel;
@@ -23,12 +23,12 @@ class ShopModel
     private $cartRepository;
 
     public function __construct(
-        CustomerModel $customerModel,
+        CustomerInfoRepository $customerInfoRepository,
         MailModel $mailModel,
         CI_Parser $parser,
         CartRepository $cartRepository
     ) {
-        $this->customerModel = $customerModel;
+        $this->customerInfoRepository = $customerInfoRepository;
         $this->mailModel = $mailModel;
         $this->parser = $parser;
         $this->cartRepository = $cartRepository;
@@ -44,7 +44,8 @@ class ShopModel
         $data = $cart->getOrderConfirmationData();
 
 // お客様情報を取得します。
-        $data = array_merge($data, $this->customerModel->get());
+        $customerInfo = $this->customerInfoRepository->find();
+        $data = array_merge($data, $customerInfo->asArray());
 
         // @phpstan-ignore-next-line
         $mail = $this->createMailData($data, $adminEmail);

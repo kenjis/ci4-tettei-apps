@@ -11,7 +11,7 @@ namespace App\Controllers\Shop;
 use App\Controllers\MyController;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerInfoForm;
-use App\Models\Shop\CustomerModel;
+use App\Models\Shop\CustomerInfoRepository;
 use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Input;
@@ -40,8 +40,8 @@ class CustomerInfo extends MyController
     /** @var CustomerInfoForm */
     private $customerInfo;
 
-    /** @var CustomerModel */
-    private $customerModel;
+    /** @var CustomerInfoRepository */
+    private $customerInfoRepository;
 
     /** @var CartRepository */
     private $cartRepository;
@@ -62,7 +62,7 @@ class CustomerInfo extends MyController
 
 // モデルをロードします。
         $this->cartRepository = new CartRepository($this->session);
-        $this->customerModel = new CustomerModel($this->session);
+        $this->customerInfoRepository = new CustomerInfoRepository($this->session);
     }
 
     /**
@@ -106,7 +106,7 @@ class CustomerInfo extends MyController
             'tel',
             'email',
         ]));
-        $this->customerModel->set($this->customerInfo);
+        $this->customerInfoRepository->save($this->customerInfo);
 
         $cart = $this->cartRepository->find();
 

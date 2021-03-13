@@ -26,8 +26,11 @@ class ShopModelTest extends UnitTestCase
     /** @var CartRepository */
     private $cartRepository;
 
-    /** @var InventoryModel */
+    /** @var ProductRepository */
     private $productRepository;
+
+    /** @var CustomerInfoRepository */
+    private $customerInfoRepository;
 
     // region Fixture
     public function setUp(): void
@@ -39,11 +42,11 @@ class ShopModelTest extends UnitTestCase
         $session = new CI_Session();
         $this->ciEmail = new CI_Email();
         $mailModel = new MailModel($this->ciEmail);
-        $customerModel = new CustomerModel($session);
+        $this->customerInfoRepository = new CustomerInfoRepository($session);
         $this->cartRepository = new CartRepository($session);
         $this->productRepository = new ProductRepository($CI->db);
         $this->shopModel = new ShopModel(
-            $customerModel,
+            $this->customerInfoRepository,
             $mailModel,
             new CI_Parser(),
             $this->cartRepository
@@ -57,6 +60,19 @@ class ShopModelTest extends UnitTestCase
         $addToCartUseCase = new AddToCartUseCase($this->cartRepository, $this->productRepository);
         $addToCartUseCase->add(1, 1);
         $addToCartUseCase->add(2, 2);
+
+        $customerInfo = new CustomerInfoForm();
+        $customerInfo->getValidationRules();
+        $customerInfo->setData(
+            [
+                'name'  => '名前',
+                'zip'   => '111-1111',
+                'addr'  => '東京都千代田区',
+                'tel'   => '03-3333-3333',
+                'email' => 'foo@example.jp',
+            ]
+        );
+        $this->customerInfoRepository->save($customerInfo);
 
         $actual = $this->shopModel->order($this->admin);
 
@@ -75,9 +91,9 @@ class ShopModelTest extends UnitTestCase
         $ci4MockEmail->returnValue = false;
         $mailModel = new MailModel($this->ciEmail);
         $session = new CI_Session();
-        $customerModel = new CustomerModel($session);
+        $this->customerInfoRepository = new CustomerInfoRepository($session);
         $this->shopModel = new ShopModel(
-            $customerModel,
+            $this->customerInfoRepository,
             $mailModel,
             new CI_Parser(),
             $this->cartRepository
