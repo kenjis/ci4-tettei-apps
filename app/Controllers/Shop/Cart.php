@@ -13,21 +13,9 @@ use App\Libraries\Validation\FieldValidation;
 use App\Models\Shop\AddToCartUseCase;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CategoryRepository;
-use App\Models\Shop\ProductRepository;
 use CodeIgniter\HTTP\IncomingRequest;
-use Config\Services;
-use Kenjis\CI3Compatible\Core\CI_Config;
-use Kenjis\CI3Compatible\Core\CI_Input;
-use Kenjis\CI3Compatible\Database\CI_DB;
-use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI4Twig\Twig;
 
-/**
- * @property CI_Session $session
- * @property CI_Config $config
- * @property CI_Input $input
- * @property CI_DB $db
- */
 class Cart extends MyController
 {
     /** @var IncomingRequest */
@@ -42,9 +30,6 @@ class Cart extends MyController
     /** @var FieldValidation */
     private $fieldValidation;
 
-    /** @var ProductRepository */
-    private $productRepository;
-
     /** @var AddToCartUseCase */
     private $addToCartUseCase;
 
@@ -54,29 +39,21 @@ class Cart extends MyController
     /** @var CategoryRepository */
     private $categoryRepository;
 
-    public function __construct()
-    {
+    public function __construct(
+        CategoryRepository $categoryRepository,
+        CartRepository $cartRepository,
+        AddToCartUseCase $addToCartUseCase,
+        FieldValidation $fieldValidation,
+        Twig $twig
+    ) {
         parent::__construct();
 
-        $this->load->library(['session']);
-        $this->load->database();
+        $this->categoryRepository = $categoryRepository;
+        $this->cartRepository = $cartRepository;
+        $this->addToCartUseCase = $addToCartUseCase;
 
-        $this->loadDependencies();
-    }
-
-    private function loadDependencies(): void
-    {
-        $this->fieldValidation = new FieldValidation(Services::validation());
-        $this->twig = new Twig();
-
-// モデルをロードします。
-        $this->productRepository = new ProductRepository($this->db);
-        $this->categoryRepository = new CategoryRepository($this->db);
-        $this->cartRepository = new CartRepository($this->session);
-        $this->addToCartUseCase = new AddToCartUseCase(
-            $this->cartRepository,
-            $this->productRepository
-        );
+        $this->fieldValidation = $fieldValidation;
+        $this->twig = $twig;
     }
 
     /**

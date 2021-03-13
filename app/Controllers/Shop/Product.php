@@ -14,19 +14,8 @@ use App\Models\Shop\CartRepository;
 use App\Models\Shop\CategoryRepository;
 use App\Models\Shop\ProductRepository;
 use CodeIgniter\HTTP\IncomingRequest;
-use Config\Services;
-use Kenjis\CI3Compatible\Core\CI_Config;
-use Kenjis\CI3Compatible\Core\CI_Input;
-use Kenjis\CI3Compatible\Database\CI_DB;
-use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI4Twig\Twig;
 
-/**
- * @property CI_Session $session
- * @property CI_Config $config
- * @property CI_Input $input
- * @property CI_DB $db
- */
 class Product extends MyController
 {
     /** @var IncomingRequest */
@@ -50,25 +39,21 @@ class Product extends MyController
     /** @var CategoryRepository */
     private $categoryRepository;
 
-    public function __construct()
-    {
+    public function __construct(
+        CategoryRepository $categoryRepository,
+        ProductRepository $productRepository,
+        CartRepository $cartRepository,
+        FieldValidation $fieldValidation,
+        Twig $twig
+    ) {
         parent::__construct();
 
-        $this->load->library(['session']);
-        $this->load->database();
+        $this->categoryRepository = $categoryRepository;
+        $this->productRepository = $productRepository;
+        $this->cartRepository = $cartRepository;
 
-        $this->loadDependencies();
-    }
-
-    private function loadDependencies(): void
-    {
-        $this->fieldValidation = new FieldValidation(Services::validation());
-        $this->twig = new Twig();
-
-// モデルをロードします。
-        $this->productRepository = new ProductRepository($this->db);
-        $this->categoryRepository = new CategoryRepository($this->db);
-        $this->cartRepository = new CartRepository($this->session);
+        $this->fieldValidation = $fieldValidation;
+        $this->twig = $twig;
     }
 
     /**

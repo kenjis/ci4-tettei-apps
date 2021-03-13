@@ -10,7 +10,8 @@
         "codeigniter4/codeigniter4": "dev-develop",
         "kenjis/codeigniter-ss-twig": "^4.0",
         "kenjis/ci3-to-4-upgrade-helper": "1.x-dev",
-        "liaison/revision": "1.x-dev"
+        "liaison/revision": "1.x-dev",
+        "ray/di": "^2.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",

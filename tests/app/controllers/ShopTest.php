@@ -11,14 +11,17 @@ use App\Models\Shop\CartItem;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerInfoRepository;
 use App\Models\Shop\OrderUseCase;
+use App\Module\AppModule;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Validation\Validation;
 use Config\Services;
+use Kenjis\CI3Compatible\Core\CI_Controller;
 use Kenjis\CI3Compatible\Library\CI_Form_validation;
-use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
 use Kenjis\CI3Compatible\Test\Traits\SessionTest;
 use Kenjis\CI3Compatible\Test\Traits\UnitTest;
+use Ray\Di\Injector;
+use Tests\Support\FeatureTestCase;
 use Twig\Environment;
 
 use function get_instance;
@@ -255,4 +258,26 @@ class ShopTest extends FeatureTestCase
         $this->assertStringContainsString('システムエラー', $output);
     }
     // endregion
+
+    /**
+     * Create a controller instance
+     *
+     * @param class-string $classname
+     */
+    public function newController(string $classname): CI_Controller
+    {
+        $this->resetInstance();
+
+        $injector = new Injector(new AppModule());
+        $controller = $injector->getInstance($classname);
+        $controller->initController(
+            Services::request(),
+            Services::response(),
+            Services::logger()
+        );
+
+        $this->CI =& get_instance();
+
+        return $controller;
+    }
 }

@@ -15,11 +15,7 @@ use App\Models\Shop\CartRepository;
 use App\Models\Shop\CategoryRepository;
 use App\Models\Shop\ProductRepository;
 use CodeIgniter\HTTP\IncomingRequest;
-use Config\Services;
 use Kenjis\CI3Compatible\Core\CI_Config;
-use Kenjis\CI3Compatible\Core\CI_Input;
-use Kenjis\CI3Compatible\Database\CI_DB;
-use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI4Twig\Twig;
 
 use function max;
@@ -27,11 +23,7 @@ use function mb_convert_kana;
 use function trim;
 
 /**
- * @property GeneratePagination $generatePagination
- * @property CI_Session $session
  * @property CI_Config $config
- * @property CI_Input $input
- * @property CI_DB $db
  */
 class Search extends MyController
 {
@@ -59,26 +51,28 @@ class Search extends MyController
     /** @var CategoryRepository */
     private $categoryRepository;
 
-    public function __construct()
-    {
+    /** @var GeneratePagination */
+    private $generatePagination;
+
+    public function __construct(
+        CategoryRepository $categoryRepository,
+        ProductRepository $productRepository,
+        CartRepository $cartRepository,
+        GeneratePagination $generatePagination,
+        FieldValidation $fieldValidation,
+        Twig $twig
+    ) {
         parent::__construct();
 
-        $this->load->library(['session', 'generatePagination']);
-        $this->load->database();
-
         $this->loadConfig();
-        $this->loadDependencies();
-    }
 
-    private function loadDependencies(): void
-    {
-        $this->fieldValidation = new FieldValidation(Services::validation());
-        $this->twig = new Twig();
+        $this->categoryRepository = $categoryRepository;
+        $this->productRepository = $productRepository;
+        $this->cartRepository = $cartRepository;
 
-// モデルをロードします。
-        $this->productRepository = new ProductRepository($this->db);
-        $this->categoryRepository = new CategoryRepository($this->db);
-        $this->cartRepository = new CartRepository($this->session);
+        $this->generatePagination = $generatePagination;
+        $this->fieldValidation = $fieldValidation;
+        $this->twig = $twig;
     }
 
     private function loadConfig(): void
