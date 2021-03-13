@@ -11,7 +11,7 @@ namespace App\Controllers\Shop;
 use App\Controllers\MyController;
 use App\Libraries\GeneratePagination;
 use App\Libraries\Validation\FieldValidation;
-use App\Models\Shop\CartModel;
+use App\Models\Shop\CartRepository;
 use App\Models\Shop\InventoryModel;
 use CodeIgniter\HTTP\IncomingRequest;
 use Config\Services;
@@ -50,8 +50,8 @@ class Index extends MyController
     /** @var InventoryModel */
     private $inventoryModel;
 
-    /** @var CartModel */
-    private $cartModel;
+    /** @var CartRepository */
+    private $cartRepository;
 
     public function __construct()
     {
@@ -71,7 +71,7 @@ class Index extends MyController
 
 // モデルをロードします。
         $this->inventoryModel = new InventoryModel($this->db);
-        $this->cartModel = new CartModel($this->inventoryModel, $this->session);
+        $this->cartRepository = new CartRepository($this->session);
     }
 
     private function loadConfig(): void
@@ -123,7 +123,8 @@ class Index extends MyController
         [$total, $pagination] = $this->createPaginationCategory($catId);
 
 // モデルよりカートの中の商品アイテム数を取得します。
-        $itemCount = $this->cartModel->count();
+        $cart = $this->cartRepository->find();
+        $itemCount = $cart->getLineCount();
 
         $data = [
             'cat_list' => $catList,

@@ -20,11 +20,14 @@ class ShopModelTest extends UnitTestCase
     /** @var ShopModel */
     private $shopModel;
 
-    /** @var CartModel */
-    private $cartModel;
-
     /** @var CI_Email */
     private $ciEmail;
+
+    /** @var CartRepository */
+    private $cartRepository;
+
+    /** @var InventoryModel */
+    private $inventoryModel;
 
     // region Fixture
     public function setUp(): void
@@ -34,15 +37,16 @@ class ShopModelTest extends UnitTestCase
         $CI =& get_instance();
         $CI->load->database();
         $session = new CI_Session();
-        $this->cartModel = new CartModel(new InventoryModel($CI->db), $session);
         $this->ciEmail = new CI_Email();
         $mailModel = new MailModel($this->ciEmail);
         $customerModel = new CustomerModel($session);
+        $this->cartRepository = new CartRepository($session);
+        $this->inventoryModel = new InventoryModel($CI->db);
         $this->shopModel = new ShopModel(
-            $this->cartModel,
             $customerModel,
             $mailModel,
-            new CI_Parser()
+            new CI_Parser(),
+            $this->cartRepository
         );
     }
     // endregion
@@ -50,8 +54,9 @@ class ShopModelTest extends UnitTestCase
     // region Tests
     public function test_order(): void
     {
-        $this->cartModel->add(1, 1);
-        $this->cartModel->add(2, 2);
+        $addToCartUseCase = new AddToCartUseCase($this->cartRepository, $this->inventoryModel);
+        $addToCartUseCase->add(1, 1);
+        $addToCartUseCase->add(2, 2);
 
         $actual = $this->shopModel->order($this->admin);
 
@@ -72,14 +77,15 @@ class ShopModelTest extends UnitTestCase
         $session = new CI_Session();
         $customerModel = new CustomerModel($session);
         $this->shopModel = new ShopModel(
-            $this->cartModel,
             $customerModel,
             $mailModel,
-            new CI_Parser()
+            new CI_Parser(),
+            $this->cartRepository
         );
 
-        $this->cartModel->add(1, 1);
-        $this->cartModel->add(2, 2);
+        $addToCartUseCase = new AddToCartUseCase($this->cartRepository, $this->inventoryModel);
+        $addToCartUseCase->add(1, 1);
+        $addToCartUseCase->add(2, 2);
 
         $actual = $this->shopModel->order($this->admin);
 

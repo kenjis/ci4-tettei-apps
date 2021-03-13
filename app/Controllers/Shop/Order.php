@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace App\Controllers\Shop;
 
 use App\Controllers\MyController;
-use App\Models\Shop\CartModel;
+use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerModel;
 use App\Models\Shop\InventoryModel;
 use App\Models\Shop\MailModel;
@@ -50,11 +50,11 @@ class Order extends MyController
     /** @var InventoryModel */
     private $inventoryModel;
 
-    /** @var CartModel */
-    private $cartModel;
-
     /** @var CustomerModel */
     private $customerModel;
+
+    /** @var CartRepository */
+    private $cartRepository;
 
     public function __construct()
     {
@@ -74,13 +74,13 @@ class Order extends MyController
 // モデルをロードします。
         $mailModel = new MailModel(new CI_Email());
         $this->inventoryModel = new InventoryModel($this->db);
-        $this->cartModel = new CartModel($this->inventoryModel, $this->session);
+        $this->cartRepository = new CartRepository($this->session);
         $this->customerModel = new CustomerModel($this->session);
         $this->shopModel = new ShopModel(
-            $this->cartModel,
             $this->customerModel,
             $mailModel,
-            $this->parser
+            $this->parser,
+            $this->cartRepository,
         );
     }
 
@@ -100,7 +100,9 @@ class Order extends MyController
      */
     public function index(): string
     {
-        if ($this->cartModel->count() === 0) {
+        $cart = $this->cartRepository->find();
+
+        if ($cart->getLineCount() === 0) {
             return '買い物カゴには何も入っていません。';
         }
 

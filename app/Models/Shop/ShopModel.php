@@ -10,9 +10,6 @@ use function array_merge;
 
 class ShopModel
 {
-    /** @var CartModel */
-    private $cartModel;
-
     /** @var CustomerModel */
     private $customerModel;
 
@@ -22,16 +19,19 @@ class ShopModel
     /** @var CI_Parser */
     private $parser;
 
+    /** @var CartRepository */
+    private $cartRepository;
+
     public function __construct(
-        CartModel $cartModel,
         CustomerModel $customerModel,
         MailModel $mailModel,
-        CI_Parser $parser
+        CI_Parser $parser,
+        CartRepository $cartRepository
     ) {
-        $this->cartModel = $cartModel;
         $this->customerModel = $customerModel;
         $this->mailModel = $mailModel;
         $this->parser = $parser;
+        $this->cartRepository = $cartRepository;
     }
 
     /**
@@ -40,7 +40,8 @@ class ShopModel
     public function order(string $adminEmail): bool
     {
 // 買い物かごの情報を取得します。
-        $data = $this->cartModel->getCart()->getOrderConfirmationData();
+        $cart = $this->cartRepository->find();
+        $data = $cart->getOrderConfirmationData();
 
 // お客様情報を取得します。
         $data = array_merge($data, $this->customerModel->get());

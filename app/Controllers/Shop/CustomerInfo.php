@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace App\Controllers\Shop;
 
 use App\Controllers\MyController;
-use App\Models\Shop\CartModel;
+use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerInfoForm;
 use App\Models\Shop\CustomerModel;
 use App\Models\Shop\InventoryModel;
@@ -44,11 +44,11 @@ class CustomerInfo extends MyController
     /** @var InventoryModel */
     private $inventoryModel;
 
-    /** @var CartModel */
-    private $cartModel;
-
     /** @var CustomerModel */
     private $customerModel;
+
+    /** @var CartRepository */
+    private $cartRepository;
 
     public function __construct()
     {
@@ -66,7 +66,7 @@ class CustomerInfo extends MyController
 
 // モデルをロードします。
         $this->inventoryModel = new InventoryModel($this->db);
-        $this->cartModel = new CartModel($this->inventoryModel, $this->session);
+        $this->cartRepository = new CartRepository($this->session);
         $this->customerModel = new CustomerModel($this->session);
     }
 
@@ -113,7 +113,7 @@ class CustomerInfo extends MyController
         ]));
         $this->customerModel->set($this->customerInfo);
 
-        $cart = $this->cartModel->getAll();
+        $cart = $this->cartRepository->find();
 
         $data = [
             'name' => $this->customerInfo['name'],
@@ -121,8 +121,8 @@ class CustomerInfo extends MyController
             'addr' => $this->customerInfo['addr'],
             'tel' => $this->customerInfo['tel'],
             'email' => $this->customerInfo['email'],
-            'total' => $cart['total'],
-            'cart' => $cart['items'],
+            'total' => $cart->getTotal(),
+            'cart' => $cart->getItems(),
             'action' => '注文内容の確認',
             'main' => 'shop_confirm',
         ];

@@ -10,7 +10,7 @@ namespace App\Controllers\Shop;
 
 use App\Controllers\MyController;
 use App\Libraries\Validation\FieldValidation;
-use App\Models\Shop\CartModel;
+use App\Models\Shop\CartRepository;
 use App\Models\Shop\InventoryModel;
 use CodeIgniter\HTTP\IncomingRequest;
 use Config\Services;
@@ -43,8 +43,8 @@ class Product extends MyController
     /** @var InventoryModel */
     private $inventoryModel;
 
-    /** @var CartModel */
-    private $cartModel;
+    /** @var CartRepository */
+    private $cartRepository;
 
     public function __construct()
     {
@@ -63,7 +63,7 @@ class Product extends MyController
 
 // モデルをロードします。
         $this->inventoryModel = new InventoryModel($this->db);
-        $this->cartModel = new CartModel($this->inventoryModel, $this->session);
+        $this->cartRepository = new CartRepository($this->session);
     }
 
     /**
@@ -84,7 +84,8 @@ class Product extends MyController
 // モデルより商品データを取得します。
         $item = $this->inventoryModel->getProductItem($prodId);
 
-        $itemCount = $this->cartModel->count();
+        $cart = $this->cartRepository->find();
+        $itemCount = $cart->getLineCount();
 
         $data = [
             'cat_list' => $catList,

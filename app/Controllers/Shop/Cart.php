@@ -10,7 +10,8 @@ namespace App\Controllers\Shop;
 
 use App\Controllers\MyController;
 use App\Libraries\Validation\FieldValidation;
-use App\Models\Shop\CartModel;
+use App\Models\Shop\AddToCartUseCase;
+use App\Models\Shop\CartRepository;
 use App\Models\Shop\InventoryModel;
 use CodeIgniter\HTTP\IncomingRequest;
 use Config\Services;
@@ -43,8 +44,11 @@ class Cart extends MyController
     /** @var InventoryModel */
     private $inventoryModel;
 
-    /** @var CartModel */
-    private $cartModel;
+    /** @var AddToCartUseCase */
+    private $addToCartUseCase;
+
+    /** @var CartRepository */
+    private $cartRepository;
 
     public function __construct()
     {
@@ -63,7 +67,11 @@ class Cart extends MyController
 
 // モデルをロードします。
         $this->inventoryModel = new InventoryModel($this->db);
-        $this->cartModel = new CartModel($this->inventoryModel, $this->session);
+        $this->cartRepository = new CartRepository($this->session);
+        $this->addToCartUseCase = new AddToCartUseCase(
+            $this->cartRepository,
+            $this->inventoryModel
+        );
     }
 
     /**
@@ -89,9 +97,9 @@ class Cart extends MyController
             'required|is_natural|max_length[3]'
         );
 
-        $this->cartModel->add($prodId, $qty);
+        $this->addToCartUseCase->add($prodId, $qty);
 
-// コントローラのcart()メソッドを呼び出し、買い物かごを表示します。
+// コントローラのindex()メソッドを呼び出し、買い物かごを表示します。
         return $this->index();
     }
 
@@ -103,13 +111,13 @@ class Cart extends MyController
         $catList = $this->inventoryModel->getCategoryList();
 
 // モデルより、買い物かごの情報を取得します。
-        $cart = $this->cartModel->getAll();
+        $cart = $this->cartRepository->find();
 
         $data = [
             'cat_list' => $catList,
-            'total' => $cart['total'],
-            'cart' => $cart['items'],
-            'item_count' => $cart['line'],
+            'total' => $cart->getTotal(),
+            'cart' => $cart->getItems(),
+            'item_count' => $cart->getLineCount(),
             'main' => 'shop_cart',
         ];
 

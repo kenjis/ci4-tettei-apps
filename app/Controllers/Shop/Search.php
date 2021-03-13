@@ -11,7 +11,7 @@ namespace App\Controllers\Shop;
 use App\Controllers\MyController;
 use App\Libraries\GeneratePagination;
 use App\Libraries\Validation\FieldValidation;
-use App\Models\Shop\CartModel;
+use App\Models\Shop\CartRepository;
 use App\Models\Shop\InventoryModel;
 use CodeIgniter\HTTP\IncomingRequest;
 use Config\Services;
@@ -52,8 +52,8 @@ class Search extends MyController
     /** @var InventoryModel */
     private $inventoryModel;
 
-    /** @var CartModel */
-    private $cartModel;
+    /** @var CartRepository */
+    private $cartRepository;
 
     public function __construct()
     {
@@ -73,7 +73,7 @@ class Search extends MyController
 
 // モデルをロードします。
         $this->inventoryModel = new InventoryModel($this->db);
-        $this->cartModel = new CartModel($this->inventoryModel, $this->session);
+        $this->cartRepository = new CartRepository($this->session);
     }
 
     private function loadConfig(): void
@@ -127,6 +127,8 @@ class Search extends MyController
 // ページネーションを生成します。
         [$total, $pagination] = $this->createPaginationSearch($q);
 
+        $cart = $this->cartRepository->find();
+
         $data = [
             'cat_list' => $catList,
             'list' => $list,
@@ -134,7 +136,7 @@ class Search extends MyController
             'q' => $q,
             'total' => $total,
             'main' => 'shop_search',
-            'item_count' => $this->cartModel->count(),
+            'item_count' => $cart->getLineCount(),
         ];
 
         return $this->twig->render('shop_tmpl_shop', $data);

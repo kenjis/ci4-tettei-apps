@@ -6,7 +6,9 @@ namespace App\Controllers;
 
 use App\Controllers\Shop\CustomerInfo;
 use App\Controllers\Shop\Order;
-use App\Models\Shop\CartModel;
+use App\Models\Shop\Cart;
+use App\Models\Shop\CartItem;
+use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerModel;
 use App\Models\Shop\ShopModel;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -15,6 +17,7 @@ use CodeIgniter\Validation\Validation;
 use Config\Services;
 use Kenjis\CI3Compatible\Library\CI_Form_validation;
 use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
+use Kenjis\CI3Compatible\Test\Traits\SessionTest;
 use Kenjis\CI3Compatible\Test\Traits\UnitTest;
 use Twig\Environment;
 
@@ -23,6 +26,7 @@ use function get_instance;
 class ShopTest extends FeatureTestCase
 {
     use UnitTest;
+    use SessionTest;
 
     // region Fixture
     public static function setUpBeforeClass(): void
@@ -172,13 +176,19 @@ class ShopTest extends FeatureTestCase
 
     public function test_order_cart_is_empty(): void
     {
+        $_SESSION = [];
+
         /**
          * @var Order
          */
         $obj = $this->newController(Order::class);
 
-        $cart = $this->getDouble(CartModel::class, ['count' => 0]);
-        $this->setPrivateProperty($obj, 'cartModel', $cart);
+        $cart = new Cart();
+        $cartRepository = $this->getDouble(
+            CartRepository::class,
+            ['find' => $cart]
+        );
+        $this->setPrivateProperty($obj, 'cartRepository', $cartRepository);
 
         $output = $obj->index();
 
@@ -187,14 +197,23 @@ class ShopTest extends FeatureTestCase
 
     public function test_order(): void
     {
+        $_SESSION = [];
+
         /**
          * @var Order
          */
         $obj = $this->newController(Order::class);
 
-        $cart = $this->getDouble(CartModel::class, ['count' => 1]);
+        $cart = new Cart();
+        $cartItem = new CartItem(1, 1, 'name', 100);
+        $cart->add($cartItem);
+        $cartRepository = $this->getDouble(
+            CartRepository::class,
+            ['find' => $cart]
+        );
+        $this->setPrivateProperty($obj, 'cartRepository', $cartRepository);
+
         $shop = $this->getDouble(ShopModel::class, ['order' => true]);
-        $this->setPrivateProperty($obj, 'cartModel', $cart);
         $this->setPrivateProperty($obj, 'shopModel', $shop);
 
         $output = $obj->index();
@@ -204,14 +223,23 @@ class ShopTest extends FeatureTestCase
 
     public function test_order_system_error(): void
     {
+        $_SESSION = [];
+
         /**
          * @var Order
          */
         $obj = $this->newController(Order::class);
 
-        $cart = $this->getDouble(CartModel::class, ['count' => 1]);
+        $cart = new Cart();
+        $cartItem = new CartItem(1, 1, 'name', 100);
+        $cart->add($cartItem);
+        $cartRepository = $this->getDouble(
+            CartRepository::class,
+            ['find' => $cart]
+        );
+        $this->setPrivateProperty($obj, 'cartRepository', $cartRepository);
+
         $shop = $this->getDouble(ShopModel::class, ['order' => false]);
-        $this->setPrivateProperty($obj, 'cartModel', $cart);
         $this->setPrivateProperty($obj, 'shopModel', $shop);
 
         $output = $obj->index();
