@@ -16,6 +16,10 @@ class BbsTest extends FeatureTestCase
 {
     use UnitTest;
 
+    protected $migrate = true;
+    protected $migrateOnce = true;
+    protected $namespace = 'App';
+
     public function setUp(): void
     {
         parent::setUp();
