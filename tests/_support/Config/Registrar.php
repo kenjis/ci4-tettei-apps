@@ -107,7 +107,8 @@ class Registrar
 
         // Under Github Actions, we can set an ENV var named 'DB'
         // so that we can test against multiple databases.
-        if ($group = getenv('DB')) {
+        $group = getenv('DB');
+        if ($group) {
             if (! empty(self::$dbConfig[$group])) {
                 // GitHub ActionsでのPHPUnit実行時の設定
                 $config['tests'] = self::$dbConfig[$group];
