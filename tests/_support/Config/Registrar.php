@@ -15,7 +15,7 @@ class Registrar
     /**
      * DB config array for testing purposes.
      *
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
     protected static $dbConfig = [
         'MySQLi'  => [
@@ -99,7 +99,7 @@ class Registrar
     /**
      * Override database config
      *
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public static function Database(): array
     {
