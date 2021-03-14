@@ -27,6 +27,7 @@
     </testsuite>
   </testsuites>
   <php>
+    <server name="app.baseURL" value="http://localhost:8080/"/>
     <!-- Directory containing phpunit.xml -->
     <const name="HOMEPATH" value="./"/>
     <!-- Directory containing the Paths config file -->
