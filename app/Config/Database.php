@@ -54,8 +54,8 @@ class Database extends Config
 	 * This database connection is used when
 	 * running PHPUnit database tests.
 	 *
-     * phpunit実行時の設定は、tests/_support/Config/Registrar.php で上書き
-     *
+	 * phpunit実行時の設定は、tests/_support/Config/Registrar.php で上書き
+	 *
 	 * @var array
 	 */
 	public $tests = [
