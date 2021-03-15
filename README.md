@@ -32,7 +32,7 @@
     - App\Views\Pager\default_full
 - バリデーション
   - Callableの検証ルールをクラスに移行
-    - App\Controllers\BbsValidationRules
+    - App\Libraries\Validation\CaptchaRules
   - バリデーションエラーのHTMLをテンプレートに移行
     - App\Views\Validation\list
     - App\Views\Validation\single
@@ -46,6 +46,10 @@
   - PHPUnitを9.5に更新
   - symfony/dom-crawlerを5.2に更新
   - symfony/css-selectorを5.2に更新
+- GitHub Actionsによるチェックの追加
+  - コーディング標準
+  - PHPUnit
+  - 静的解析
 
 追加されたComposerのパッケージ
 
