@@ -139,6 +139,7 @@ jobs:
         with:
           php-version: 7.4
           coverage: none
+          tools: composer-require-checker
 
       - name: Get composer cache directory
         id: composer-cache
@@ -153,8 +154,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer install --no-interaction --no-progress --prefer-dist
-          composer require --dev maglnet/composer-require-checker ^3.0
+          composer install --no-progress --no-scripts --no-dev
 
       - name: Run composer-require-checker
-        run: ./vendor/bin/composer-require-checker
+        run: composer-require-checker check composer.json
