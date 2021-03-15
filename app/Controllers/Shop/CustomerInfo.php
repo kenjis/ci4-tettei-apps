@@ -9,11 +9,11 @@ declare(strict_types=1);
 namespace App\Controllers\Shop;
 
 use App\Controllers\MyController;
+use App\Exception\RuntimeException;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerInfoForm;
 use App\Models\Shop\CustomerInfoRepository;
 use CodeIgniter\HTTP\IncomingRequest;
-use Kenjis\CI3Compatible\Exception\RuntimeException;
 use Kenjis\CI4Twig\Twig;
 
 class CustomerInfo extends MyController

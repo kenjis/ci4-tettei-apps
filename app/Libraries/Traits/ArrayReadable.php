@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Libraries\Traits;
 
-use LogicException;
+use App\Exception\LogicException;
 
 use function assert;
 use function in_array;

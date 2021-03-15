@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Libraries;
 
+use App\Exception\LogicException;
 use ArrayAccess;
 use Iterator;
-use Kenjis\CI3Compatible\Exception\LogicException;
 
 use function array_key_exists;
 use function array_keys;

@@ -8,10 +8,10 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Exception\RuntimeException;
 use App\Models\Form\FormForm;
 use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI3Compatible\Core\CI_Controller;
-use Kenjis\CI3Compatible\Exception\RuntimeException;
 use Kenjis\CI3Compatible\Library\CI_Email;
 
 /**

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Libraries\Validation;
 
+use App\Exception\RuntimeException;
 use Config\Services;
-use Kenjis\CI3Compatible\Exception\RuntimeException;
 use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 
 class FieldValidationTest extends UnitTestCase
