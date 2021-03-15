@@ -4,6 +4,14 @@ on:
   pull_request:
     branches:
       - develop
+      - 'app/**'
+      - 'tests/**'
+      - composer.*
+      - phpcs.xml
+      - phpmd.xml
+      - phpstan.neon
+      - psalm.xml
+      - '.github/workflows/**'
 
 jobs:
   static-analysis-phpstan:

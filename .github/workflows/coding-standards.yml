@@ -4,6 +4,12 @@ on:
   pull_request:
     branches:
       - develop
+    paths:
+      - 'app/**'
+      - 'tests/**'
+      - composer.*
+      - phpcs.xml
+      - '.github/workflows/**'
 
 jobs:
   coding-standards:
