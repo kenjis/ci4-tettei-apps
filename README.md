@@ -62,7 +62,7 @@
 
 ### ダウンロード
 
-https://github.com/kenjis/ci4-tettei-apps/archive/main.zip をダウンロードし解凍します。
+https://github.com/kenjis/ci4-tettei-apps/archive/develop.zip をダウンロードし解凍します。
 
 ### .envファイルの作成
 
