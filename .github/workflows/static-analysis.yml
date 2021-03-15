@@ -111,7 +111,7 @@ jobs:
         run: composer install --no-interaction --no-progress --prefer-dist
 
       - name: Run PhpMetrics
-        run: ./vendor/bin/phpmetrics --exclude='Config,Database,Language,ThirdParty,Views'
+        run: ./vendor/bin/phpmetrics app --exclude='Config,Database,Language,ThirdParty,Views'
 
   static-analysis-composer-require-checker:
     name: Static Analysis with ComposerRequireChecker
