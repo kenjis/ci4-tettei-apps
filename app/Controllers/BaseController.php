@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Exception\RuntimeException;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Kenjis\CI3Compatible\Exception\RuntimeException;
 use Psr\Log\LoggerInterface;
 
 use function filter_var;

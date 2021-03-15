@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
+use App\Exception\RuntimeException;
 use Kenjis\CI3Compatible\Database\CI_DB;
-use Kenjis\CI3Compatible\Exception\RuntimeException;
 use stdClass;
 
 use function array_map;

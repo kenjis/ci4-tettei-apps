@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Libraries\Validation;
 
+use App\Exception\RuntimeException;
 use CodeIgniter\Validation\Validation;
-use Kenjis\CI3Compatible\Exception\RuntimeException;
 
 class FieldValidation
 {

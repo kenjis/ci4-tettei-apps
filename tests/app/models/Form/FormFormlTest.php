@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models\Form;
 
+use App\Exception\LogicException;
 use CodeIgniter\Test\CIUnitTestCase;
-use Kenjis\CI3Compatible\Exception\LogicException;
 
 class FormFormlTest extends CIUnitTestCase
 {
