@@ -16,6 +16,15 @@ class BbsTest extends FeatureTestCase
 {
     use UnitTest;
 
+    /** @var bool マイグレーションを実行するか？ */
+    protected $migrate = true;
+
+    /** @var bool 一度だけ実行するか？ */
+    protected $migrateOnce = true;
+
+    /** @var string マイグレーションファイルの名前空間 */
+    protected $namespace = 'App';
+
     public function setUp(): void
     {
         parent::setUp();

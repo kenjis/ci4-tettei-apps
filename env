@@ -59,11 +59,12 @@ database.default.username = username
 database.default.password = password
 database.default.DBDriver = MySQLi
 
-database.tests.hostname = localhost
-database.tests.database = codeigniter
-database.tests.username = username
-database.tests.password = password
-database.tests.DBDriver = MySQLi
+# tests/_support/Config/Registrar.php で上書きしているので設定しても使えない
+# database.tests.hostname = localhost
+# database.tests.database = codeigniter
+# database.tests.username = username
+# database.tests.password = password
+# database.tests.DBDriver = MySQLi
 
 #--------------------------------------------------------------------
 # CONTENT SECURITY POLICY
