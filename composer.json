@@ -37,8 +37,8 @@
             "php spark revision:update",
             "@composer bin all update --ansi"
         ],
-        "test": "phpunit",
-        "coverage": "php -dzend_extension=xdebug.so -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage --log-junit=build/coverage/junit.xml",
+        "test": "phpunit --no-coverage",
+        "coverage": "php -dzend_extension=xdebug.so -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-text --log-junit=build/coverage/junit.xml",
         "pcov": "php -dextension=pcov.so -d pcov.enabled=1 ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage  --coverage-clover=coverage.xml --log-junit=build/coverage/junit.xml",
         "cs-fix": "phpcbf",
         "cs": "phpcs",

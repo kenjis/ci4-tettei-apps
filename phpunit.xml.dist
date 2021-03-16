@@ -10,7 +10,10 @@
   stopOnIncomplete="false"
   stopOnSkipped="false"
   xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage includeUncoveredFiles="true" processUncoveredFiles="true">
+  <coverage cacheDirectory="./build/cache/coverage"
+    includeUncoveredFiles="true"
+    processUncoveredFiles="true"
+    pathCoverage="true">
     <include>
       <directory suffix=".php">./app</directory>
     </include>
@@ -19,6 +22,9 @@
       <directory suffix=".php">./app/Database</directory>
       <directory suffix=".php">./app/Views</directory>
     </exclude>
+    <report>
+      <html outputDirectory="./build/coverage " lowUpperBound="85" highLowerBound="90"/>
+    </report>
   </coverage>
   <testsuites>
     <testsuite name="App">
