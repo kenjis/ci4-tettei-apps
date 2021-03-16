@@ -13,17 +13,21 @@ declare(strict_types=1);
 
 namespace Tests\Support;
 
+use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 use Kenjis\CI3Compatible\Test\Traits\FeatureTest;
 use Kenjis\CI3Compatible\Test\Traits\ResetInstance;
 use Kenjis\CI3Compatible\Test\Traits\SessionTest;
 use Kenjis\PhpUnitHelper\TestDouble;
 
-class FeatureTestCase extends CI4FeatureTestCase
+class FeatureTestCase extends TestCase
 {
     use ResetInstance;
     use FeatureTest;
     use SessionTest;
     use TestDouble;
+    use FeatureTestTrait;
+    use DatabaseTestTrait;
 
     /**
      * Should run db migration?
