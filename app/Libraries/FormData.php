@@ -116,9 +116,7 @@ abstract class FormData implements ArrayAccess, Iterator
         );
 
         if (! property_exists($this, $offset)) {
-            throw new LogicException(
-                $offset . ' は存在しません。'
-            );
+            return false;
         }
 
         $this->isset($offset);
