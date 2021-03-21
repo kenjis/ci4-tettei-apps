@@ -8,37 +8,27 @@ declare(strict_types=1);
 
 namespace App\Controllers\Shop;
 
-use App\Controllers\MyController;
-use App\Exception\RuntimeException;
+use App\Libraries\Validation\FormValidation;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerInfoForm;
 use App\Models\Shop\CustomerInfoRepository;
-use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI4Twig\Twig;
 
-class CustomerInfo extends MyController
+class CustomerInfo extends ShopController
 {
-    /** @var IncomingRequest */
-    protected $request;
-
-    /** @var Twig */
-    private $twig;
-
-    /** @var string[] */
-    protected $helpers = ['form', 'url'];
-
-    /** @var CustomerInfoForm */
-    private $customerInfo;
-
     /** @var CustomerInfoRepository */
     private $customerInfoRepository;
 
     /** @var CartRepository */
     private $cartRepository;
 
+    /** @var FormValidation */
+    private $formValidation;
+
     public function __construct(
         CartRepository $cartRepository,
         CustomerInfoRepository $customerInfoRepository,
+        FormValidation $formValidation,
         Twig $twig
     ) {
         parent::__construct();
@@ -46,6 +36,7 @@ class CustomerInfo extends MyController
         $this->cartRepository = $cartRepository;
         $this->customerInfoRepository = $customerInfoRepository;
 
+        $this->formValidation = $formValidation;
         $this->twig = $twig;
     }
 
@@ -67,13 +58,12 @@ class CustomerInfo extends MyController
      */
     public function confirm(): string
     {
-        if ($this->request->getMethod() !== 'post') {
-            throw new RuntimeException('不正な入力です。', 400);
-        }
+        $this->postOnly();
 
-        $this->customerInfo = new CustomerInfoForm();
+        $customerInfo = new CustomerInfoForm();
 
-        if (! $this->validate($this->customerInfo->getValidationRules())) {
+        $isValid = $this->formValidation->validate($this->request, $customerInfo);
+        if (! $isValid) {
             $data = [
                 'action' => 'お客様情報の入力',
                 'main' => 'shop_customer_info',
@@ -83,23 +73,16 @@ class CustomerInfo extends MyController
         }
 
 // 検証をパスした入力データは、モデルを使って保存します。
-        $this->customerInfo->setData($this->request->getPost([
-            'name',
-            'zip',
-            'addr',
-            'tel',
-            'email',
-        ]));
-        $this->customerInfoRepository->save($this->customerInfo);
+        $this->customerInfoRepository->save($customerInfo);
 
         $cart = $this->cartRepository->find();
 
         $data = [
-            'name' => $this->customerInfo['name'],
-            'zip' => $this->customerInfo['zip'],
-            'addr' => $this->customerInfo['addr'],
-            'tel' => $this->customerInfo['tel'],
-            'email' => $this->customerInfo['email'],
+            'name' => $customerInfo['name'],
+            'zip' => $customerInfo['zip'],
+            'addr' => $customerInfo['addr'],
+            'tel' => $customerInfo['tel'],
+            'email' => $customerInfo['email'],
             'total' => $cart->getTotal(),
             'cart' => $cart->getItems(),
             'action' => '注文内容の確認',

@@ -44,6 +44,9 @@ abstract class FormData implements ArrayAccess, Iterator
     /**
      * 現在のバリデーションルール
      *
+     * バリデーションルールはグループ名をキーにグループ化する。
+     * 共通のルールは common グループに設定する。
+     *
      * @var array<string, array<string, string>>
      */
     protected $currentRules;
@@ -107,17 +110,13 @@ abstract class FormData implements ArrayAccess, Iterator
     public function offsetExists($offset): bool
     {
         assert(is_string($offset));
-
-        if (! isset($this->arrayReadProperties)) {
-            throw new LogicException(
-                'プロパティ $arrayReadProperties に配列としてアクセスできるプロパティを設定してください。'
-            );
-        }
+        assert(
+            isset($this->arrayReadProperties),
+            'プロパティ $arrayReadProperties に配列としてアクセスできるプロパティを設定してください。'
+        );
 
         if (! property_exists($this, $offset)) {
-            throw new LogicException(
-                $offset . ' は存在しません。'
-            );
+            return false;
         }
 
         $this->isset($offset);

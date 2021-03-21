@@ -87,4 +87,22 @@ class FormFormlTest extends CIUnitTestCase
 
         $this->assertIsArray($form['name']);
     }
+
+    public function test_配列の値を変更しようとすると例外が返る(): void
+    {
+        $form = $this->createForm();
+
+        $this->expectException(LogicException::class);
+
+        $form['not_exists'] = 'new value';
+    }
+
+    public function test_配列の要素を削除しようとすると例外が返る(): void
+    {
+        $form = $this->createForm();
+
+        $this->expectException(LogicException::class);
+
+        unset($form['name']);
+    }
 }

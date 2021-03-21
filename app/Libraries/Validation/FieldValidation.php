@@ -14,7 +14,7 @@ class FieldValidation
 
     public function __construct(Validation $validation)
     {
-        $this->validation =  $validation;
+        $this->validation = $validation;
     }
 
     /**

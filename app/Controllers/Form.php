@@ -8,16 +8,16 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Exception\RuntimeException;
+use App\Libraries\Validation\FormValidation;
 use App\Models\Form\FormForm;
 use CodeIgniter\HTTP\IncomingRequest;
-use Kenjis\CI3Compatible\Core\CI_Controller;
+use Config\Services;
 use Kenjis\CI3Compatible\Library\CI_Email;
 
 /**
  * @property CI_Email $email
  */
-class Form extends CI_Controller
+class Form extends MyController
 {
     /** @var IncomingRequest */
     protected $request;
@@ -25,9 +25,6 @@ class Form extends CI_Controller
 // 必要なヘルパーをロードします。
     /** @var string[] */
     protected $helpers = ['form', 'url'];
-
-    /** @var FormForm */
-    private $form;
 
     public function __construct()
     {
@@ -47,22 +44,17 @@ class Form extends CI_Controller
 
     public function confirm(): void
     {
-        if ($this->request->getMethod() !== 'post') {
-            throw new RuntimeException('不正な入力です。', 400);
-        }
+        $this->postOnly();
 
-        $this->form = new FormForm();
+        $form = new FormForm();
+        $formValidation = new FormValidation(Services::validation());
 
 // バリデーション(検証)クラスのrun()メソッドを呼び出し、送信されたデータの検証
 // を行います。検証OKなら、確認ページ(form_confirm)を表示します。
-        if ($this->validate($this->form->getValidationRules())) {
-            $this->form->setData($this->request->getPost(
-                ['name', 'email', 'comment']
-            ));
-
+        if ($formValidation->validate($this->request, $form)) {
             $this->load->view(
                 'form_confirm',
-                ['form' => $this->form]
+                ['form' => $form]
             );
 
             return;
@@ -74,31 +66,26 @@ class Form extends CI_Controller
 
     public function send(): void
     {
-        if ($this->request->getMethod() !== 'post') {
-            throw new RuntimeException('不正な入力です。', 400);
-        }
+        $this->postOnly();
 
-        $this->form = new FormForm();
+        $form = new FormForm();
+        $formValidation = new FormValidation(Services::validation());
 
 // 送信されたデータの検証を行い、検証でエラーの場合、入力ページ(form)を表示します。
-        if (! $this->validate($this->form->getValidationRules())) {
+        if (! $formValidation->validate($this->request, $form)) {
             $this->load->view('form');
 
             return;
         }
 
 // 検証OKなら、メールを送信します。
-        $this->form->setData($this->request->getPost(
-            ['name', 'email', 'comment']
-        ));
-
 // メールの内容を設定します。
         $mail = [
-            'from_name' => $this->form->getName(),
-            'from' => $this->form->getEmail(),
+            'from_name' => $form->getName(),
+            'from' => $form->getEmail(),
             'to' => 'info@example.jp',
             'subject' => 'コンタクトフォーム',
-            'body' => $this->form->getComment(),
+            'body' => $form->getComment(),
         ];
 
 // sendmail()メソッドを呼び出しメールの送信処理を行います。

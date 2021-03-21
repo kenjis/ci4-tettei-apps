@@ -8,25 +8,14 @@ declare(strict_types=1);
 
 namespace App\Controllers\Shop;
 
-use App\Controllers\MyController;
 use App\Libraries\Validation\FieldValidation;
 use App\Models\Shop\AddToCartUseCase;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CategoryRepository;
-use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI4Twig\Twig;
 
-class Cart extends MyController
+class Cart extends ShopController
 {
-    /** @var IncomingRequest */
-    protected $request;
-
-    /** @var Twig */
-    private $twig;
-
-    /** @var string[] */
-    protected $helpers = ['form', 'url'];
-
     /** @var FieldValidation */
     private $fieldValidation;
 
@@ -61,6 +50,21 @@ class Cart extends MyController
      */
     public function add(string $prodId = '0'): string
     {
+        [$prodId, $qty] = $this->getParams($prodId);
+
+        $this->addToCartUseCase->add($prodId, $qty);
+
+// コントローラのindex()メソッドを呼び出し、買い物かごを表示します。
+        return $this->index();
+    }
+
+    /**
+     * 入力パラメータを検証・変換して返す
+     *
+     * @return array{0: int, 1: int}
+     */
+    private function getParams(string $prodId): array
+    {
 // $prod_idの型をintに変更します。
         $prodId = $this->convertToInt($prodId);
 
@@ -79,10 +83,7 @@ class Cart extends MyController
             'required|is_natural|max_length[3]'
         );
 
-        $this->addToCartUseCase->add($prodId, $qty);
-
-// コントローラのindex()メソッドを呼び出し、買い物かごを表示します。
-        return $this->index();
+        return [$prodId, $qty];
     }
 
     /**

@@ -8,13 +8,11 @@ declare(strict_types=1);
 
 namespace App\Controllers\Shop;
 
-use App\Controllers\MyController;
 use App\Libraries\GeneratePagination;
 use App\Libraries\Validation\FieldValidation;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CategoryRepository;
 use App\Models\Shop\ProductRepository;
-use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI4Twig\Twig;
 
@@ -25,20 +23,8 @@ use function trim;
 /**
  * @property CI_Config $config
  */
-class Search extends MyController
+class Search extends ShopController
 {
-    /** @var IncomingRequest */
-    protected $request;
-
-    /** @var int 1ページに表示する商品の数 */
-    private $limit;
-
-    /** @var Twig */
-    private $twig;
-
-    /** @var string[] */
-    protected $helpers = ['form', 'url'];
-
     /** @var FieldValidation */
     private $fieldValidation;
 
@@ -64,8 +50,6 @@ class Search extends MyController
     ) {
         parent::__construct();
 
-        $this->loadConfig();
-
         $this->categoryRepository = $categoryRepository;
         $this->productRepository = $productRepository;
         $this->cartRepository = $cartRepository;
@@ -75,44 +59,12 @@ class Search extends MyController
         $this->twig = $twig;
     }
 
-    private function loadConfig(): void
-    {
-// このアプリケーション専用の設定ファイルConfigShop.phpを読み込みます。
-// load()メソッドの第2引数にTRUEを指定すると、他の設定ファイルで使われている
-// 設定項目名との衝突を気にしなくても済みます。
-        $this->config->load('ConfigShop', true);
-// 上記のように読み込んだ場合、設定値は、以下のようにitem()メソッドに引数で
-// 「設定項目名」と「設定ファイル名」を渡すことで取得できます。
-        $this->limit = (int) $this->config->item('per_page', 'ConfigShop');
-    }
-
     /**
      * 検索ページ
      */
     public function index(string $page = '0'): string
     {
-        $page = $this->convertToInt($page);
-
-// ページ番号をoffsetに変換します。
-        $offset = max($page - 1, 0) * $this->limit;
-
-// オフセットを検証します。
-        $this->fieldValidation->validate(
-            $offset,
-            'required|is_natural|max_length[3]'
-        );
-
-// 検索キーワードをクエリ文字列から取得します。
-        $q = (string) $this->request->getGet('q');
-
-// 全角スペースを半角スペースに変換します。
-        $q = trim(mb_convert_kana($q, 's'));
-
-// 検索キーワードを検証します。
-        $this->fieldValidation->validate(
-            $q,
-            'max_length[100]'
-        );
+        [$q, $offset] = $this->getParams($page);
 
         $catList = $this->categoryRepository->findAll();
 
@@ -139,6 +91,39 @@ class Search extends MyController
         ];
 
         return $this->twig->render('shop_tmpl_shop', $data);
+    }
+
+    /**
+     * 入力パラメータを検証・変換して返す
+     *
+     * @return array{0: string, 1: int}
+     */
+    private function getParams(string $page): array
+    {
+        $page = $this->convertToInt($page);
+
+// ページ番号をoffsetに変換します。
+        $offset = max($page - 1, 0) * $this->limit;
+
+// オフセットを検証します。
+        $this->fieldValidation->validate(
+            $offset,
+            'required|is_natural|max_length[3]'
+        );
+
+// 検索キーワードをクエリ文字列から取得します。
+        $q = (string) $this->request->getGet('q');
+
+// 全角スペースを半角スペースに変換します。
+        $q = trim(mb_convert_kana($q, 's'));
+
+// 検索キーワードを検証します。
+        $this->fieldValidation->validate(
+            $q,
+            'max_length[100]'
+        );
+
+        return [$q, $offset];
     }
 
     /**
