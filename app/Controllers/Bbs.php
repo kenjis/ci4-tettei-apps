@@ -42,9 +42,6 @@ class Bbs extends CI_Controller
     /** @var string[] */
     protected $helpers = ['form', 'url'];
 
-    /** @var PostForm */
-    private $form;
-
     public function __construct()
     {
         parent::__construct();
@@ -119,11 +116,11 @@ class Bbs extends CI_Controller
      */
     public function confirm(): void
     {
-        $this->form = new PostForm();
+        $form = new PostForm();
         $formValidation = new FormValidation(Services::validation());
 
 // 検証をパスしなかった場合は、新規投稿ページを表示します。
-        if (! $formValidation->validate($this->request, $this->form, 'confirm')) {
+        if (! $formValidation->validate($this->request, $form, 'confirm')) {
 // 投稿されたIDのキャプチャを削除します。
             $this->deleteCaptchaData();
 
@@ -135,7 +132,7 @@ class Bbs extends CI_Controller
 // 検証をパスした場合は、投稿確認ページ(bbs_confirm)を表示します。
         $this->loadView(
             'bbs_confirm',
-            ['form' => $this->form]
+            ['form' => $form]
         );
     }
 
@@ -288,12 +285,12 @@ class Bbs extends CI_Controller
      */
     public function insert(): ?RedirectResponse
     {
-        $this->form = new PostForm();
+        $form = new PostForm();
         $formValidation = new FormValidation(Services::validation());
 
 // 検証にパスした場合は、送られたデータとIPアドレスをbbsテーブルに登録します。
-        if ($formValidation->validate($this->request, $this->form)) {
-            $data = $this->form->asArray();
+        if ($formValidation->validate($this->request, $form)) {
+            $data = $form->asArray();
             $data['ip_address'] = $this->request->getServer('REMOTE_ADDR');
 
             $this->insertToDb($data);
