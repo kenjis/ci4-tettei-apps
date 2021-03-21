@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
+use App\Exception\LogicException;
 use CodeIgniter\Test\CIUnitTestCase;
 
 class CartItemTest extends CIUnitTestCase
@@ -51,5 +52,33 @@ class CartItemTest extends CIUnitTestCase
             'amount' => 3800,
         ];
         $this->assertSame($expected, $this->item->asArray());
+    }
+
+    public function test_存在しない配列キーにアクセスすると例外が返る(): void
+    {
+        $this->expectException(LogicException::class);
+
+        $this->item['not_exists'];
+    }
+
+    public function test_存在しないプロパティにアクセスすると例外が返る(): void
+    {
+        $this->expectException(LogicException::class);
+
+        $this->item->not_exists;
+    }
+
+    public function test_配列の値を変更しようとすると例外が返る(): void
+    {
+        $this->expectException(LogicException::class);
+
+        $this->item['not_exists'] = 'new value';
+    }
+
+    public function test_配列の要素を削除しようとすると例外が返る(): void
+    {
+        $this->expectException(LogicException::class);
+
+        unset($this->item['not_exists']);
     }
 }
