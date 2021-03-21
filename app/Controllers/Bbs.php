@@ -137,20 +137,6 @@ class Bbs extends CI_Controller
     }
 
     /**
-     * @return array{name: string, email: string, subject: string, body: string, password: string}
-     */
-    private function getBasicPostData(): array
-    {
-        return $this->request->getPost([
-            'name',
-            'email',
-            'subject',
-            'body',
-            'password',
-        ]);
-    }
-
-    /**
      * 投稿されたIDのキャプチャを削除
      */
     private function deleteCaptchaData(): void
@@ -173,7 +159,12 @@ class Bbs extends CI_Controller
 
         [$key, $cap] = $this->createCaptcha();
 
-        $data          = $this->getBasicPostData();
+        // 入力データから必要な項目のみを $form にセットする
+        $postForm = new PostForm();
+        $postForm->setCurrentRules();
+        $form = $this->request->getPost($postForm->getKeys());
+
+        $data['form']  = $form;
         $data['image'] = $cap['image'];
         $data['key']   = $key;
 

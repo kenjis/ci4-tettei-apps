@@ -24,19 +24,19 @@
 <?= form_open('bbs/confirm'); ?>
 <p>
 <label for="name">名前: </label>
-<input type="text" name="name" size="50" value="<?= html_escape($name); ?>"/>
+<input type="text" name="name" size="50" value="<?= html_escape($form['name']); ?>"/>
 <br />
 <label for="email">メールアドレス: </label>
-<input type="text" name="email" size="50" value="<?= html_escape($email); ?>"/>
+<input type="text" name="email" size="50" value="<?= html_escape($form['email']); ?>"/>
 <br />
 <label for="subject">件名: </label>
-<input type="text" name="subject" size="50" value="<?= html_escape($subject); ?>"/>
+<input type="text" name="subject" size="50" value="<?= html_escape($form['subject']); ?>"/>
 <br />
 <label for="body">内容: </label>
-<textarea name="body" rows="10" cols="50"><?= html_escape($body); ?></textarea>
+<textarea name="body" rows="10" cols="50"><?= html_escape($form['body']); ?></textarea>
 <br />
 <label for="password">削除パスワード: </label>
-<input type="text" name="password" size="20" value="<?= html_escape($password); ?>"/>
+<input type="text" name="password" size="20" value="<?= html_escape($form['password']); ?>"/>
 <br />
 <label for="captcha">画像認証コード: </label>
 <input type="text" name="captcha" value="" />

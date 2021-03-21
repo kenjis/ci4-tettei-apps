@@ -29,19 +29,19 @@
 <?= form_open('bbs/confirm', ['accept-charset' => 'Shift_JIS']); ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td bgcolor="#EEEEEe">名前<br><input type="text" name="name" value="<?= html_escape($name); ?>"></td>
+<td bgcolor="#EEEEEe">名前<br><input type="text" name="name" value="<?= html_escape($form['name']); ?>"></td>
 </tr>
 <tr>
-<td>ﾒｰﾙｱﾄﾞﾚｽ<br><input type="text" name="email" value="<?= html_escape($email); ?>"></td>
+<td>ﾒｰﾙｱﾄﾞﾚｽ<br><input type="text" name="email" value="<?= html_escape($form['email']); ?>"></td>
 </tr>
 <tr>
-<td bgcolor="#EEEEEE">件名<br><input type="text" name="subject" value="<?= html_escape($subject); ?>"></td>
+<td bgcolor="#EEEEEE">件名<br><input type="text" name="subject" value="<?= html_escape($form['subject']); ?>"></td>
 </tr>
 <tr>
-<td>内容<br><textarea name="body" rows="3"><?= html_escape($body); ?></textarea></td>
+<td>内容<br><textarea name="body" rows="3"><?= html_escape($form['body']); ?></textarea></td>
 </tr>
 <tr>
-<td bgcolor="#EEEEEE">削除ﾊﾟｽﾜｰﾄﾞ<br><input type="text" name="password" value="<?= html_escape($password); ?>"></td>
+<td bgcolor="#EEEEEE">削除ﾊﾟｽﾜｰﾄﾞ<br><input type="text" name="password" value="<?= html_escape($form['password']); ?>"></td>
 </tr>
 <tr>
 <td>画像認証ｺｰﾄﾞ<br><?= $image; ?>
