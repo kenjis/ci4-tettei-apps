@@ -289,9 +289,13 @@ class Bbs extends CI_Controller
         $form = new PostForm();
         $formValidation = new FormValidation(Services::validation());
 
-// 検証にパスした場合は、送られたデータとIPアドレスをbbsテーブルに登録します。
-        if ($formValidation->validate($this->request, $form)) {
+// 検証にパスした場合は、bbsテーブルに登録します。
+        if ($formValidation->validate($this->request, $form, 'confirm')) {
             $data = $form->asArray();
+            // 不要な項目を削除
+            unset($data['captcha']);
+            unset($data['key']);
+            // IPアドレスを追加
             $data['ip_address'] = $this->request->getServer('REMOTE_ADDR');
 
             $this->insertToDb($data);
