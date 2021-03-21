@@ -25,7 +25,7 @@ use function property_exists;
 abstract class FormData implements ArrayAccess, Iterator
 {
     /**
-     * 配列としてアクセスできるプロパティのリスト
+     * フォームの項目名のリスト（配列としてアクセスできる）
      *
      * @var string[]
      */
@@ -61,6 +61,13 @@ abstract class FormData implements ArrayAccess, Iterator
      */
     public function getValidationRules(string $group = 'common'): array
     {
+        $this->setCurrentRules($group);
+
+        return $this->currentRules;
+    }
+
+    public function setCurrentRules(string $group = 'common'): void
+    {
         assert(array_key_exists('common', $this->validationRules));
 
         $rules = $this->validationRules['common'];
@@ -72,8 +79,21 @@ abstract class FormData implements ArrayAccess, Iterator
         $this->currentRules = $rules;
 
         $this->arrayReadProperties = array_keys($rules);
+    }
 
-        return $this->currentRules;
+    /**
+     * フォームの項目名を返す
+     *
+     * @return string[]
+     */
+    public function getKeys(): array
+    {
+        assert(
+            isset($this->arrayReadProperties),
+            'プロパティ $arrayReadProperties が設定されていません。'
+        );
+
+        return $this->arrayReadProperties;
     }
 
     /**
