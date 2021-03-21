@@ -8,25 +8,14 @@ declare(strict_types=1);
 
 namespace App\Controllers\Shop;
 
-use App\Controllers\MyController;
 use App\Libraries\Validation\FieldValidation;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CategoryRepository;
 use App\Models\Shop\ProductRepository;
-use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI4Twig\Twig;
 
-class Product extends MyController
+class Product extends ShopController
 {
-    /** @var IncomingRequest */
-    protected $request;
-
-    /** @var Twig */
-    private $twig;
-
-    /** @var string[] */
-    protected $helpers = ['form', 'url'];
-
     /** @var FieldValidation */
     private $fieldValidation;
 

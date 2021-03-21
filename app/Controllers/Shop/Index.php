@@ -8,13 +8,11 @@ declare(strict_types=1);
 
 namespace App\Controllers\Shop;
 
-use App\Controllers\MyController;
 use App\Libraries\GeneratePagination;
 use App\Libraries\Validation\FieldValidation;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CategoryRepository;
 use App\Models\Shop\ProductRepository;
-use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI4Twig\Twig;
 
@@ -23,20 +21,8 @@ use function max;
 /**
  * @property CI_Config $config
  */
-class Index extends MyController
+class Index extends ShopController
 {
-    /** @var IncomingRequest */
-    protected $request;
-
-    /** @var int 1ページに表示する商品の数 */
-    private $limit;
-
-    /** @var Twig */
-    private $twig;
-
-    /** @var string[] */
-    protected $helpers = ['form', 'url'];
-
     /** @var FieldValidation */
     private $fieldValidation;
 
@@ -62,8 +48,6 @@ class Index extends MyController
     ) {
         parent::__construct();
 
-        $this->loadConfig();
-
         $this->categoryRepository = $categoryRepository;
         $this->productRepository = $productRepository;
         $this->cartRepository = $cartRepository;
@@ -71,17 +55,6 @@ class Index extends MyController
         $this->generatePagination = $generatePagination;
         $this->fieldValidation = $fieldValidation;
         $this->twig = $twig;
-    }
-
-    private function loadConfig(): void
-    {
-// このアプリケーション専用の設定ファイルConfigShop.phpを読み込みます。
-// load()メソッドの第2引数にTRUEを指定すると、他の設定ファイルで使われている
-// 設定項目名との衝突を気にしなくても済みます。
-        $this->config->load('ConfigShop', true);
-// 上記のように読み込んだ場合、設定値は、以下のようにitem()メソッドに引数で
-// 「設定項目名」と「設定ファイル名」を渡すことで取得できます。
-        $this->limit = (int) $this->config->item('per_page', 'ConfigShop');
     }
 
     /**

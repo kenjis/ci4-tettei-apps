@@ -8,24 +8,13 @@ declare(strict_types=1);
 
 namespace App\Controllers\Shop;
 
-use App\Controllers\MyController;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerInfoForm;
 use App\Models\Shop\CustomerInfoRepository;
-use CodeIgniter\HTTP\IncomingRequest;
 use Kenjis\CI4Twig\Twig;
 
-class CustomerInfo extends MyController
+class CustomerInfo extends ShopController
 {
-    /** @var IncomingRequest */
-    protected $request;
-
-    /** @var Twig */
-    private $twig;
-
-    /** @var string[] */
-    protected $helpers = ['form', 'url'];
-
     /** @var CustomerInfoForm */
     private $customerInfo;
 
