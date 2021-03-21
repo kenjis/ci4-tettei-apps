@@ -110,12 +110,10 @@ abstract class FormData implements ArrayAccess, Iterator
     public function offsetExists($offset): bool
     {
         assert(is_string($offset));
-
-        if (! isset($this->arrayReadProperties)) {
-            throw new LogicException(
-                'プロパティ $arrayReadProperties に配列としてアクセスできるプロパティを設定してください。'
-            );
-        }
+        assert(
+            isset($this->arrayReadProperties),
+            'プロパティ $arrayReadProperties に配列としてアクセスできるプロパティを設定してください。'
+        );
 
         if (! property_exists($this, $offset)) {
             throw new LogicException(
