@@ -14,7 +14,7 @@ use function property_exists;
 /**
  * 配列としてリード可能にする
  *
- * $arrayReadProperties に記載したプロパティは $obj['key] としてリード可能になる。
+ * $arrayReadProperties に記載したプロパティは $obj['key'] としてリード可能になる。
  * また、$obj->key でもリード可能。
  *
  * 使用するクラスで implements ArrayAccess を記載すること。
