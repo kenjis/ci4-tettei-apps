@@ -16,9 +16,6 @@ use Kenjis\CI4Twig\Twig;
 
 class CustomerInfo extends ShopController
 {
-    /** @var CustomerInfoForm */
-    private $customerInfo;
-
     /** @var CustomerInfoRepository */
     private $customerInfoRepository;
 
@@ -63,9 +60,9 @@ class CustomerInfo extends ShopController
     {
         $this->postOnly();
 
-        $this->customerInfo = new CustomerInfoForm();
+        $customerInfo = new CustomerInfoForm();
 
-        $isValid = $this->formValidation->validate($this->request, $this->customerInfo);
+        $isValid = $this->formValidation->validate($this->request, $customerInfo);
         if (! $isValid) {
             $data = [
                 'action' => 'お客様情報の入力',
@@ -76,16 +73,16 @@ class CustomerInfo extends ShopController
         }
 
 // 検証をパスした入力データは、モデルを使って保存します。
-        $this->customerInfoRepository->save($this->customerInfo);
+        $this->customerInfoRepository->save($customerInfo);
 
         $cart = $this->cartRepository->find();
 
         $data = [
-            'name' => $this->customerInfo['name'],
-            'zip' => $this->customerInfo['zip'],
-            'addr' => $this->customerInfo['addr'],
-            'tel' => $this->customerInfo['tel'],
-            'email' => $this->customerInfo['email'],
+            'name' => $customerInfo['name'],
+            'zip' => $customerInfo['zip'],
+            'addr' => $customerInfo['addr'],
+            'tel' => $customerInfo['tel'],
+            'email' => $customerInfo['email'],
             'total' => $cart->getTotal(),
             'cart' => $cart->getItems(),
             'action' => '注文内容の確認',
