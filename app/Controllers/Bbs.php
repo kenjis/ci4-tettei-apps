@@ -211,15 +211,7 @@ class Bbs extends CI_Controller
      */
     public function delete(string $id = ''): void
     {
-// 第1引数、つまり、3番目のURIセグメントのデータをint型に変換します。
-        $id = $this->convertToInt($id);
-
-// POSTされたpasswordフィールドの値を$passwordに代入します。
-        $password = (string) $this->request->getPost('password');
-
-// POSTされたdeleteフィールドの値を$deleteに代入します。この値が
-// 1の場合は、削除を実行します。1以外は、削除の確認ページを表示します。
-        $delete = (int) $this->request->getPost('delete');
+        [$id, $password, $delete] = $this->getParamsDelete($id);
 
 // 削除パスワードが入力されていない場合は、エラーページを表示します。
         if ($password === '') {
@@ -264,6 +256,24 @@ class Bbs extends CI_Controller
         ];
 
         $this->loadView('bbs_delete_confirm', $data);
+    }
+
+    /**
+     * @return array{0: int, 1: string, 2: int}
+     */
+    private function getParamsDelete(string $id): array
+    {
+// 第1引数、つまり、3番目のURIセグメントのデータをint型に変換します。
+        $id = $this->convertToInt($id);
+
+// POSTされたpasswordフィールドの値を$passwordに代入します。
+        $password = (string) $this->request->getPost('password');
+
+// POSTされたdeleteフィールドの値を$deleteに代入します。この値が
+// 1の場合は、削除を実行します。1以外は、削除の確認ページを表示します。
+        $delete = (int) $this->request->getPost('delete');
+
+        return [$id, $password, $delete];
     }
 
     private function deletePost(int $id): void
