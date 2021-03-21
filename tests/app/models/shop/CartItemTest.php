@@ -8,27 +8,28 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 class CartItemTest extends CIUnitTestCase
 {
-    public function test_インスタンス化できる(): void
+    /** @var CartItem */
+    private $item;
+
+    public function setUp(): void
     {
-        $item = new CartItem(
+        parent::setUp();
+
+        $this->item = new CartItem(
             1,
             1,
             'CodeIgniter徹底入門',
             3800
         );
+    }
 
-        $this->assertInstanceOf(CartItem::class, $item);
+    public function test_インスタンス化できる(): void
+    {
+        $this->assertInstanceOf(CartItem::class, $this->item);
     }
 
     public function test_配列としてアクセスできる(): void
     {
-        $item = new CartItem(
-            1,
-            1,
-            'CodeIgniter徹底入門',
-            3800
-        );
-
         $expected = [
             'id' => 1,
             'qty' => 1,
@@ -36,19 +37,12 @@ class CartItemTest extends CIUnitTestCase
             'price' => 3800,
             'amount' => 3800,
         ];
-        $this->assertSame($expected['id'], $item['id']);
-        $this->assertSame($expected['name'], $item['name']);
+        $this->assertSame($expected['id'], $this->item['id']);
+        $this->assertSame($expected['name'], $this->item['name']);
     }
 
     public function test_配列に変換できる(): void
     {
-        $item = new CartItem(
-            1,
-            1,
-            'CodeIgniter徹底入門',
-            3800
-        );
-
         $expected = [
             'id' => 1,
             'qty' => 1,
@@ -56,6 +50,6 @@ class CartItemTest extends CIUnitTestCase
             'price' => 3800,
             'amount' => 3800,
         ];
-        $this->assertSame($expected, $item->asArray());
+        $this->assertSame($expected, $this->item->asArray());
     }
 }
