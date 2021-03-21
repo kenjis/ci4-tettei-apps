@@ -8,8 +8,10 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Libraries\Validation\FormValidation;
 use App\Models\Form\FormForm;
 use CodeIgniter\HTTP\IncomingRequest;
+use Config\Services;
 use Kenjis\CI3Compatible\Library\CI_Email;
 
 /**
@@ -48,12 +50,11 @@ class Form extends MyController
         $this->postOnly();
 
         $this->form = new FormForm();
+        $formValidation = new FormValidation(Services::validation());
 
 // バリデーション(検証)クラスのrun()メソッドを呼び出し、送信されたデータの検証
 // を行います。検証OKなら、確認ページ(form_confirm)を表示します。
-        if ($this->validate($this->form->getValidationRules())) {
-            $this->form->setData($this->request->getPost());
-
+        if ($formValidation->validate($this->request, $this->form)) {
             $this->load->view(
                 'form_confirm',
                 ['form' => $this->form]
@@ -71,17 +72,16 @@ class Form extends MyController
         $this->postOnly();
 
         $this->form = new FormForm();
+        $formValidation = new FormValidation(Services::validation());
 
 // 送信されたデータの検証を行い、検証でエラーの場合、入力ページ(form)を表示します。
-        if (! $this->validate($this->form->getValidationRules())) {
+        if (! $formValidation->validate($this->request, $this->form)) {
             $this->load->view('form');
 
             return;
         }
 
 // 検証OKなら、メールを送信します。
-        $this->form->setData($this->request->getPost());
-
 // メールの内容を設定します。
         $mail = [
             'from_name' => $this->form->getName(),

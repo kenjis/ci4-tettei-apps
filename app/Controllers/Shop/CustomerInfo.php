@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Shop;
 
+use App\Libraries\Validation\FormValidation;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerInfoForm;
 use App\Models\Shop\CustomerInfoRepository;
@@ -24,9 +25,13 @@ class CustomerInfo extends ShopController
     /** @var CartRepository */
     private $cartRepository;
 
+    /** @var FormValidation */
+    private $formValidation;
+
     public function __construct(
         CartRepository $cartRepository,
         CustomerInfoRepository $customerInfoRepository,
+        FormValidation $formValidation,
         Twig $twig
     ) {
         parent::__construct();
@@ -34,6 +39,7 @@ class CustomerInfo extends ShopController
         $this->cartRepository = $cartRepository;
         $this->customerInfoRepository = $customerInfoRepository;
 
+        $this->formValidation = $formValidation;
         $this->twig = $twig;
     }
 
@@ -59,7 +65,8 @@ class CustomerInfo extends ShopController
 
         $this->customerInfo = new CustomerInfoForm();
 
-        if (! $this->validate($this->customerInfo->getValidationRules())) {
+        $isValid = $this->formValidation->validate($this->request, $this->customerInfo);
+        if (! $isValid) {
             $data = [
                 'action' => 'お客様情報の入力',
                 'main' => 'shop_customer_info',
@@ -69,7 +76,6 @@ class CustomerInfo extends ShopController
         }
 
 // 検証をパスした入力データは、モデルを使って保存します。
-        $this->customerInfo->setData($this->request->getPost());
         $this->customerInfoRepository->save($this->customerInfo);
 
         $cart = $this->cartRepository->find();

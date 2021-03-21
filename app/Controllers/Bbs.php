@@ -8,9 +8,11 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Libraries\Validation\FormValidation;
 use App\Models\Bbs\PostForm;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
+use Config\Services;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Core\CI_Controller;
 use Kenjis\CI3Compatible\Core\CI_Input;
@@ -118,9 +120,10 @@ class Bbs extends CI_Controller
     public function confirm(): void
     {
         $this->form = new PostForm();
+        $formValidation = new FormValidation(Services::validation());
 
 // 検証をパスしなかった場合は、新規投稿ページを表示します。
-        if (! $this->validate($this->form->getValidationRules('confirm'))) {
+        if (! $formValidation->validate($this->request, $this->form, 'confirm')) {
 // 投稿されたIDのキャプチャを削除します。
             $this->deleteCaptchaData();
 
@@ -130,8 +133,6 @@ class Bbs extends CI_Controller
         }
 
 // 検証をパスした場合は、投稿確認ページ(bbs_confirm)を表示します。
-        $this->form->setData($this->request->getPost());
-
         $this->loadView(
             'bbs_confirm',
             ['form' => $this->form]
@@ -288,10 +289,11 @@ class Bbs extends CI_Controller
     public function insert(): ?RedirectResponse
     {
         $this->form = new PostForm();
+        $formValidation = new FormValidation(Services::validation());
 
 // 検証にパスした場合は、送られたデータとIPアドレスをbbsテーブルに登録します。
-        if ($this->validate($this->form->getValidationRules())) {
-            $data = $this->form->setData($this->request->getPost())->asArray();
+        if ($formValidation->validate($this->request, $this->form)) {
+            $data = $this->form->asArray();
             $data['ip_address'] = $this->request->getServer('REMOTE_ADDR');
 
             $this->insertToDb($data);
