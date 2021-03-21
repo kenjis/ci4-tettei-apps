@@ -33,9 +33,7 @@ trait ArrayReadable
         );
 
         if (! property_exists($this, $offset)) {
-            throw new LogicException(
-                $offset . ' は存在しません。'
-            );
+            return false;
         }
 
         return in_array($offset, $this->arrayReadProperties, true);
