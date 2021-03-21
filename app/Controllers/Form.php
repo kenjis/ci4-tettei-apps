@@ -8,16 +8,14 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Exception\RuntimeException;
 use App\Models\Form\FormForm;
 use CodeIgniter\HTTP\IncomingRequest;
-use Kenjis\CI3Compatible\Core\CI_Controller;
 use Kenjis\CI3Compatible\Library\CI_Email;
 
 /**
  * @property CI_Email $email
  */
-class Form extends CI_Controller
+class Form extends MyController
 {
     /** @var IncomingRequest */
     protected $request;
@@ -47,9 +45,7 @@ class Form extends CI_Controller
 
     public function confirm(): void
     {
-        if ($this->request->getMethod() !== 'post') {
-            throw new RuntimeException('不正な入力です。', 400);
-        }
+        $this->postOnly();
 
         $this->form = new FormForm();
 
@@ -74,9 +70,7 @@ class Form extends CI_Controller
 
     public function send(): void
     {
-        if ($this->request->getMethod() !== 'post') {
-            throw new RuntimeException('不正な入力です。', 400);
-        }
+        $this->postOnly();
 
         $this->form = new FormForm();
 

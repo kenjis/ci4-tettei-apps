@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace App\Controllers\Shop;
 
 use App\Controllers\MyController;
-use App\Exception\RuntimeException;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerInfoForm;
 use App\Models\Shop\CustomerInfoRepository;
@@ -67,9 +66,7 @@ class CustomerInfo extends MyController
      */
     public function confirm(): string
     {
-        if ($this->request->getMethod() !== 'post') {
-            throw new RuntimeException('不正な入力です。', 400);
-        }
+        $this->postOnly();
 
         $this->customerInfo = new CustomerInfoForm();
 
