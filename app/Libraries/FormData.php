@@ -44,6 +44,9 @@ abstract class FormData implements ArrayAccess, Iterator
     /**
      * 現在のバリデーションルール
      *
+     * バリデーションルールはグループ名をキーにグループ化する。
+     * 共通のルールは common グループに設定する。
+     *
      * @var array<string, array<string, string>>
      */
     protected $currentRules;

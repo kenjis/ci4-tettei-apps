@@ -22,6 +22,11 @@ class FormValidation
         $this->validation->reset();
     }
 
+    /**
+     * リクエストデータを検証し、OKならFormDataにセットする
+     *
+     * @param string $group バリデーションルールのグループ
+     */
     public function validate(
         IncomingRequest $request,
         FormData $form,
