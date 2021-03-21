@@ -62,21 +62,7 @@ class Index extends ShopController
      */
     public function index(string $catId = '1', string $page = '0'): string
     {
-        $catId = $this->convertToInt($catId);
-        $page = $this->convertToInt($page);
-
-// ページ番号をoffsetに変換します。
-        $offset = max($page - 1, 0) * $this->limit;
-
-// カテゴリーIDとオフセットを検証します。
-        $this->fieldValidation->validate(
-            $catId,
-            'required|is_natural|max_length[11]'
-        );
-        $this->fieldValidation->validate(
-            $offset,
-            'required|is_natural|max_length[3]'
-        );
+        [$catId, $offset] = $this->getParams($catId, $page);
 
 // モデルからカテゴリの一覧を取得します。
         $catList = $this->categoryRepository->findAll();
@@ -110,6 +96,32 @@ class Index extends ShopController
 
 // ビューを表示します。
         return $this->twig->render('shop_tmpl_shop', $data);
+    }
+
+    /**
+     * 入力パラメータを検証・変換して返す
+     *
+     * @return array{0: int, 1: int}
+     */
+    private function getParams(string $catId, string $page): array
+    {
+        $catId = $this->convertToInt($catId);
+        $page = $this->convertToInt($page);
+
+// ページ番号をoffsetに変換します。
+        $offset = max($page - 1, 0) * $this->limit;
+
+// カテゴリーIDとオフセットを検証します。
+        $this->fieldValidation->validate(
+            $catId,
+            'required|is_natural|max_length[11]'
+        );
+        $this->fieldValidation->validate(
+            $offset,
+            'required|is_natural|max_length[3]'
+        );
+
+        return [$catId, $offset];
     }
 
     /**

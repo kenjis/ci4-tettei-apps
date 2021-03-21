@@ -64,28 +64,7 @@ class Search extends ShopController
      */
     public function index(string $page = '0'): string
     {
-        $page = $this->convertToInt($page);
-
-// ページ番号をoffsetに変換します。
-        $offset = max($page - 1, 0) * $this->limit;
-
-// オフセットを検証します。
-        $this->fieldValidation->validate(
-            $offset,
-            'required|is_natural|max_length[3]'
-        );
-
-// 検索キーワードをクエリ文字列から取得します。
-        $q = (string) $this->request->getGet('q');
-
-// 全角スペースを半角スペースに変換します。
-        $q = trim(mb_convert_kana($q, 's'));
-
-// 検索キーワードを検証します。
-        $this->fieldValidation->validate(
-            $q,
-            'max_length[100]'
-        );
+        [$q, $offset] = $this->getParams($page);
 
         $catList = $this->categoryRepository->findAll();
 
@@ -112,6 +91,39 @@ class Search extends ShopController
         ];
 
         return $this->twig->render('shop_tmpl_shop', $data);
+    }
+
+    /**
+     * 入力パラメータを検証・変換して返す
+     *
+     * @return array{0: string, 1: int}
+     */
+    private function getParams(string $page): array
+    {
+        $page = $this->convertToInt($page);
+
+// ページ番号をoffsetに変換します。
+        $offset = max($page - 1, 0) * $this->limit;
+
+// オフセットを検証します。
+        $this->fieldValidation->validate(
+            $offset,
+            'required|is_natural|max_length[3]'
+        );
+
+// 検索キーワードをクエリ文字列から取得します。
+        $q = (string) $this->request->getGet('q');
+
+// 全角スペースを半角スペースに変換します。
+        $q = trim(mb_convert_kana($q, 's'));
+
+// 検索キーワードを検証します。
+        $this->fieldValidation->validate(
+            $q,
+            'max_length[100]'
+        );
+
+        return [$q, $offset];
     }
 
     /**

@@ -50,6 +50,21 @@ class Cart extends ShopController
      */
     public function add(string $prodId = '0'): string
     {
+        [$prodId, $qty] = $this->getParams($prodId);
+
+        $this->addToCartUseCase->add($prodId, $qty);
+
+// コントローラのindex()メソッドを呼び出し、買い物かごを表示します。
+        return $this->index();
+    }
+
+    /**
+     * 入力パラメータを検証・変換して返す
+     *
+     * @return array{0: int, 1: int}
+     */
+    private function getParams(string $prodId): array
+    {
 // $prod_idの型をintに変更します。
         $prodId = $this->convertToInt($prodId);
 
@@ -68,10 +83,7 @@ class Cart extends ShopController
             'required|is_natural|max_length[3]'
         );
 
-        $this->addToCartUseCase->add($prodId, $qty);
-
-// コントローラのindex()メソッドを呼び出し、買い物かごを表示します。
-        return $this->index();
+        return [$prodId, $qty];
     }
 
     /**
