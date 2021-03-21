@@ -69,13 +69,7 @@ class CustomerInfo extends ShopController
         }
 
 // 検証をパスした入力データは、モデルを使って保存します。
-        $this->customerInfo->setData($this->request->getPost([
-            'name',
-            'zip',
-            'addr',
-            'tel',
-            'email',
-        ]));
+        $this->customerInfo->setData($this->request->getPost());
         $this->customerInfoRepository->save($this->customerInfo);
 
         $cart = $this->cartRepository->find();

@@ -130,15 +130,7 @@ class Bbs extends CI_Controller
         }
 
 // 検証をパスした場合は、投稿確認ページ(bbs_confirm)を表示します。
-        $this->form->setData($this->request->getPost([
-            'name',
-            'email',
-            'subject',
-            'body',
-            'password',
-            'captcha',
-            'key',
-        ]));
+        $this->form->setData($this->request->getPost());
 
         $this->loadView(
             'bbs_confirm',
@@ -299,13 +291,7 @@ class Bbs extends CI_Controller
 
 // 検証にパスした場合は、送られたデータとIPアドレスをbbsテーブルに登録します。
         if ($this->validate($this->form->getValidationRules())) {
-            $data = $this->form->setData($this->request->getPost([
-                'name',
-                'email',
-                'subject',
-                'body',
-                'password',
-            ]))->asArray();
+            $data = $this->form->setData($this->request->getPost())->asArray();
             $data['ip_address'] = $this->request->getServer('REMOTE_ADDR');
 
             $this->insertToDb($data);

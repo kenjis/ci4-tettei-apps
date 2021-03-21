@@ -52,9 +52,7 @@ class Form extends MyController
 // バリデーション(検証)クラスのrun()メソッドを呼び出し、送信されたデータの検証
 // を行います。検証OKなら、確認ページ(form_confirm)を表示します。
         if ($this->validate($this->form->getValidationRules())) {
-            $this->form->setData($this->request->getPost(
-                ['name', 'email', 'comment']
-            ));
+            $this->form->setData($this->request->getPost());
 
             $this->load->view(
                 'form_confirm',
@@ -82,9 +80,7 @@ class Form extends MyController
         }
 
 // 検証OKなら、メールを送信します。
-        $this->form->setData($this->request->getPost(
-            ['name', 'email', 'comment']
-        ));
+        $this->form->setData($this->request->getPost());
 
 // メールの内容を設定します。
         $mail = [
