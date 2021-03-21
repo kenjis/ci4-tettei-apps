@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Shop;
 
+use App\Exception\RuntimeException;
 use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 
 use function get_instance;
@@ -35,7 +36,7 @@ class CategoryRepositoryTest extends UnitTestCase
     // endregion
 
     // region Tests
-    public function test_get_category_list(): void
+    public function test_カテゴリのリストを取得できる(): void
     {
         $list = $this->categoryRepository->findAll();
 
@@ -49,12 +50,19 @@ class CategoryRepositoryTest extends UnitTestCase
         }
     }
 
-    public function test_get_category_name(): void
+    public function test_カテゴリIDからカテゴリ名を取得できる(): void
     {
         $actual = $this->categoryRepository->findNameById(1);
 
         $expected = '本';
         $this->assertEquals($expected, $actual);
+    }
+
+    public function test_存在しないカテゴリIDには例外が返る(): void
+    {
+        $this->expectException(RuntimeException::class);
+
+        $this->categoryRepository->findNameById(0);
     }
     // endregion
 }

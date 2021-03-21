@@ -42,6 +42,20 @@ class CartItemTest extends CIUnitTestCase
         $this->assertSame($expected['name'], $this->item['name']);
     }
 
+    public function test_Getterでアクセスできる(): void
+    {
+        $expected = [
+            'id' => 1,
+            'qty' => 1,
+            'name' => 'CodeIgniter徹底入門',
+            'price' => 3800,
+            'amount' => 3800,
+        ];
+        $this->assertSame($expected['qty'], $this->item->getQty());
+        $this->assertSame($expected['name'], $this->item->getName());
+        $this->assertSame($expected['price'], $this->item->getPrice());
+    }
+
     public function test_配列に変換できる(): void
     {
         $expected = [
