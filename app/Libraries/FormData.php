@@ -37,15 +37,15 @@ abstract class FormData implements ArrayAccess, Iterator
     /**
      * バリデーションのルール
      *
+     * バリデーションルールはグループ名をキーにグループ化する。
+     * 共通のルールは common グループに設定する。
+     *
      * @var array<string, array<string, array<string, string>>>
      */
     protected $validationRules = [];
 
     /**
      * 現在のバリデーションルール
-     *
-     * バリデーションルールはグループ名をキーにグループ化する。
-     * 共通のルールは common グループに設定する。
      *
      * @var array<string, array<string, string>>
      */
