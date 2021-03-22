@@ -100,7 +100,7 @@ class ProductRepository
         );
     }
 
-    public function countBySearch(string $q): int
+    public function countByKeyword(string $q): int
     {
         $this->db->select('name');
         $keywords = explode(' ', $q);

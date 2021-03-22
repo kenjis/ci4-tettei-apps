@@ -72,7 +72,7 @@ class ProductRepositoryTest extends UnitTestCase
 
     public function test_キーワードで商品数を取得できる(): void
     {
-        $actual = $this->productRepository->countBySearch('CodeIgniter');
+        $actual = $this->productRepository->countByKeyword('CodeIgniter');
 
         $expected = 3;
         $this->assertEquals($expected, $actual);
