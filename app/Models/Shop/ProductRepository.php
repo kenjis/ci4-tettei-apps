@@ -23,7 +23,7 @@ class ProductRepository
     /**
      * @return Product[]
      */
-    public function fiindListByCategoryId(int $catId, int $limit, int $offset): array
+    public function findListByCategoryId(int $catId, int $limit, int $offset): array
     {
         $this->db->where('category_id', $catId);
         $this->db->order_by('id');

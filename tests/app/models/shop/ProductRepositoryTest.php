@@ -45,7 +45,7 @@ class ProductRepositoryTest extends UnitTestCase
 
     public function test_カテゴリIDで商品リストを取得できる(): void
     {
-        $list = $this->productRepository->fiindListByCategoryId(1, 1, 0);
+        $list = $this->productRepository->findListByCategoryId(1, 1, 0);
 
         $expected = [1 => 'CodeIgniter徹底入門'];
         foreach ($list as $product) {
