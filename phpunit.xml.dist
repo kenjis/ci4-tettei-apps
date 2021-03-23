@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   bootstrap="vendor/kenjis/ci3-to-4-upgrade-helper/src/CI3Compatible/Test/bootstrap.php"
-  backupGlobals="false" colors="true"
+  backupGlobals="false"
+  colors="true"
   convertErrorsToExceptions="true"
   convertNoticesToExceptions="true"
   convertWarningsToExceptions="true"
