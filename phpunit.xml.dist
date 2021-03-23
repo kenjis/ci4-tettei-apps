@@ -10,7 +10,7 @@
   stopOnIncomplete="false"
   stopOnSkipped="false"
   xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage cacheDirectory="./build/cache/coverage"
+  <coverage cacheDirectory=".phpunit.cache/code-coverage"
     includeUncoveredFiles="true"
     processUncoveredFiles="true"
     pathCoverage="true">
