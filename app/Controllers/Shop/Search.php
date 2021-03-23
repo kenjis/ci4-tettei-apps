@@ -133,7 +133,7 @@ class Search extends ShopController
     {
 // ページネーションを生成します。
         $path  = '/shop/search';
-        $total = $this->productRepository->countBySearch($q);
+        $total = $this->productRepository->countByKeyword($q);
 
         $config = [
 // リンク先のURLを指定します。

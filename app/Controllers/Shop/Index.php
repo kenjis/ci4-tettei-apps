@@ -69,7 +69,7 @@ class Index extends ShopController
 
 // カテゴリIDとoffset値と、1ページに表示する商品の数を渡し、モデルより
 // 商品一覧を取得します。
-        $list = $this->productRepository->fiindListByCategoryId(
+        $list = $this->productRepository->findListByCategoryId(
             $catId,
             $this->limit,
             $offset
