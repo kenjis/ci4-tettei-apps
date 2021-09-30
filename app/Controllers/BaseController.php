@@ -24,13 +24,12 @@ use const FILTER_VALIDATE_INT;
  *
  * For security be sure to declare any new methods as protected or private.
  */
-
 class BaseController extends Controller
 {
     /**
      * Instance of the main Request object.
      *
-     * @var IncomingRequest|CLIRequest
+     * @var CLIRequest|IncomingRequest
      */
     protected $request;
 
@@ -48,9 +47,8 @@ class BaseController extends Controller
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
-        //--------------------------------------------------------------------
         // Preload any models, libraries, etc, here.
-        //--------------------------------------------------------------------
+
         // E.g.: $this->session = \Config\Services::session();
     }
 
