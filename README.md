@@ -15,9 +15,9 @@
 
 ## 動作確認環境
 
-- CodeIgniter 4.1.2-dev ([ci4-app-template](https://github.com/kenjis/ci4-app-template) を使用)
-- PHP 7.4.15
-  - Composer 2.0.8
+- CodeIgniter 4.1.5-dev ([ci4-app-template](https://github.com/kenjis/ci4-app-template) を使用)
+- PHP 8.0.10
+  - Composer 2.1.6
 - MySQL 5.7
 
 ## 「CodeIgniter 3.xで動作するように更新したもの」からの変更点
