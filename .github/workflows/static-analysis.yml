@@ -27,6 +27,8 @@ jobs:
           php-version: 7.4
           tools: cs2pr
           coverage: none
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get composer cache directory
         id: composer-cache
@@ -58,6 +60,8 @@ jobs:
           php-version: 7.4
           tools: cs2pr
           coverage: none
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get composer cache directory
         id: composer-cache
@@ -87,6 +91,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 7.4
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get composer cache directory
         id: composer-cache
@@ -117,6 +123,8 @@ jobs:
         with:
           php-version: 7.4
           coverage: none
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get composer cache directory
         id: composer-cache
@@ -148,6 +156,8 @@ jobs:
 #          php-version: 7.4
 #          coverage: none
 #          tools: composer-require-checker
+#        env:
+#          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #
 #      - name: Get composer cache directory
 #        id: composer-cache
