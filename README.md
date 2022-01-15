@@ -24,24 +24,24 @@
 
 - アプリケーションクラスを名前空間付きに移行
 - 設定ファイルを設定クラスに移行 
-  - app/Config/ConfigShop.php
+  - `app/Config/ConfigShop.php`
 - ページネーション
   - 仕様変更に伴い最初のページもURIセグメント数が変わらないものに変更
   - offsetベースからページ番号に移行
   - ページネーションのHTMLをテンプレートに移行
-    - App\Views\Pager\default_full
+    - `App\Views\Pager\default_full`
 - バリデーション
   - Callableの検証ルールをクラスに移行
-    - App\Libraries\Validation\CaptchaRules
+    - `App\Libraries\Validation\CaptchaRules`
   - バリデーションエラーのHTMLをテンプレートに移行
-    - App\Views\Validation\list
-    - App\Views\Validation\single
+    - `App\Views\Validation\list`
+    - `App\Views\Validation\single`
 - モバイル掲示板用のフックをコントローラフィルタに移行
   - App\Filters\ConvertEncoding
 - アプリケーション用の例外クラスを追加
 - テストケースクラスを名前空間付きに移行
 - 受入テスト用にacceptance環境を追加
-  - app/Config/Boot/acceptance.php
+  - `app/Config/Boot/acceptance.php`
 - Composerパッケージの更新
   - Twigライブラリをcodeigniter-ss-twig v4.0に更新
   - PHPUnitを9.5に更新
