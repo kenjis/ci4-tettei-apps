@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['7.3', '7.4']
+        php-versions: ['8.0']
         db-platforms: ['MySQLi']
 
     services:
@@ -44,6 +44,8 @@ jobs:
           tools: composer, pecl, phpunit
           extensions: intl, json, mbstring, mysqlnd, xdebug, xml, sqlite3
           coverage: xdebug
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get composer cache directory
         id: composer-cache

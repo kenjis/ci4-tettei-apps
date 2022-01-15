@@ -64,6 +64,8 @@ writable/debugbar/*
 
 writable/revision/*
 
+writable/ray.di/*
+
 php_errors.log
 
 #-------------------------
@@ -126,6 +128,7 @@ nb-configuration.xml
 /results/
 /phpunit*.xml
 /.phpunit.*.cache
+/.phpunit.cache/
 
 .phpcs-cache
 

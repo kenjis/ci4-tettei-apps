@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use Kenjis\CI3Compatible\Library\CI_User_agent;
 use Kenjis\CI3Compatible\Test\TestCase\FeatureTestCase;
 use Kenjis\CI3Compatible\Test\Traits\UnitTest;
 use Symfony\Component\DomCrawler\Crawler;
@@ -38,7 +39,7 @@ class BbsTest extends FeatureTestCase
 
     public function test_index_mobile(): void
     {
-        $agent = $this->getDouble('CI_User_agent', ['is_mobile' => true]);
+        $agent = $this->getDouble(CI_User_agent::class, ['is_mobile' => true]);
         $this->request->setCallable(
             static function ($CI) use ($agent): void {
                 $CI->agent = $agent;

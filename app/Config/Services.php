@@ -20,15 +20,16 @@ use CodeIgniter\Config\Services as CoreService;
  */
 class Services extends CoreService
 {
-	// public static function example($getShared = true)
-	// {
-	//     if ($getShared)
-	//     {
-	//         return static::getSharedInstance('example');
-	//     }
-	//
-	//     return new \CodeIgniter\Example();
-	// }
+    /*
+     * public static function example($getShared = true)
+     * {
+     *     if ($getShared) {
+     *         return static::getSharedInstance('example');
+     *     }
+     *
+     *     return new \CodeIgniter\Example();
+     * }
+     */
 
     public static function codeigniter(App $config = null, bool $getShared = true)
     {

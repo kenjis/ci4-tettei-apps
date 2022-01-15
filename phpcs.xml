@@ -63,6 +63,8 @@
     </rule>
     <rule ref="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps">
         <exclude-pattern>app/Libraries/Validation/*</exclude-pattern>
+        <exclude-pattern>app/Database/*</exclude-pattern>
+        <exclude-pattern>tests/app/controllers/ShopTest.php</exclude-pattern>
     </rule>
 
     <rule ref="Squiz.Commenting.FunctionComment.WrongStyle">
