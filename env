@@ -111,6 +111,8 @@ database.default.DBDriver = MySQLi
 # SECURITY
 #--------------------------------------------------------------------
 
+# security.csrfProtection = 'cookie'
+# security.tokenRandomize = false
 # security.tokenName = 'csrf_token_name'
 # security.headerName = 'X-CSRF-TOKEN'
 # security.cookieName = 'csrf_cookie_name'
@@ -124,3 +126,9 @@ database.default.DBDriver = MySQLi
 #--------------------------------------------------------------------
 
 # logger.threshold = 4
+
+#--------------------------------------------------------------------
+# CURLRequest
+#--------------------------------------------------------------------
+
+# curlrequest.shareOptions = true
