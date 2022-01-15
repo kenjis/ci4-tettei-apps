@@ -37,7 +37,7 @@
     - `App\Views\Validation\list`
     - `App\Views\Validation\single`
 - モバイル掲示板用のフックをコントローラフィルタに移行
-  - App\Filters\ConvertEncoding
+  - `App\Filters\ConvertEncoding`
 - アプリケーション用の例外クラスを追加
 - テストケースクラスを名前空間付きに移行
 - 受入テスト用にacceptance環境を追加
