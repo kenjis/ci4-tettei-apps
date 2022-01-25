@@ -52,7 +52,7 @@ abstract class FormData implements ArrayAccess, Iterator
     protected $currentRules;
 
     /**
-     * @param array<string, mixed> $data
+     * @param array<string, string|int> $data
      */
     abstract public function setData(array $data): FormData;
 
@@ -89,7 +89,8 @@ abstract class FormData implements ArrayAccess, Iterator
     public function getKeys(): array
     {
         assert(
-            isset($this->arrayReadProperties),
+            property_exists($this, 'arrayReadProperties')
+            && ! empty($this->arrayReadProperties),
             'プロパティ $arrayReadProperties が設定されていません。'
         );
 
@@ -97,12 +98,13 @@ abstract class FormData implements ArrayAccess, Iterator
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<string, string|int>
      */
     public function asArray(): array
     {
         assert(
-            isset($this->arrayReadProperties),
+            property_exists($this, 'arrayReadProperties')
+            && ! empty($this->arrayReadProperties),
             'プロパティ $arrayReadProperties に配列としてアクセスできるプロパティを設定してください。'
         );
 
@@ -131,7 +133,8 @@ abstract class FormData implements ArrayAccess, Iterator
     {
         assert(is_string($offset));
         assert(
-            isset($this->arrayReadProperties),
+            property_exists($this, 'arrayReadProperties')
+            && ! empty($this->arrayReadProperties),
             'プロパティ $arrayReadProperties に配列としてアクセスできるプロパティを設定してください。'
         );
 
@@ -147,7 +150,7 @@ abstract class FormData implements ArrayAccess, Iterator
     /**
      * @param string|int $offset
      *
-     * @return mixed
+     * @return string|int
      */
     public function offsetGet($offset)
     {

@@ -8,6 +8,9 @@ use App\Libraries\FormData;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Validation\Validation;
 
+use function assert;
+use function is_array;
+
 /**
  * FormData のバリデーション
  */
@@ -33,13 +36,16 @@ class FormValidation
         string $group = 'common'
     ): bool {
         $rules = $form->getValidationRules($group);
-        $isValid = $this->validation->setRules($rules)->run($request->getPost());
+        $post = $request->getPost();
+        assert(is_array($post));
+
+        $isValid = $this->validation->setRules($rules)->run($post);
 
         if (! $isValid) {
             return false;
         }
 
-        $form->setData($request->getPost());
+        $form->setData($post);
 
         return true;
     }

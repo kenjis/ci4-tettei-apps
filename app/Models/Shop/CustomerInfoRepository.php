@@ -6,6 +6,8 @@ namespace App\Models\Shop;
 
 use Kenjis\CI3Compatible\Library\CI_Session;
 
+use function assert;
+
 class CustomerInfoRepository
 {
     /** @var CI_Session */
@@ -23,6 +25,9 @@ class CustomerInfoRepository
 
     public function find(): CustomerInfoForm
     {
-        return $this->session->userdata('CustomerInfo');
+        $customerInfo = $this->session->userdata('CustomerInfo');
+        assert($customerInfo instanceof CustomerInfoForm);
+
+        return $customerInfo;
     }
 }

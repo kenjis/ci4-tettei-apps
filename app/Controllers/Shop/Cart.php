@@ -14,6 +14,9 @@ use App\Models\Shop\CartRepository;
 use App\Models\Shop\CategoryRepository;
 use Kenjis\CI4Twig\Twig;
 
+use function assert;
+use function is_string;
+
 class Cart extends ShopController
 {
     /** @var FieldValidation */
@@ -68,8 +71,9 @@ class Cart extends ShopController
 // $prod_idの型をintに変更します。
         $prodId = $this->convertToInt($prodId);
 
-// POSTされたqtyフィールドより、数量を取得します。
-        $qty = (int) $this->request->getPost('qty');
+        $qty = $this->request->getPost('qty');
+        assert(is_string($qty) || $qty === null);
+        $qty = (int) $qty;
 
 // 商品IDを検証します。
         $this->fieldValidation->validate(

@@ -19,10 +19,9 @@ class FieldValidation
 
     /**
      * @param mixed                 $value
-     * @param mixed                 $rules
      * @param array<string, string> $errors
      */
-    public function validate($value, $rules, array $errors = []): bool
+    public function validate($value, string $rules, array $errors = []): bool
     {
         if ($this->validation->check($value, $rules, $errors)) {
             return true;

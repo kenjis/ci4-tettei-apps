@@ -8,6 +8,7 @@ use Kenjis\CI3Compatible\Database\CI_DB;
 use stdClass;
 
 use function array_map;
+use function assert;
 use function explode;
 
 class ProductRepository
@@ -58,6 +59,7 @@ class ProductRepository
         $query = $this->db->get('product');
 
         $product = $query->row();
+        assert($product instanceof stdClass);
 
         return new Product(
             (int) $product->id,

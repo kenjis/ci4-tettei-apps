@@ -6,6 +6,8 @@ namespace App\Models\Shop;
 
 use Kenjis\CI3Compatible\Library\CI_Session;
 
+use function assert;
+
 class CartRepository
 {
     /** @var CI_Session */
@@ -19,6 +21,7 @@ class CartRepository
     public function find(): Cart
     {
         $cart = $this->session->userdata('Cart');
+        assert($cart instanceof Cart || $cart === null);
 
         if ($cart !== null) {
             return $cart;
