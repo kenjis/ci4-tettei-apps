@@ -16,6 +16,8 @@ use App\Models\Shop\ProductRepository;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI4Twig\Twig;
 
+use function assert;
+use function is_string;
 use function max;
 use function mb_convert_kana;
 use function trim;
@@ -111,8 +113,9 @@ class Search extends ShopController
             'required|is_natural|max_length[3]'
         );
 
-// 検索キーワードをクエリ文字列から取得します。
-        $q = (string) $this->request->getGet('q');
+        $q = $this->request->getGet('q');
+        assert(is_string($q) || $q === null);
+        $q = (string) $q;
 
 // 全角スペースを半角スペースに変換します。
         $q = trim(mb_convert_kana($q, 's'));

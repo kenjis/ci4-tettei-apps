@@ -28,7 +28,8 @@ trait ArrayReadable
     {
         assert(is_string($offset));
         assert(
-            isset($this->arrayReadProperties),
+            property_exists($this, 'arrayReadProperties')
+            && ! empty($this->arrayReadProperties),
             'プロパティ $arrayReadProperties に配列としてアクセスできるプロパティを設定してください。'
         );
 
@@ -78,7 +79,8 @@ trait ArrayReadable
     public function asArray(): array
     {
         assert(
-            isset($this->arrayReadProperties),
+            property_exists($this, 'arrayReadProperties')
+            && ! empty($this->arrayReadProperties),
             'プロパティ $arrayReadProperties に配列としてアクセスできるプロパティを設定してください。'
         );
 

@@ -9,6 +9,7 @@ use Kenjis\CI3Compatible\Database\CI_DB;
 use stdClass;
 
 use function array_map;
+use function assert;
 
 class CategoryRepository
 {
@@ -44,7 +45,9 @@ class CategoryRepository
         $this->db->select('name');
         $this->db->where('id', $id);
         $query = $this->db->get('category');
+
         $row = $query->row();
+        assert($row instanceof stdClass || $row === null);
 
         if ($row === null) {
             throw new RuntimeException('不正な入力です。');

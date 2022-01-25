@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Libraries\Validation;
 
 use Kenjis\CI3Compatible\Database\CI_DB;
+use stdClass;
 
 use function assert;
 use function get_instance;
@@ -63,7 +64,9 @@ class CaptchaRules
         $this->db->where('captcha_id', $key);
         $this->db->where('captcha_time >', $expiration);
         $query = $this->db->get('captcha');
+
         $row = $query->row();
+        assert($row instanceof stdClass);
 
 // レコードが0件の場合、つまり、一致しなかった場合は、captcha_checkルール
 // のエラーメッセージを設定し、FALSEを返します。

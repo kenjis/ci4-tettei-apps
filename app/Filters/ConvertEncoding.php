@@ -8,7 +8,9 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
+use function assert;
 use function count;
+use function is_string;
 use function mb_convert_encoding;
 
 class ConvertEncoding implements FilterInterface
@@ -57,8 +59,11 @@ class ConvertEncoding implements FilterInterface
             'text/html; charset=Shift_JIS'
         );
 
+        $body = $response->getBody();
+        assert(is_string($body));
+
         $response->setBody(
-            mb_convert_encoding($response->getBody(), 'SJIS-win', 'UTF-8')
+            mb_convert_encoding($body, 'SJIS-win', 'UTF-8')
         );
     }
 

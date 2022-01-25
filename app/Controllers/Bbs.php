@@ -20,7 +20,10 @@ use Kenjis\CI3Compatible\Database\CI_DB;
 use Kenjis\CI3Compatible\Database\CI_DB_result;
 use Kenjis\CI3Compatible\Library\CI_Pagination;
 use Kenjis\CI3Compatible\Library\CI_User_agent;
+use stdClass;
 
+use function assert;
+use function is_string;
 use function max;
 
 /**
@@ -235,6 +238,7 @@ class Bbs extends CI_Controller
 // deleteフィールドが1以外の場合は、記事表示ページからのPOSTですので、確認
 // ページを表示します。
         $row = $query->row();
+        assert($row instanceof stdClass);
 
         $data = [
             'id'       => $row->id,
@@ -258,11 +262,15 @@ class Bbs extends CI_Controller
         $id = $this->convertToInt($id);
 
 // POSTされたpasswordフィールドの値を$passwordに代入します。
-        $password = (string) $this->request->getPost('password');
+        $password = $this->request->getPost('password');
+        assert(is_string($password) || $password === null);
+        $password = (string) $password;
 
 // POSTされたdeleteフィールドの値を$deleteに代入します。この値が
 // 1の場合は、削除を実行します。1以外は、削除の確認ページを表示します。
-        $delete = (int) $this->request->getPost('delete');
+        $delete = $this->request->getPost('delete');
+        assert(is_string($delete) || $delete === null);
+        $delete = (int) $delete;
 
         return [$id, $password, $delete];
     }
@@ -296,7 +304,9 @@ class Bbs extends CI_Controller
             unset($data['captcha']);
             unset($data['key']);
             // IPアドレスを追加
-            $data['ip_address'] = $this->request->getServer('REMOTE_ADDR');
+            $ipAddress = $this->request->getServer('REMOTE_ADDR');
+            assert(is_string($ipAddress) || $ipAddress === null);
+            $data['ip_address'] = (string) $ipAddress;
 
             $this->insertToDb($data);
 
@@ -317,7 +327,7 @@ class Bbs extends CI_Controller
     }
 
     /**
-     * @param array<string, string> $data
+     * @param array<string, string|int|null> $data
      */
     private function insertToDb(array $data): void
     {
