@@ -13,7 +13,7 @@ use Kenjis\CI3Compatible\Core\CI_Output;
  *
  * @property CI_Output $output
  */
-class MyController extends CI_Controller
+abstract class MyController extends CI_Controller
 {
     protected function postOnly(): void
     {
