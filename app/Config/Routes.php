@@ -21,7 +21,8 @@ $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
-$routes->setAutoRoute(true);
+$routes->setAutoRoute(false);
+$routes->setPrioritize();
 
 /*
  * --------------------------------------------------------------------
@@ -67,4 +68,16 @@ $routes->post('shop/order', 'Shop\Order::index');
  */
 if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
+}
+
+/*
+ * Attribute Routes
+ *
+ * To update the route file, run the following command:
+ * $ php spark route:update
+ *
+ * @see https://github.com/kenjis/ci4-attribute-routes
+ */
+if (file_exists(APPPATH . 'Config/RoutesFromAttribute.php')) {
+    require APPPATH . 'Config/RoutesFromAttribute.php';
 }
