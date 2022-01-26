@@ -14,6 +14,7 @@ use App\Models\Shop\CartRepository;
 use App\Models\Shop\CategoryRepository;
 use App\Models\Shop\ProductRepository;
 use Kenjis\CI3Compatible\Core\CI_Config;
+use Kenjis\CI4\AttributeRoutes\Route;
 use Kenjis\CI4Twig\Twig;
 
 use function max;
@@ -60,6 +61,8 @@ class Index extends ShopController
     /**
      * トップページ = カテゴリ別商品一覧
      */
+    #[Route('shop/index/(:num)', methods: ['get'])]
+    #[Route('shop/index/(:num)/(:num)', methods: ['get'])]
     public function index(string $catId = '1', string $page = '0'): string
     {
         [$catId, $offset] = $this->getParams($catId, $page);

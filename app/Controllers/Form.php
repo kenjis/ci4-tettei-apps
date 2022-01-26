@@ -13,6 +13,7 @@ use App\Models\Form\FormForm;
 use CodeIgniter\HTTP\IncomingRequest;
 use Config\Services;
 use Kenjis\CI3Compatible\Library\CI_Email;
+use Kenjis\CI4\AttributeRoutes\Route;
 
 /**
  * @property CI_Email $email
@@ -36,12 +37,14 @@ class Form extends MyController
         $this->load->library('email');
     }
 
+    #[Route('form', methods: ['get', 'post'])]
     public function index(): void
     {
 // 入力ページ(form)のビューをロードし表示します。
         $this->load->view('form');
     }
 
+    #[Route('form/confirm', methods: ['post'])]
     public function confirm(): void
     {
         $this->postOnly();
@@ -64,6 +67,7 @@ class Form extends MyController
         $this->load->view('form');
     }
 
+    #[Route('form/send', methods: ['post'])]
     public function send(): void
     {
         $this->postOnly();

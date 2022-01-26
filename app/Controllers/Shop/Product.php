@@ -12,6 +12,7 @@ use App\Libraries\Validation\FieldValidation;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CategoryRepository;
 use App\Models\Shop\ProductRepository;
+use Kenjis\CI4\AttributeRoutes\Route;
 use Kenjis\CI4Twig\Twig;
 
 class Product extends ShopController
@@ -48,6 +49,7 @@ class Product extends ShopController
     /**
      * 商品詳細ページ
      */
+    #[Route('shop/product/(:num)', methods: ['get'])]
     public function index(string $prodId = '1'): string
     {
         $prodId = $this->convertToInt($prodId);

@@ -20,6 +20,7 @@ use Kenjis\CI3Compatible\Database\CI_DB;
 use Kenjis\CI3Compatible\Database\CI_DB_result;
 use Kenjis\CI3Compatible\Library\CI_Pagination;
 use Kenjis\CI3Compatible\Library\CI_User_agent;
+use Kenjis\CI4\AttributeRoutes\Route;
 use stdClass;
 
 use function assert;
@@ -57,6 +58,7 @@ class Bbs extends CI_Controller
     /**
      * 日付順に記事を表示
      */
+    #[Route('bbs/index', methods: ['get'])]
     public function index(string $page = '1'): void
     {
 // 引数から$pageに値が渡されます。これは、3番目のURIセグメントの値です。
@@ -107,6 +109,7 @@ class Bbs extends CI_Controller
     /**
      * 新規投稿ページ
      */
+    #[Route('bbs/post', methods: ['get'])]
     public function post(): void
     {
 // バリデーションを設定し、新規投稿ページを表示します。実際の処理は、他でも
@@ -117,6 +120,7 @@ class Bbs extends CI_Controller
     /**
      * 確認ページ
      */
+    #[Route('bbs/confirm', methods: ['post'])]
     public function confirm(): void
     {
         $form = new PostForm();
@@ -203,6 +207,7 @@ class Bbs extends CI_Controller
     /**
      * 削除ページ
      */
+    #[Route('bbs/delete/(:num)', methods: ['post'])]
     public function delete(string $id = ''): void
     {
         [$id, $password, $delete] = $this->getParamsDelete($id);
@@ -292,6 +297,7 @@ class Bbs extends CI_Controller
     /**
      * 投稿された記事をデータベースに登録
      */
+    #[Route('bbs/insert', methods: ['post'])]
     public function insert(): ?RedirectResponse
     {
         $form = new PostForm();

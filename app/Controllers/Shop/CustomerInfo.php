@@ -12,6 +12,7 @@ use App\Libraries\Validation\FormValidation;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CustomerInfoForm;
 use App\Models\Shop\CustomerInfoRepository;
+use Kenjis\CI4\AttributeRoutes\Route;
 use Kenjis\CI4Twig\Twig;
 
 class CustomerInfo extends ShopController
@@ -43,6 +44,7 @@ class CustomerInfo extends ShopController
     /**
      * お客様情報入力ページ
      */
+    #[Route('shop/customer_info', methods: ['post'])]
     public function index(): string
     {
         $data = [
@@ -56,6 +58,7 @@ class CustomerInfo extends ShopController
     /**
      * 注文内容確認
      */
+    #[Route('shop/confirm', methods: ['post'])]
     public function confirm(): string
     {
         $this->postOnly();
