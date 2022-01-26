@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "481604c270edc99116b5b57b3e9e9136",
+    "content-hash": "d8dd69dd5785987a5a38b5c516c4bd20",
     "packages": [
         {
             "name": "codeigniter4/codeigniter4",
@@ -635,6 +635,68 @@
                 "source": "https://github.com/kenjis/ci3-to-4-upgrade-helper/tree/v0.3.0"
             },
             "time": "2022-01-15T05:52:42+00:00"
+        },
+        {
+            "name": "kenjis/ci4-attribute-routes",
+            "version": "1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kenjis/ci4-attribute-routes.git",
+                "reference": "af6df77da33d0d124992e7c246ab1e42defb2e2a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kenjis/ci4-attribute-routes/zipball/af6df77da33d0d124992e7c246ab1e42defb2e2a",
+                "reference": "af6df77da33d0d124992e7c246ab1e42defb2e2a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "codeigniter4/codeigniter4": "dev-develop",
+                "codeigniter4/devkit": "^1.0",
+                "doctrine/coding-standard": "^9.0",
+                "kenjis/phpunit-helper": "^1.1.2",
+                "phpmd/phpmd": "^2.11",
+                "phpmetrics/phpmetrics": "^2.7",
+                "phpunit/phpunit": "^9.5",
+                "psalm/plugin-phpunit": "^0.13",
+                "rector/rector": "0.12.13",
+                "squizlabs/php_codesniffer": "^3.6",
+                "vimeo/psalm": "^4.18"
+            },
+            "suggest": {
+                "ext-fileinfo": "Improves mime type detection for files"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Kenjis\\CI4\\AttributeRoutes\\": "src/AttributeRoutes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kenji Suzuki",
+                    "homepage": "https://github.com/kenjis"
+                }
+            ],
+            "description": "CodeIgniter4 Attribute Routes module",
+            "homepage": "https://github.com/kenjis/ci4-attribute-routes",
+            "keywords": [
+                "codeigniter4",
+                "routing"
+            ],
+            "support": {
+                "issues": "https://github.com/kenjis/ci4-attribute-routes/issues",
+                "source": "https://github.com/kenjis/ci4-attribute-routes/tree/1.x"
+            },
+            "time": "2022-01-19T23:51:10+00:00"
         },
         {
             "name": "kenjis/codeigniter-ss-twig",
@@ -8600,12 +8662,13 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "codeigniter4/translations": 20
+        "codeigniter4/translations": 20,
+        "kenjis/ci4-attribute-routes": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.3",
+        "php": ">=8.0",
         "ext-mbstring": "*"
     },
     "platform-dev": [],
