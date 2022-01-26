@@ -4,7 +4,7 @@
     "description" : "『CodeIgniter徹底入門』のサンプルアプリケーション",
     "license": "BSD-3-Clause",
     "require": {
-        "php": ">=7.3",
+        "php": ">=8.0",
         "ext-mbstring": "*",
         "codeigniter4/translations": "dev-develop",
         "codeigniter4/codeigniter4": "^4.1",
