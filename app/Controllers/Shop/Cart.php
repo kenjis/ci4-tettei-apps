@@ -12,6 +12,7 @@ use App\Libraries\Validation\FieldValidation;
 use App\Models\Shop\AddToCartUseCase;
 use App\Models\Shop\CartRepository;
 use App\Models\Shop\CategoryRepository;
+use Kenjis\CI4\AttributeRoutes\Route;
 use Kenjis\CI4Twig\Twig;
 
 use function assert;
@@ -51,6 +52,7 @@ class Cart extends ShopController
     /**
      * 買い物かごに入れる
      */
+    #[Route('shop/add/(:num)', methods: ['post'])]
     public function add(string $prodId = '0'): string
     {
         [$prodId, $qty] = $this->getParams($prodId);
@@ -93,6 +95,7 @@ class Cart extends ShopController
     /**
      * 買い物かごページ
      */
+    #[Route('shop/cart', methods: ['get'])]
     public function index(): string
     {
         $catList = $this->categoryRepository->findAll();

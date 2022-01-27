@@ -12,6 +12,7 @@ use App\Models\Shop\CartRepository;
 use App\Models\Shop\OrderUseCase;
 use Kenjis\CI3Compatible\Core\CI_Config;
 use Kenjis\CI3Compatible\Library\CI_Session;
+use Kenjis\CI4\AttributeRoutes\Route;
 use Kenjis\CI4Twig\Twig;
 
 /**
@@ -46,6 +47,7 @@ class Order extends ShopController
     /**
      * 注文処理
      */
+    #[Route('shop/order', methods: ['post'])]
     public function index(): string
     {
         $cart = $this->cartRepository->find();

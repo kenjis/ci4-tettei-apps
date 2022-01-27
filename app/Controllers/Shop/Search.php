@@ -14,6 +14,7 @@ use App\Models\Shop\CartRepository;
 use App\Models\Shop\CategoryRepository;
 use App\Models\Shop\ProductRepository;
 use Kenjis\CI3Compatible\Core\CI_Config;
+use Kenjis\CI4\AttributeRoutes\Route;
 use Kenjis\CI4Twig\Twig;
 
 use function assert;
@@ -64,6 +65,8 @@ class Search extends ShopController
     /**
      * 検索ページ
      */
+    #[Route('shop/search', methods: ['get'])]
+    #[Route('shop/search/(:num)', methods: ['get'])]
     public function index(string $page = '0'): string
     {
         [$q, $offset] = $this->getParams($page);

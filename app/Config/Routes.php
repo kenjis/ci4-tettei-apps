@@ -21,7 +21,8 @@ $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
-$routes->setAutoRoute(true);
+$routes->setAutoRoute(false);
+$routes->setPrioritize();
 
 /*
  * --------------------------------------------------------------------
@@ -41,17 +42,6 @@ $routes->addRedirect('bbs', 'bbs/index');
 // ため、shop/index/1にリダイレクトさせます。
 $routes->addRedirect('shop', 'shop/index/1');
 
-$routes->get('shop/index/(:num)', 'Shop\Index::index/$1');
-$routes->get('shop/index/(:num)/(:num)', 'Shop\Index::index/$1/$2');
-$routes->get('shop/cart', 'Shop\Cart::index');
-$routes->post('shop/add/(:num)', 'Shop\Cart::add/$1');
-$routes->get('shop/product/(:num)', 'Shop\Product::index/$1');
-$routes->get('shop/search', 'Shop\Search::index');
-$routes->get('shop/search/(:num)', 'Shop\Search::index/$1');
-$routes->post('shop/customer_info', 'Shop\CustomerInfo::index');
-$routes->post('shop/confirm', 'Shop\CustomerInfo::confirm');
-$routes->post('shop/order', 'Shop\Order::index');
-
 /*
  * --------------------------------------------------------------------
  * Additional Routing
@@ -67,4 +57,16 @@ $routes->post('shop/order', 'Shop\Order::index');
  */
 if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
+}
+
+/*
+ * Attribute Routes
+ *
+ * To update the route file, run the following command:
+ * $ php spark route:update
+ *
+ * @see https://github.com/kenjis/ci4-attribute-routes
+ */
+if (file_exists(APPPATH . 'Config/RoutesFromAttribute.php')) {
+    require APPPATH . 'Config/RoutesFromAttribute.php';
 }

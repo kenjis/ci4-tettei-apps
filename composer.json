@@ -4,14 +4,15 @@
     "description" : "『CodeIgniter徹底入門』のサンプルアプリケーション",
     "license": "BSD-3-Clause",
     "require": {
-        "php": ">=7.3",
+        "php": ">=8.0",
         "ext-mbstring": "*",
         "codeigniter4/translations": "dev-develop",
         "codeigniter4/codeigniter4": "^4.1",
         "kenjis/codeigniter-ss-twig": "^4.0",
         "kenjis/ci3-to-4-upgrade-helper": "~0.1",
         "liaison/revision": "^1.0",
-        "ray/di": "^2.0"
+        "ray/di": "^2.0",
+        "kenjis/ci4-attribute-routes": "~0.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",
