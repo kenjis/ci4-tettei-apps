@@ -7,9 +7,9 @@
         "php": ">=8.0",
         "ext-mbstring": "*",
         "codeigniter4/translations": "dev-develop",
-        "codeigniter4/codeigniter4": "^4.1",
+        "codeigniter4/codeigniter4": "^4.1.8",
         "kenjis/codeigniter-ss-twig": "^4.0",
-        "kenjis/ci3-to-4-upgrade-helper": "~0.1",
+        "kenjis/ci3-to-4-upgrade-helper": "~0.3",
         "liaison/revision": "^1.0",
         "ray/di": "^2.0",
         "kenjis/ci4-attribute-routes": "~0.1"
@@ -17,7 +17,7 @@
     "require-dev": {
         "fakerphp/faker": "^1.9",
         "mikey179/vfsstream": "1.6.*",
-        "phpunit/phpunit": "^9.0",
+        "phpunit/phpunit": "^9.5",
         "codeception/codeception": "^4.1",
         "codeception/module-webdriver": "^1.2",
         "kenjis/phpunit-helper": "^1.0",
