@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d8dd69dd5785987a5a38b5c516c4bd20",
+    "content-hash": "e70ca613032c90293314940f591771d1",
     "packages": [
         {
             "name": "codeigniter4/codeigniter4",
@@ -638,16 +638,16 @@
         },
         {
             "name": "kenjis/ci4-attribute-routes",
-            "version": "1.x-dev",
+            "version": "v0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kenjis/ci4-attribute-routes.git",
-                "reference": "af6df77da33d0d124992e7c246ab1e42defb2e2a"
+                "reference": "6daafb87a6d36cd43e0bab8431f5ad9b5ffc9c25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kenjis/ci4-attribute-routes/zipball/af6df77da33d0d124992e7c246ab1e42defb2e2a",
-                "reference": "af6df77da33d0d124992e7c246ab1e42defb2e2a",
+                "url": "https://api.github.com/repos/kenjis/ci4-attribute-routes/zipball/6daafb87a6d36cd43e0bab8431f5ad9b5ffc9c25",
+                "reference": "6daafb87a6d36cd43e0bab8431f5ad9b5ffc9c25",
                 "shasum": ""
             },
             "require": {
@@ -669,7 +669,6 @@
             "suggest": {
                 "ext-fileinfo": "Improves mime type detection for files"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -694,9 +693,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kenjis/ci4-attribute-routes/issues",
-                "source": "https://github.com/kenjis/ci4-attribute-routes/tree/1.x"
+                "source": "https://github.com/kenjis/ci4-attribute-routes/tree/v0.1.0"
             },
-            "time": "2022-01-19T23:51:10+00:00"
+            "time": "2022-01-27T02:53:45+00:00"
         },
         {
             "name": "kenjis/codeigniter-ss-twig",
@@ -4225,16 +4224,16 @@
         },
         {
             "name": "codeception/phpunit-wrapper",
-            "version": "9.0.6",
+            "version": "9.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/phpunit-wrapper.git",
-                "reference": "b0c06abb3181eedca690170f7ed0fd26a70bfacc"
+                "reference": "7d6b1a5ea4ed28d010e5d36b993db813eb49710b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/phpunit-wrapper/zipball/b0c06abb3181eedca690170f7ed0fd26a70bfacc",
-                "reference": "b0c06abb3181eedca690170f7ed0fd26a70bfacc",
+                "url": "https://api.github.com/repos/Codeception/phpunit-wrapper/zipball/7d6b1a5ea4ed28d010e5d36b993db813eb49710b",
+                "reference": "7d6b1a5ea4ed28d010e5d36b993db813eb49710b",
                 "shasum": ""
             },
             "require": {
@@ -4268,9 +4267,9 @@
             "description": "PHPUnit classes used by Codeception",
             "support": {
                 "issues": "https://github.com/Codeception/phpunit-wrapper/issues",
-                "source": "https://github.com/Codeception/phpunit-wrapper/tree/9.0.6"
+                "source": "https://github.com/Codeception/phpunit-wrapper/tree/9.0.7"
             },
-            "time": "2020-12-28T13:59:47+00:00"
+            "time": "2022-01-26T14:43:10+00:00"
         },
         {
             "name": "codeception/stub",
@@ -8662,8 +8661,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "codeigniter4/translations": 20,
-        "kenjis/ci4-attribute-routes": 20
+        "codeigniter4/translations": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
