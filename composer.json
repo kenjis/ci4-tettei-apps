@@ -12,7 +12,7 @@
         "kenjis/ci3-to-4-upgrade-helper": "~0.1",
         "liaison/revision": "^1.0",
         "ray/di": "^2.0",
-        "kenjis/ci4-attribute-routes": "1.x-dev"
+        "kenjis/ci4-attribute-routes": "~0.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",
