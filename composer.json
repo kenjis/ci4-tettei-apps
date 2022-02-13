@@ -17,7 +17,6 @@
     "require-dev": {
         "fakerphp/faker": "^1.9",
         "mikey179/vfsstream": "1.6.*",
-        "phpunit/phpunit": "^9.5",
         "codeception/codeception": "^4.1",
         "codeception/module-webdriver": "^1.2",
         "kenjis/phpunit-helper": "^1.0",
