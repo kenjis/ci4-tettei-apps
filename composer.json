@@ -34,7 +34,6 @@
         "post-install-cmd": "@composer bin all install --ansi",
         "post-update-cmd": [
             "@composer dump-autoload",
-            "php spark revision:update",
             "@composer bin all update --ansi"
         ],
         "test": "phpunit --no-coverage",
