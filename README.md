@@ -135,7 +135,7 @@ $ brew install geckodriver
 Seleniumサーバを起動します。
 
 ~~~
-$ selenium-server standalone --port 4444
+$ selenium-server standalone
 ~~~
 
 受入テストを実行します。
