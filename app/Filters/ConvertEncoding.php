@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filters;
 
 use CodeIgniter\Filters\FilterInterface;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
@@ -22,6 +23,8 @@ class ConvertEncoding implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null): void
     {
+        assert($request instanceof IncomingRequest);
+
 // 携帯端末からのアクセスを判定するためユーザエージェントクラスをロードします。
         $agent = $request->getUserAgent();
 
@@ -46,6 +49,8 @@ class ConvertEncoding implements FilterInterface
         ResponseInterface $response,
         $arguments = null
     ): void {
+        assert($request instanceof IncomingRequest);
+
         $agent = $request->getUserAgent();
 
 // 携帯端末の場合は、HTTPヘッダのContent-Typeヘッダで文字エンコードがShift_JIS

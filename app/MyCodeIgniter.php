@@ -13,6 +13,7 @@ class MyCodeIgniter extends CodeIgniter
     protected function createController()
     {
         assert(is_string($this->controller), 'クロージャコントローラは使えません。');
+        assert($this->request !== null);
 
         /**
          * @var class-string $controllerName

@@ -42,10 +42,8 @@ trait ArrayReadable
 
     /**
      * @param string|int $offset
-     *
-     * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         if ($this->offsetExists($offset)) {
             return $this->$offset;

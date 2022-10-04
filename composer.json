@@ -22,8 +22,18 @@
         "kenjis/phpunit-helper": "^1.0",
         "symfony/dom-crawler": "^5.2",
         "symfony/css-selector": "^5.2",
-        "bamarni/composer-bin-plugin": "^1.4",
-        "rector/rector": "^0.9.31"
+        "rector/rector": "^0.14",
+        "doctrine/coding-standard": "^9.0",
+        "friendsofphp/php-cs-fixer": "^3.4",
+        "phploc/phploc": "^7.0",
+        "phpmd/phpmd": "^2.11",
+        "phpmetrics/phpmetrics": "^2.7",
+        "phpstan/phpstan": "^1.3",
+        "phpunit/phpunit": "^9.5.10",
+        "psalm/plugin-phpunit": "^0.16",
+        "sebastian/phpcpd": "^6.0",
+        "squizlabs/php_codesniffer": "^3.5",
+        "vimeo/psalm": "^4.2"
     },
     "autoload-dev": {
         "psr-4": {
@@ -31,11 +41,9 @@
         }
     },
     "scripts": {
-        "post-install-cmd": "@composer bin all install --ansi",
+        "post-install-cmd": [],
         "post-update-cmd": [
-            "@composer dump-autoload",
-            "php spark revision:update",
-            "@composer bin all update --ansi"
+            "@composer dump-autoload"
         ],
         "test": "phpunit --no-coverage",
         "coverage": "php -dzend_extension=xdebug.so -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-text --log-junit=build/coverage/junit.xml",
@@ -91,11 +99,15 @@
         {
             "type": "vcs",
             "url": "https://github.com/codeigniter4/codeigniter4"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/kenjis/php-simple-captcha.git"
         }
     ],
     "config": {
         "allow-plugins": {
-            "bamarni/composer-bin-plugin": true
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }

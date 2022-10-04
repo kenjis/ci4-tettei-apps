@@ -10,6 +10,8 @@ use Kenjis\CI3Compatible\Library\CI_Session;
 use Kenjis\CI3Compatible\Test\TestCase\UnitTestCase;
 use Kenjis\CI3Compatible\Test\Traits\SessionTest;
 
+use function get_instance;
+
 class OrderUseCaseTest extends UnitTestCase
 {
     use SessionTest;

@@ -7,6 +7,7 @@ namespace App\Libraries;
 use App\Exception\LogicException;
 use ArrayAccess;
 use Iterator;
+use ReturnTypeWillChange;
 
 use function array_key_exists;
 use function array_keys;
@@ -152,6 +153,7 @@ abstract class FormData implements ArrayAccess, Iterator
      *
      * @return string|int
      */
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if ($this->offsetExists($offset)) {
@@ -180,6 +182,7 @@ abstract class FormData implements ArrayAccess, Iterator
         throw new LogicException($offset . 'は変更できません。');
     }
 
+    #[ReturnTypeWillChange]
     public function current()
     {
         $property = $this->arrayReadProperties[$this->position];
@@ -192,11 +195,13 @@ abstract class FormData implements ArrayAccess, Iterator
         ++$this->position;
     }
 
+    #[ReturnTypeWillChange]
     public function key()
     {
         return $this->arrayReadProperties[$this->position];
     }
 
+    #[ReturnTypeWillChange]
     public function valid()
     {
         return isset($this->arrayReadProperties[$this->position]);

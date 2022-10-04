@@ -94,7 +94,7 @@ class Security extends BaseConfig
      *
      * @var bool
      */
-    public $redirect = true;
+    public $redirect = false;
 
     /**
      * --------------------------------------------------------------------------
@@ -111,7 +111,7 @@ class Security extends BaseConfig
      *
      * @var string
      *
-     * @deprecated
+     * @deprecated `Config\Cookie` $samesite property is used.
      */
     public $samesite = 'Lax';
 }

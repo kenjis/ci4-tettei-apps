@@ -37,23 +37,23 @@ class CustomerInfoForm extends FormData
         'common' => [
             'name' => [
                 'label' => '名前',
-                'rules' => 'trim|required|max_length[64]',
+                'rules' => 'required|max_length[64]',
             ],
             'zip' => [
                 'label' => '郵便番号',
-                'rules' => 'trim|max_length[8]',
+                'rules' => 'max_length[8]',
             ],
             'addr' => [
                 'label' => '住所',
-                'rules' => 'trim|required|max_length[128]',
+                'rules' => 'required|max_length[128]',
             ],
             'tel' => [
                 'label' => '電話番号',
-                'rules' => 'trim|required|max_length[20]',
+                'rules' => 'required|max_length[20]',
             ],
             'email' => [
                 'label' => 'メールアドレス',
-                'rules' => 'trim|required|valid_email|max_length[64]',
+                'rules' => 'required|valid_email|max_length[64]',
             ],
         ],
     ];

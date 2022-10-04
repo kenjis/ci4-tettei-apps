@@ -37,7 +37,8 @@ class Filters extends BaseConfig
         'before' => [
             // 'honeypot',
             'csrf',
-            'invalidchars',
+            // SJIS文字は不正な文字とみなされるため、BBSは除外
+            'invalidchars' => ['except' => 'bbs/*'],
         ],
         'after' => [
             'toolbar',
@@ -51,7 +52,11 @@ class Filters extends BaseConfig
      * particular HTTP method (GET, POST, etc.).
      *
      * Example:
-     * 'post' => ['csrf', 'throttle']
+     * 'post' => ['foo', 'bar']
+     *
+     * If you use this, you should disable auto-routing because auto-routing
+     * permits any HTTP method to access a controller. Accessing the controller
+     * with a method you don’t expect could bypass the filter.
      *
      * @var array
      */
@@ -71,5 +76,10 @@ class Filters extends BaseConfig
             'before' => ['bbs/*'],
             'after' => ['bbs/*'],
         ],
+        // @TODO bbsフィルタの後にinvalidcharsフィルタでチェックしたいが、
+        //      rawInputにもSJIS文字が含まれるため、一旦、コメントアウト
+//        'invalidchars' => [
+//            'before' => ['bbs/*'],
+//        ],
     ];
 }

@@ -62,5 +62,8 @@ class ConvertEncodingTest extends TestCase
 
         $body = $response->getBody();
         $this->assertEquals('尾?骨', mb_convert_encoding($body, 'UTF-8', 'SJIS-win'));
+
+        // 変更したグローバル変数をクリアする
+        $_POST = [];
     }
 }

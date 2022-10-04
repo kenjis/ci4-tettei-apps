@@ -59,7 +59,14 @@ class ShopTest extends FeatureTestCase
 
     public function test_add(): void
     {
-        $output = $this->request('POST', 'shop/add/3', ['qty' => '3']);
+        $output = $this->request(
+            'POST',
+            'shop/add/3',
+            [
+                'csrf_test_name' => csrf_hash(),
+                'qty' => '3',
+            ]
+        );
 
         $this->assertStringContainsString('CodeIgniter徹底入門 DVD', $output);
     }
@@ -73,7 +80,14 @@ class ShopTest extends FeatureTestCase
 
     public function test_customer_info(): void
     {
-        $output = $this->request('POST', 'shop/add/1', ['qty' => '1']);
+        $output = $this->request(
+            'POST',
+            'shop/add/1',
+            [
+                'csrf_test_name' => csrf_hash(),
+                'qty' => '1',
+            ]
+        );
 
         $this->assertStringContainsString('CodeIgniter徹底入門', $output);
 
@@ -82,7 +96,11 @@ class ShopTest extends FeatureTestCase
         $this->assertStringContainsString('買い物かご', $output);
         $this->assertStringContainsString('CodeIgniter徹底入門', $output);
 
-        $output = $this->request('POST', 'shop/customer_info');
+        $output = $this->request(
+            'POST',
+            'shop/customer_info',
+            ['csrf_test_name' => csrf_hash()]
+        );
 
         $this->assertStringContainsString('お客様情報の入力', $output);
     }

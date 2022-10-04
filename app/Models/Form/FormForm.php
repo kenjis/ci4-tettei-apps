@@ -31,11 +31,11 @@ class FormForm extends FormData
         'common' => [
             'name' => [
                 'label' => '名前',
-                'rules' => 'trim|required|max_length[20]',
+                'rules' => 'required|max_length[20]',
             ],
             'email' => [
                 'label' => 'メールアドレス',
-                'rules' => 'trim|required|valid_email',
+                'rules' => 'required|valid_email',
             ],
             'comment' => [
                 'label' => 'コメント',

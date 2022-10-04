@@ -61,7 +61,10 @@ class BbsTest extends FeatureTestCase
         $output = $this->request(
             'POST',
             'bbs/confirm',
-            ['name' => '']
+            [
+                'csrf_test_name' => csrf_hash(),
+                'name' => '',
+            ]
         );
         $this->assertStringContainsString('名前 は必須項目です', $output);
     }
@@ -72,6 +75,7 @@ class BbsTest extends FeatureTestCase
             'POST',
             'bbs/confirm',
             [
+                'csrf_test_name' => csrf_hash(),
                 'name' => '<s>abc</s>',
                 'email' => 'test@example.jp',
                 'subject' => '<s>abc</s>',
@@ -91,6 +95,7 @@ class BbsTest extends FeatureTestCase
             'POST',
             'bbs/insert',
             [
+                'csrf_test_name' => csrf_hash(),
                 'name' => '<s>xyz</s>',
                 'email' => 'test@example.jp',
                 'subject' => $subject,
@@ -112,6 +117,7 @@ class BbsTest extends FeatureTestCase
             'POST',
             'bbs/insert',
             [
+                'csrf_test_name' => csrf_hash(),
                 'name' => '削除太郎',
                 'email' => 'test@example.jp',
                 'subject' => '削除する投稿',
@@ -130,13 +136,22 @@ class BbsTest extends FeatureTestCase
         $text = $crawler->filter('h1 > a')->eq(0)->text();
         $id = trim($text, '[]');
 
-        $output = $this->request('POST', "bbs/delete/$id");
+        $output = $this->request(
+            'POST',
+            "bbs/delete/$id",
+            [
+                'csrf_test_name' => csrf_hash(),
+            ]
+        );
         $this->assertStringContainsString('記事を削除できませんでした', $output);
 
         $output = $this->request(
             'POST',
             "bbs/delete/$id",
-            ['password' => 'delete']
+            [
+                'csrf_test_name' => csrf_hash(),
+                'password' => 'delete',
+            ]
         );
         $this->assertStringContainsString('削除の確認', $output);
 
@@ -144,6 +159,7 @@ class BbsTest extends FeatureTestCase
             'POST',
             "bbs/delete/$id",
             [
+                'csrf_test_name' => csrf_hash(),
                 'password' => 'bad password',
                 'delete' => '1',
             ]
@@ -154,6 +170,7 @@ class BbsTest extends FeatureTestCase
             'POST',
             "bbs/delete/$id",
             [
+                'csrf_test_name' => csrf_hash(),
                 'password' => 'delete',
                 'delete' => '1',
             ]

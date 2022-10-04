@@ -22,6 +22,7 @@ class FormTest extends FeatureTestCase
             'POST',
             'form/confirm',
             [
+                'csrf_test_name' => csrf_hash(),
                 'name' => '',
                 'email' => '',
                 'comment' => '',
@@ -37,6 +38,7 @@ class FormTest extends FeatureTestCase
             'POST',
             'form/confirm',
             [
+                'csrf_test_name' => csrf_hash(),
                 'name' => '<s>abc</s>',
                 'email' => 'test@example.jp',
                 'comment' => '<s>abc</s>',
@@ -65,6 +67,7 @@ class FormTest extends FeatureTestCase
             'POST',
             'form/send',
             [
+                'csrf_test_name' => csrf_hash(),
                 'name' => '<s>abc</s>',
                 'email' => 'test@example.jp',
                 'comment' => '<s>abc</s>',

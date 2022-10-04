@@ -64,19 +64,19 @@ class PostFormTest extends CIUnitTestCase
         $expected = [
             'name' => [
                 'label' => '名前',
-                'rules' => 'trim|required|max_length[16]',
+                'rules' => 'required|max_length[16]',
             ],
             'email' => [
                 'label' => 'メールアドレス',
-                'rules' => 'trim|permit_empty|valid_email|max_length[64]',
+                'rules' => 'permit_empty|valid_email|max_length[64]',
             ],
             'subject' => [
                 'label' => '件名',
-                'rules' => 'trim|required|max_length[32]',
+                'rules' => 'required|max_length[32]',
             ],
             'body' => [
                 'label' => '内容',
-                'rules' => 'trim|required|max_length[200]',
+                'rules' => 'required|max_length[200]',
             ],
             'password' => [
                 'label' => '削除パスワード',
@@ -94,19 +94,19 @@ class PostFormTest extends CIUnitTestCase
         $expected = [
             'name' => [
                 'label' => '名前',
-                'rules' => 'trim|required|max_length[16]',
+                'rules' => 'required|max_length[16]',
             ],
             'email' => [
                 'label' => 'メールアドレス',
-                'rules' => 'trim|permit_empty|valid_email|max_length[64]',
+                'rules' => 'permit_empty|valid_email|max_length[64]',
             ],
             'subject' => [
                 'label' => '件名',
-                'rules' => 'trim|required|max_length[32]',
+                'rules' => 'required|max_length[32]',
             ],
             'body' => [
                 'label' => '内容',
-                'rules' => 'trim|required|max_length[200]',
+                'rules' => 'required|max_length[200]',
             ],
             'password' => [
                 'label' => '削除パスワード',
@@ -114,7 +114,7 @@ class PostFormTest extends CIUnitTestCase
             ],
             'captcha' => [
                 'label' => '画像認証コード',
-                'rules' => 'trim|required|alpha_numeric|captcha_check[{key}]',
+                'rules' => 'required|alpha_numeric|captcha_check[{key}]',
             ],
             'key' => [
                 'label' => 'key',

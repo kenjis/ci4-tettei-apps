@@ -15,10 +15,17 @@
 
 ## 動作確認環境
 
-- CodeIgniter 4.1.8 ([ci4-app-template](https://github.com/kenjis/ci4-app-template) を使用)
-- PHP 8.0.14
-  - Composer 2.1.14
+### アプリ
+
+- CodeIgniter 4.2.6 ([ci4-app-template](https://github.com/kenjis/ci4-app-template) を使用)
+- PHP 8.1.11
+  - Composer 2.4.2
 - MySQL 5.7
+
+### 受入テスト
+
+- selenium-server 4.5.0
+- geckodriver 0.31.0
 
 ## 「CodeIgniter 3.xで動作するように更新したもの」からの変更点
 
@@ -60,7 +67,6 @@
 - Ray.Di <https://github.com/Ray-Di/Ray.Di>
 - CodeIgniter4 Attribute Routes <https://github.com/kenjis/ci4-attribute-routes>
 - PHPUnit Helper <https://github.com/kenjis/phpunit-helper>
-- bear/qatools <https://github.com/bearsunday/BEAR.QATools>
 
 ## インストール方法
 
@@ -129,14 +135,14 @@ $ composer coverage
 Homebrewからselenium-server-standaloneとgeckodriverをインストールします。
 
 ~~~
-$ brew install selenium-server-standalone
+$ brew install selenium-server
 $ brew install geckodriver
 ~~~
 
 Seleniumサーバを起動します。
 
 ~~~
-$ selenium-server standalone --port 4444
+$ selenium-server standalone
 ~~~
 
 受入テストを実行します。

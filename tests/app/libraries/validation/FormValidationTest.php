@@ -66,5 +66,8 @@ class FormValidationTest extends UnitTestCase
         $this->assertSame('名前です', $form['name']);
         $this->assertSame('foo@example.com', $form['email']);
         $this->assertSame('コメントです', $form['comment']);
+
+        // 変更したグローバル変数をクリアする
+        $_POST = [];
     }
 }
