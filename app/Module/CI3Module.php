@@ -12,6 +12,8 @@ use Kenjis\CI3Compatible\Library\CI_Session;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
+use function get_instance;
+
 class CI3Module extends AbstractModule
 {
     /** @var CI_Controller */
