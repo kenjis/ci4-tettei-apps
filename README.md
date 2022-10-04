@@ -60,7 +60,6 @@
 - Ray.Di <https://github.com/Ray-Di/Ray.Di>
 - CodeIgniter4 Attribute Routes <https://github.com/kenjis/ci4-attribute-routes>
 - PHPUnit Helper <https://github.com/kenjis/phpunit-helper>
-- bear/qatools <https://github.com/bearsunday/BEAR.QATools>
 
 ## インストール方法
 
