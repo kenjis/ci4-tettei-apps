@@ -15,10 +15,17 @@
 
 ## 動作確認環境
 
+### アプリ
+
 - CodeIgniter 4.2.6 ([ci4-app-template](https://github.com/kenjis/ci4-app-template) を使用)
 - PHP 8.1.11
   - Composer 2.4.2
 - MySQL 5.7
+
+### 受入テスト
+
+- selenium-server 4.5.0
+- geckodriver 0.31.0
 
 ## 「CodeIgniter 3.xで動作するように更新したもの」からの変更点
 
@@ -128,7 +135,7 @@ $ composer coverage
 Homebrewからselenium-server-standaloneとgeckodriverをインストールします。
 
 ~~~
-$ brew install selenium-server-standalone
+$ brew install selenium-server
 $ brew install geckodriver
 ~~~
 
