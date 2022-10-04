@@ -96,5 +96,11 @@
         "allow-plugins": {
             "bamarni/composer-bin-plugin": true
         }
+    },
+    "extra": {
+        "bamarni-bin": {
+            "bin-links": true,
+            "forward-command": false
+        }
     }
 }
