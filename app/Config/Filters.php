@@ -37,7 +37,8 @@ class Filters extends BaseConfig
         'before' => [
             // 'honeypot',
             'csrf',
-            'invalidchars',
+            // SJIS文字は不正な文字とみなされるため、BBSは除外
+            'invalidchars' => ['except' => 'bbs/*'],
         ],
         'after' => [
             'toolbar',
@@ -75,5 +76,10 @@ class Filters extends BaseConfig
             'before' => ['bbs/*'],
             'after' => ['bbs/*'],
         ],
+        // @TODO bbsフィルタの後にinvalidcharsフィルタでチェックしたいが、
+        //      rawInputにもSJIS文字が含まれるため、一旦、コメントアウト
+//        'invalidchars' => [
+//            'before' => ['bbs/*'],
+//        ],
     ];
 }
