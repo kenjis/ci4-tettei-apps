@@ -99,10 +99,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/codeigniter4/codeigniter4"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/kenjis/php-simple-captcha.git"
         }
     ],
     "config": {
