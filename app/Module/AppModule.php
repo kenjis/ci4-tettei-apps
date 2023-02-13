@@ -14,7 +14,7 @@ use App\Models\Shop\CustomerInfoRepository;
 use App\Models\Shop\MailService;
 use App\Models\Shop\OrderUseCase;
 use App\Models\Shop\ProductRepository;
-use CodeIgniter\Validation\Validation;
+use CodeIgniter\Validation\ValidationInterface;
 use Config\Services;
 use Kenjis\CI4Twig\Twig;
 use Ray\Di\AbstractModule;
@@ -29,7 +29,7 @@ class AppModule extends AbstractModule
     {
         $this->install(new CI3Module());
 
-        $this->bind(Validation::class)->toInstance(Services::validation());
+        $this->bind(ValidationInterface::class)->toInstance(Services::validation());
 
         $this->bind(Twig::class)->in(Scope::SINGLETON);
         $this->bind(GeneratePagination::class)->in(Scope::SINGLETON);
