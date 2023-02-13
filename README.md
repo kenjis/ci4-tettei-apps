@@ -17,15 +17,15 @@
 
 ### アプリ
 
-- CodeIgniter 4.2.6 ([ci4-app-template](https://github.com/kenjis/ci4-app-template) を使用)
-- PHP 8.1.11
-  - Composer 2.4.2
+- CodeIgniter 4.3.1 ([ci4-app-template](https://github.com/kenjis/ci4-app-template) を使用)
+- PHP 8.1.13
+  - Composer 2.5.1
 - MySQL 5.7
 
 ### 受入テスト
 
 - selenium-server 4.5.0
-- geckodriver 0.31.0
+- geckodriver 0.32.0
 
 ## 「CodeIgniter 3.xで動作するように更新したもの」からの変更点
 
@@ -94,7 +94,8 @@ MySQLにデータベースとユーザーを作成します。
 
 ```
 CREATE DATABASE `codeigniter` DEFAULT CHARACTER SET utf8mb4;
-GRANT ALL PRIVILEGES ON codeigniter.* TO username@localhost IDENTIFIED BY 'password';
+CREATE USER username@localhost IDENTIFIED WITH mysql_native_password BY 'password';
+GRANT ALL PRIVILEGES ON codeigniter.* TO username@localhost;
 ```
 
 ### データベースマイグレーションとシーディングの実行

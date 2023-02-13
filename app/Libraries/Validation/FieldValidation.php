@@ -5,21 +5,21 @@ declare(strict_types=1);
 namespace App\Libraries\Validation;
 
 use App\Exception\RuntimeException;
-use CodeIgniter\Validation\Validation;
+use CodeIgniter\Validation\ValidationInterface;
 
 class FieldValidation
 {
-    /** @var Validation */
+    /** @var ValidationInterface */
     private $validation;
 
-    public function __construct(Validation $validation)
+    public function __construct(ValidationInterface $validation)
     {
         $this->validation = $validation;
     }
 
     /**
-     * @param mixed                 $value
-     * @param array<string, string> $errors
+     * @param array<bool|float|int|object|string|null>|bool|float|int|object|string|null $value
+     * @param array<string, string>                                                      $errors
      */
     public function validate($value, string $rules, array $errors = []): bool
     {

@@ -6,7 +6,7 @@ namespace App\Libraries\Validation;
 
 use App\Libraries\FormData;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\Validation\Validation;
+use CodeIgniter\Validation\ValidationInterface;
 
 use function assert;
 use function is_array;
@@ -16,10 +16,10 @@ use function is_array;
  */
 class FormValidation
 {
-    /** @var Validation */
+    /** @var ValidationInterface */
     private $validation;
 
-    public function __construct(Validation $validation)
+    public function __construct(ValidationInterface $validation)
     {
         $this->validation = $validation;
         $this->validation->reset();

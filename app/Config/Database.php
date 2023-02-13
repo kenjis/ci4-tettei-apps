@@ -12,25 +12,19 @@ class Database extends Config
     /**
      * The directory that holds the Migrations
      * and Seeds directories.
-     *
-     * @var string
      */
-    public $filesPath = APPPATH . 'Database' . DIRECTORY_SEPARATOR;
+    public string $filesPath = APPPATH . 'Database' . DIRECTORY_SEPARATOR;
 
     /**
      * Lets you choose which connection group to
      * use if no other is specified.
-     *
-     * @var string
      */
-    public $defaultGroup = 'default';
+    public string $defaultGroup = 'default';
 
     /**
      * The default database connection.
-     *
-     * @var array
      */
-    public $default = [
+    public array $default = [
         'DSN'      => '',
         'hostname' => 'localhost',
         'username' => '',
@@ -39,7 +33,7 @@ class Database extends Config
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
-        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'DBDebug'  => true,
         'charset'  => 'utf8',
         'DBCollat' => 'utf8_general_ci',
         'swapPre'  => '',
@@ -55,28 +49,25 @@ class Database extends Config
      * running PHPUnit database tests.
      *
      * phpunit実行時の設定は、tests/_support/Config/Registrar.php で上書き
-     *
-     * @var array
      */
-    public $tests = [
-        'DSN'      => '',
-        'hostname' => 'localhost',
-        'username' => '',
-        'password' => '',
-        'database' => 'codeigniter',
-        'DBDriver' => 'MySQLi',
-        'DBPrefix' => '',
-        'pConnect' => false,
-        'DBDebug'  => (ENVIRONMENT !== 'production'),
-        'charset'  => 'utf8',
-        'DBCollat' => 'utf8_general_ci',
-        'swapPre'  => '',
-        'encrypt'  => false,
-        'compress' => false,
-        'strictOn' => false,
-        'failover' => [],
-        'port'     => 3306,
-        'foreignKeys' => true,
+    public array $tests = [
+        'DSN'         => '',
+        'hostname'    => 'localhost',
+        'username'    => '',
+        'password'    => '',
+        'database'    => 'codeigniter',
+        'DBDriver'    => 'MySQLi',
+        'DBPrefix'    => '',
+        'pConnect'    => false,
+        'DBDebug'     => true,
+        'charset'     => 'utf8',
+        'DBCollat'    => 'utf8_general_ci',
+        'swapPre'     => '',
+        'encrypt'     => false,
+        'compress'    => false,
+        'strictOn'    => false,
+        'failover'    => [],
+        'port'        => 3306,
     ];
 
     public function __construct()
