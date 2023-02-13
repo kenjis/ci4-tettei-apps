@@ -38,7 +38,7 @@ abstract class BaseController extends Controller
      * class instantiation. These helpers will be available
      * to all other controllers that extend BaseController.
      *
-     * @var array
+     * @var array<string>
      */
     protected $helpers = [];
 
@@ -48,6 +48,9 @@ abstract class BaseController extends Controller
      */
     // protected $session;
 
+    /**
+     * Controller Constructor
+     */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger): void
     {
         // Do Not Edit This Line
