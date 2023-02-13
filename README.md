@@ -94,7 +94,8 @@ MySQLにデータベースとユーザーを作成します。
 
 ```
 CREATE DATABASE `codeigniter` DEFAULT CHARACTER SET utf8mb4;
-GRANT ALL PRIVILEGES ON codeigniter.* TO username@localhost IDENTIFIED BY 'password';
+CREATE USER username@localhost IDENTIFIED WITH mysql_native_password BY 'password';
+GRANT ALL PRIVILEGES ON codeigniter.* TO username@localhost;
 ```
 
 ### データベースマイグレーションとシーディングの実行
