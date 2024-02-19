@@ -17,15 +17,15 @@
 
 ### アプリ
 
-- CodeIgniter 4.3.1 ([ci4-app-template](https://github.com/kenjis/ci4-app-template) を使用)
-- PHP 8.1.13
-  - Composer 2.5.1
-- MySQL 5.7
+- CodeIgniter 4.4.5 ([ci4-app-template](https://github.com/kenjis/ci4-app-template) を使用)
+- PHP 8.2.16
+  - Composer 2.7.1
+- MySQL 8.0.34
 
 ### 受入テスト
 
-- selenium-server 4.5.0
-- geckodriver 0.32.0
+- selenium-server 4.17.0
+- geckodriver 0.34.0
 
 ## 「CodeIgniter 3.xで動作するように更新したもの」からの変更点
 
