@@ -1,6 +1,10 @@
 <?php
 
+use Config\Services;
 use CodeIgniter\Router\RouteCollection;
+
+// Create a new instance of our RouteCollection class.
+$routes = Services::routes();
 
 /**
  * @var RouteCollection $routes
